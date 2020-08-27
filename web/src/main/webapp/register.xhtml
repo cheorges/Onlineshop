@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/template.xhtml"
+                xml:lang="en" lang="en">
+
+    <ui:define name="content">
+        <br/>
+        <div class="card">
+            <div class="card-header">
+                <br/>
+                <h1>Zotteltec - Register</h1>
+                <br/>
+            </div>
+            <div class="card-body">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h:form id="customerRegisterForm">
+                            <div class="form-group">
+                                <label for="forUsername">Username</label>
+                                <h:inputText binding="#{regUsernameInput}" class="forUsername form-control" id="forUsername" />
+                            </div>
+                            <div class="form-group">
+                                <label for="forFirstname">Firstname</label>
+                                <h:inputText binding="#{regFirstnameInput}" class="regFirstnameInput form-control" id="forFirstname" />
+                            </div>
+                            <div class="form-group">
+                                <label for="forLastname">Lastname</label>
+                                <h:inputText binding="#{regLastnameInput}" class="regLastnameInput form-control" id="forLastname" />
+                            </div>
+                            <div class="form-group">
+                                <label for="forEmail">Email</label>
+                                <h:inputText binding="#{regEmailInput}" class="regEmailInput form-control" id="forEmail" />
+                            </div>
+                            <div class="form-group">
+                                <label for="forPassword">Password</label>
+                                <h:inputSecret binding="#{regPasswordInput}" class="regPasswordInput form-control" id="forPassword" />
+                            </div>
+                            <h:commandButton value="Register" class="btn btn-primary"
+                                             actionListener="#{customerJSF.addNewCustomer(
+                                                    regUsernameInput.value,
+                                                    regFirstnameInput.value,
+                                                    regLastnameInput.value,
+                                                    regEmailInput.value,
+                                                    regPasswordInput.value)}">
+                                <f:ajax execute="customerRegisterForm"/>
+                            </h:commandButton>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

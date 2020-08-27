@@ -1,0 +1,8 @@
+rootProject.name = 'Zotteltec'
+
+include 'common'
+include 'data'
+include 'core'
+include 'ear'
+include 'web'
+

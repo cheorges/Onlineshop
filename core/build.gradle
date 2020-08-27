@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'ch.zotteljedi'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.20.Final'
+    compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', version: '2.7.7'
+    // https://mvnrepository.com/artifact/us.hornerscorners.mojo/eclipselink-ddlgeneration-maven-plugin
+    compile group: 'us.hornerscorners.mojo', name: 'eclipselink-ddlgeneration-maven-plugin', version: '1.8'
+
+
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
+
+    compileOnly('javax:javaee-api:8.0.1')
+
+    implementation project(':common')
+    implementation project(':data')
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

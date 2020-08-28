@@ -1,11 +1,13 @@
 package ch.zotteljedi.onlineshop.customer.services;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
+import ch.zotteljedi.onlineshop.customer.exception.ApplicationException;
 
-import javax.ejb.Local;
 import java.io.Serializable;
+import javax.ejb.Local;
 
 @Local
 public interface CustomerServicesLocal extends Serializable {
-    void addNewCustomer(Customer customer);
+    void addNewCustomer(Customer customer) throws ApplicationException;
+    Customer getCustomerByUsername(String username) throws ApplicationException;
 }

@@ -11,32 +11,39 @@
         <div class="card">
             <div class="card-header">
                 <br/>
-                <h1>Zotteltec - Register</h1>
+                <h1>Register</h1>
                 <br/>
             </div>
             <div class="card-body">
                 <div class="card shadow">
                     <div class="card-body">
-                        <h:form id="customerRegisterForm">
+                        <h:form id="customerRegisterForm" prependId="false">
                             <div class="form-group">
                                 <label for="forUsername">Username</label>
-                                <h:inputText binding="#{regUsernameInput}" class="forUsername form-control" id="forUsername" />
+                                <h:inputText binding="#{regUsernameInput}" class="forUsername form-control" id="forUsername"
+                                             maxlength="255" required="true" />
                             </div>
                             <div class="form-group">
                                 <label for="forFirstname">Firstname</label>
-                                <h:inputText binding="#{regFirstnameInput}" class="regFirstnameInput form-control" id="forFirstname" />
+                                <h:inputText binding="#{regFirstnameInput}" class="regFirstnameInput form-control" id="forFirstname"
+                                             maxlength="255" required="true" />
                             </div>
                             <div class="form-group">
                                 <label for="forLastname">Lastname</label>
-                                <h:inputText binding="#{regLastnameInput}" class="regLastnameInput form-control" id="forLastname" />
+                                <h:inputText binding="#{regLastnameInput}" class="regLastnameInput form-control" id="forLastname"
+                                             maxlength="255" required="true" />
                             </div>
                             <div class="form-group">
                                 <label for="forEmail">Email</label>
-                                <h:inputText binding="#{regEmailInput}" class="regEmailInput form-control" id="forEmail" />
+                                <h:inputText binding="#{regEmailInput}" class="regEmailInput form-control" id="forEmail"
+                                             maxlength="255" required="true">
+                                <f:validateRegex pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9-.]+$" for="forEmail" />
+                                </h:inputText>
                             </div>
                             <div class="form-group">
                                 <label for="forPassword">Password</label>
-                                <h:inputSecret binding="#{regPasswordInput}" class="regPasswordInput form-control" id="forPassword" />
+                                <h:inputSecret binding="#{regPasswordInput}" class="regPasswordInput form-control" id="forPassword"
+                                               maxlength="255" required="true" />
                             </div>
                             <h:commandButton value="Register" class="btn btn-primary"
                                              actionListener="#{customerJSF.addNewCustomer(

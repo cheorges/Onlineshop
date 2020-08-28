@@ -6,4 +6,37 @@
                 template="/resources/templates/template.xhtml"
                 xml:lang="en" lang="en">
 
+    <ui:define name="content">
+        <br/>
+        <div class="card">
+            <div class="card-header">
+                <br/>
+                <h1>Login</h1>
+                <br/>
+            </div>
+            <div class="card-body">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h:form id="customerRegisterForm" prependId="false">
+                            <div class="form-group">
+                                <label for="forUsername">Username</label>
+                                <h:inputText binding="#{logUsernameInput}" class="forUsername form-control" id="forUsername"
+                                             maxlength="255" required="true" />
+                            </div>
+                            <div class="form-group">
+                                <label for="forPassword">Password</label>
+                                <h:inputSecret binding="#{logPasswordInput}" class="regPasswordInput form-control" id="forPassword"
+                                               maxlength="255" required="true" />
+                            </div>
+                            <h:commandButton value="Login" class="btn btn-primary"
+                                             actionListener="#{customerSessionJSF.login(logUsernameInput.value, logPasswordInput.value)}">
+                                <f:ajax execute="customerRegisterForm"/>
+                            </h:commandButton>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
 </ui:composition>

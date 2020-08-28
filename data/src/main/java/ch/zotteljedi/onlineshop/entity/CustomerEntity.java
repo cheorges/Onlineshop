@@ -1,6 +1,7 @@
 package ch.zotteljedi.onlineshop.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -8,26 +9,28 @@ import java.util.Objects;
         query = "select c from CustomerEntity c")
 @NamedQuery(name = "CustomerEntity.getByUsername",
         query = "select c from CustomerEntity c where c.username = :username")
+@NamedQuery(name = "CustomerEntity.getByUsernameAndPassword",
+        query = "select c from CustomerEntity c where c.username = :username and c.password = :password")
 public class CustomerEntity {
 
     @Id
     @GeneratedValue
-    @Column(nullable = false)
+    @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "firstname", nullable = false)
     private String firstname;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "lastname", nullable = false)
     private String lastname;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "password", nullable = false)
     private String password;
 
     public int getId() {
@@ -80,31 +83,33 @@ public class CustomerEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CustomerEntity)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof CustomerEntity))
+            return false;
         CustomerEntity that = (CustomerEntity) o;
-        return id == that.id &&
-                username.equals(that.username) &&
-                firstname.equals(that.firstname) &&
-                lastname.equals(that.lastname) &&
-                email.equals(that.email) &&
-                password.equals(that.password);
+        return getId() == that.getId() &&
+              getUsername().equals(that.getUsername()) &&
+              getFirstname().equals(that.getFirstname()) &&
+              getLastname().equals(that.getLastname()) &&
+              getEmail().equals(that.getEmail()) &&
+              getPassword().equals(that.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, firstname, lastname, email, password);
+        return Objects.hash(getId(), getUsername(), getFirstname(), getLastname(), getEmail(), getPassword());
     }
 
     @Override
     public String toString() {
         return "CustomerEntity{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+              "id=" + id +
+              ", username='" + username + '\'' +
+              ", firstname='" + firstname + '\'' +
+              ", lastname='" + lastname + '\'' +
+              ", email='" + email + '\'' +
+              ", password='" + password + '\'' +
+              '}';
     }
 }

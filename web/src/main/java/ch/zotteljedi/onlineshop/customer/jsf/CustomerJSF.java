@@ -2,8 +2,8 @@ package ch.zotteljedi.onlineshop.customer.jsf;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
 import ch.zotteljedi.onlineshop.customer.dto.ImmutableCustomer;
+import ch.zotteljedi.onlineshop.customer.exception.ApplicationException;
 import ch.zotteljedi.onlineshop.customer.services.CustomerServicesLocal;
-import ch.zotteljedi.onlineshop.firststep.service.MyFirstServiceLocal;
 import ch.zotteljedi.onlineshop.helper.Hash256;
 
 import javax.enterprise.context.SessionScoped;
@@ -13,7 +13,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Named
 @SessionScoped
@@ -22,11 +23,9 @@ public class CustomerJSF implements Serializable {
     @Inject
     private CustomerServicesLocal customerServicesLocal;
 
-    private Customer customer;
-
     public void addNewCustomer(String username, String firstname, String lastname, String email, String password) {
         try {
-            customer = ImmutableCustomer.builder()
+            Customer customer = ImmutableCustomer.builder()
                     .username(username)
                     .firstname(firstname)
                     .lastname(lastname)
@@ -34,16 +33,18 @@ public class CustomerJSF implements Serializable {
                     .password(Hash256.INSTANCE.hash256(password))
                     .build();
             customerServicesLocal.addNewCustomer(customer);
+            showMessage(FacesMessage.SEVERITY_INFO, "Registration successfully.");
+
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             externalContext.redirect("index.xhtml");
-            showErrorMessage("Registration successfully");
+        } catch (ApplicationException e) {
+           showMessage(FacesMessage.SEVERITY_ERROR, e.getMessage());
         } catch (Exception e) {
-            showErrorMessage(e.getMessage());
+            Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
         }
     }
 
-    private void showErrorMessage(String message) {
-        FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, "");
-        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+    private void showMessage(final FacesMessage.Severity severity, final String message) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, message, ""));
     }
 }

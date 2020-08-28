@@ -504,3 +504,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+# generated source
+common/src/main/generated
+core/src/main/generated

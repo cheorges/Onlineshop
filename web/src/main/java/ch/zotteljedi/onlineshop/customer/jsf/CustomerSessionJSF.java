@@ -2,21 +2,21 @@ package ch.zotteljedi.onlineshop.customer.jsf;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
 import ch.zotteljedi.onlineshop.customer.dto.ImmutableCustomer;
-import ch.zotteljedi.onlineshop.customer.exception.ApplicationException;
 import ch.zotteljedi.onlineshop.customer.services.CustomerServicesLocal;
 import ch.zotteljedi.onlineshop.customer.services.CustomerSessionServicesLocal;
 import ch.zotteljedi.onlineshop.helper.Hash256;
 
-import java.io.Serializable;
-import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Named
 @SessionScoped
@@ -42,20 +42,26 @@ public class CustomerSessionJSF implements Serializable {
 
     public void login(String username, String password) {
         try {
-            if (customerSessionServicesLocal.checkCredantioals(username, Hash256.INSTANCE.hash256(password))) {
-                Customer customer = customerServicesLocal.getCustomerByUsername(username);
-                showMessage(FacesMessage.SEVERITY_INFO, "Successfully signed in.");
-                ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                externalContext.getSessionMap().put(IS_AUTHENTICATED_KEY, ImmutableCustomer.copyOf(customer).withAuthenticated(true));
-                externalContext.redirect("index.xhtml");
+            if (customerSessionServicesLocal.checkCredentials(username, Hash256.INSTANCE.hash256(password))) {
+                Optional<Customer> authentificatedCustomer = customerServicesLocal.getCustomerByUsername(username);
+                if (authentificatedCustomer.isPresent()) {
+                    showMessage(FacesMessage.SEVERITY_INFO, "Successfully signed in.");
+                    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                    externalContext.getSessionMap().put(IS_AUTHENTICATED_KEY, ImmutableCustomer.copyOf(authentificatedCustomer.get()).withAuthenticated(true));
+                    externalContext.redirect("index.xhtml");
+                    return;
+                } else {
+                    // The customer should always be present at this point. Otherwise the check of the credentials data would fail.
+                    Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, "Customer by username not found.");
+                }
             }
-        } catch (ApplicationException e) {
-            showMessage(FacesMessage.SEVERITY_ERROR, e.getMessage());
         } catch (Exception e) {
             Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
         }
 
-        showMessage(FacesMessage.SEVERITY_ERROR, "Invalid credentials");
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.getSessionMap().put(IS_AUTHENTICATED_KEY, Optional.empty());
+        showMessage(FacesMessage.SEVERITY_ERROR, "Invalid credentials.");
     }
 
     private void showMessage(final FacesMessage.Severity severity, final String message) {

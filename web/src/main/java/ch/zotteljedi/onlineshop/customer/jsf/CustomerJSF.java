@@ -2,7 +2,8 @@ package ch.zotteljedi.onlineshop.customer.jsf;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
 import ch.zotteljedi.onlineshop.customer.dto.ImmutableCustomer;
-import ch.zotteljedi.onlineshop.customer.exception.ApplicationException;
+import ch.zotteljedi.onlineshop.customer.dto.Message;
+import ch.zotteljedi.onlineshop.customer.dto.MessageContainer;
 import ch.zotteljedi.onlineshop.customer.services.CustomerServicesLocal;
 import ch.zotteljedi.onlineshop.helper.Hash256;
 
@@ -32,19 +33,25 @@ public class CustomerJSF implements Serializable {
                     .email(email)
                     .password(Hash256.INSTANCE.hash256(password))
                     .build();
-            customerServicesLocal.addNewCustomer(customer);
-            showMessage(FacesMessage.SEVERITY_INFO, "Registration successfully.");
 
-            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-            externalContext.redirect("index.xhtml");
-        } catch (ApplicationException e) {
-           showMessage(FacesMessage.SEVERITY_ERROR, e.getMessage());
+            MessageContainer messageContainer = customerServicesLocal.addNewCustomer(customer);
+            if (!messageContainer.hasMessagesThenProvide((msg) -> showMessage(FacesMessage.SEVERITY_ERROR, msg))) {
+                showMessage(FacesMessage.SEVERITY_INFO, new Message() {
+                    @Override
+                    public String getMessage() {
+                        return "Registration successfully.";
+                    }
+                });
+                ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                externalContext.redirect("index.xhtml");
+            }
+
         } catch (Exception e) {
             Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
         }
     }
 
-    private void showMessage(final FacesMessage.Severity severity, final String message) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, message, ""));
+    private void showMessage(final FacesMessage.Severity severity, final Message message) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, message.getMessage(), ""));
     }
 }

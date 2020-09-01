@@ -5,5 +5,5 @@ import javax.ejb.Local;
 
 @Local
 public interface CustomerSessionServicesLocal extends Serializable {
-   boolean checkCredantioals(String username, String password);
+   boolean checkCredentials(String username, String password);
 }

@@ -12,4 +12,7 @@ public interface CustomerServicesLocal extends Serializable {
     MessageContainer addNewCustomer(Customer customer);
     Optional<Customer> getCustomerByUsername(String username);
     boolean checkCredentials(String username, String password);
+    MessageContainer changeCustomerUsername(Integer id, String username);
+    MessageContainer changeCustomerPassword(Integer id, String username);
+    MessageContainer changeCustomer(Integer id, String firstname, String lastname, String email);
 }

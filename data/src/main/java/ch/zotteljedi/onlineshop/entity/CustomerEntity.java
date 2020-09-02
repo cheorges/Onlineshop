@@ -9,6 +9,8 @@ import java.util.Objects;
         query = "select c from CustomerEntity c")
 @NamedQuery(name = "CustomerEntity.getByUsername",
         query = "select c from CustomerEntity c where c.username = :username")
+@NamedQuery(name = "CustomerEntity.getById",
+        query = "select c from CustomerEntity c where c.id = :id")
 @NamedQuery(name = "CustomerEntity.getByUsernameAndPassword",
         query = "select c from CustomerEntity c where c.username = :username and c.password = :password")
 public class CustomerEntity {

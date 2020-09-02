@@ -52,17 +52,15 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="register.xhtml">Register</a>
-                    </li>
                 </ul>
                 <ui:fragment rendered="#{customerSessionJSF.authenticated eq true}">
                     <span class="navbar-nav navbar-text nav-item dropdown text-dark">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            #{customerSessionJSF.customerRepresentation}
+                            #{customerSessionJSF.customer.representation}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-dark " href="#">Profiel</a>
+                            <a class="dropdown-item text-dark " href="customer_product.xhtml">My Products</a>
+                            <a class="dropdown-item text-dark " href="customer_profile.xhtml">Profiel</a>
                             <a class="dropdown-item text-dark" href="#">Shopping cart</a>
                             <div class="dropdown-divider"></div>
                             <h:form><h:commandButton action="#{customerSessionJSF.logout}" value="Logout" class="dropdown-item text-dark" /></h:form>
@@ -70,6 +68,9 @@
                     </span>
                 </ui:fragment>
                 <ui:fragment rendered="#{customerSessionJSF.authenticated eq false}">
+                    <span class="navbar-nav navbar-text nav-item nav-link text-dark">
+                        <a class="nav-link" href="register.xhtml">Register</a>
+                    </span>
                     <span class="navbar-nav navbar-text nav-item nav-link text-dark">
                         <a class="nav-link" href="login.xhtml">Login</a>
                     </span>

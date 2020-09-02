@@ -6,6 +6,7 @@ import ch.zotteljedi.onlineshop.entity.CustomerEntity;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -13,7 +14,6 @@ import org.mapstruct.factory.Mappers;
 public interface CustomerMapper {
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
 
-    @Mapping(target = "id", ignore = true)
     CustomerEntity map(Customer customer);
 
     @Mapping(target = "from", ignore = true)

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/template.xhtml"
+                xml:lang="en" lang="en">
+
+    <ui:define name="content">
+        <br/>
+        <div class="card">
+            <div class="card-header">
+                <br/>
+                <h1>Login</h1>
+                <br/>
+            </div>
+            <div class="card-body">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h:form id="customerLoginForm">
+                            <h:message for="customerLoginForm" class="text-danger" />
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <h:inputText binding="#{logUsernameInput}" class="forUsername form-control"
+                                             id="username"
+                                             maxlength="255"
+                                             required="true"
+                                             requiredMessage="#{messageJSF.requiredMassage}" />
+                                <h:message for="username" class="text-danger" />
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <h:inputSecret binding="#{logPasswordInput}" class="regPasswordInput form-control"
+                                               id="password"
+                                               maxlength="255"
+                                               required="true"
+                                               requiredMessage="#{messageJSF.requiredMassage}" />
+                                <h:message for="password" class="text-danger" />
+                            </div>
+                            <h:commandButton value="Login" class="btn btn-primary"
+                                             actionListener="#{customerSessionJSF.login(logUsernameInput.value, logPasswordInput.value)}"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

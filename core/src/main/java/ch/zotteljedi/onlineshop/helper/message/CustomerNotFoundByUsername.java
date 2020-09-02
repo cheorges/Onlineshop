@@ -12,6 +12,6 @@ public class CustomerNotFoundByUsername implements Message {
 
     @Override
     public String getMessage() {
-        return "Customer by username '" + username + "' not found.";
+        return "Username '" + username + "' already exist.";
     }
 }

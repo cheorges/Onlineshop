@@ -11,8 +11,8 @@ public interface Customer extends Serializable {
     String getLastname();
     String getEmail();
     String getPassword();
-    @Value.Default
-    default Boolean getAuthenticated() {
-        return Boolean.FALSE;
+    @Value.Derived
+    default String getRepresentation() {
+        return getFirstname() + " " + getLastname();
     }
 }

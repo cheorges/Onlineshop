@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface CustomerServicesLocal extends Serializable {
     MessageContainer addNewCustomer(Customer customer);
     Optional<Customer> getCustomerByUsername(String username);
+    boolean checkCredentials(String username, String password);
 }

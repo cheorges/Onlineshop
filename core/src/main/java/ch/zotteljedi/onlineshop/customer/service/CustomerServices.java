@@ -27,13 +27,12 @@ public class CustomerServices extends ApplicationService implements CustomerServ
     @Override
     public MessageContainer addNewCustomer(Customer customer) {
         List<CustomerEntity> customerEntities = getCustomerEntityByUsername(customer.getUsername());
-
-        if (!customerEntities.isEmpty()) {
+        if (customerEntities.isEmpty()) {
+            CustomerEntity customerEntity = CustomerMapper.INSTANCE.map(customer);
+            em.persist(customerEntity);
+        } else {
             addMessage(new CustomerNotFoundByUsername(customer.getUsername()));
         }
-
-        CustomerEntity customerEntity = CustomerMapper.INSTANCE.map(customer);
-        em.persist(customerEntity);
         return getMessageContainer();
     }
 
@@ -43,6 +42,15 @@ public class CustomerServices extends ApplicationService implements CustomerServ
                 .stream()
                 .findFirst()
                 .map(CustomerMapper.INSTANCE::map);
+    }
+
+    @Override
+    public boolean checkCredentials(String username, String password) {
+        List<CustomerEntity> customerEntities = em.createNamedQuery("CustomerEntity.getByUsernameAndPassword", CustomerEntity.class)
+                .setParameter("username", username)
+                .setParameter("password", password)
+                .getResultList();
+        return !customerEntities.isEmpty();
     }
 
     private List<CustomerEntity> getCustomerEntityByUsername(String username) {

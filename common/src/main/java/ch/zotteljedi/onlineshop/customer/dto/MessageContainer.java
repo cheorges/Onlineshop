@@ -17,6 +17,7 @@ public class MessageContainer implements Serializable {
             return false;
         }
         messages.forEach(action);
+        messages.clear();
         return true;
     }
 }

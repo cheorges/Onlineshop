@@ -17,7 +17,6 @@ public interface CustomerMapper {
     CustomerEntity map(Customer customer);
 
     @Mapping(target = "from", ignore = true)
-    @Mapping(target = "authenticated", ignore = true)
     ImmutableCustomer map(CustomerEntity customerEntity);
 
 }

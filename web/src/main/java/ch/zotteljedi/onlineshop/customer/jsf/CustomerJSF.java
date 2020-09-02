@@ -35,15 +35,10 @@ public class CustomerJSF implements Serializable {
                     .build();
 
             MessageContainer messageContainer = customerServicesLocal.addNewCustomer(customer);
-            if (!messageContainer.hasMessagesThenProvide((msg) -> showMessage(FacesMessage.SEVERITY_ERROR, msg))) {
-                showMessage(FacesMessage.SEVERITY_INFO, new Message() {
-                    @Override
-                    public String getMessage() {
-                        return "Registration successfully.";
-                    }
-                });
+            if (!messageContainer.hasMessagesThenProvide((msg) -> showMessage("customerRegisterForm", msg))) {
                 ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
                 externalContext.redirect("index.xhtml");
+                return;
             }
 
         } catch (Exception e) {
@@ -51,7 +46,7 @@ public class CustomerJSF implements Serializable {
         }
     }
 
-    private void showMessage(final FacesMessage.Severity severity, final Message message) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, message.getMessage(), ""));
+    private void showMessage(final String clientId, final Message message) {
+        FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(message.getMessage()));
     }
 }

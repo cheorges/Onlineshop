@@ -15,4 +15,5 @@ public interface CustomerServicesLocal extends Serializable {
     MessageContainer changeCustomerUsername(Integer id, String username);
     MessageContainer changeCustomerPassword(Integer id, String username);
     MessageContainer changeCustomer(Integer id, String firstname, String lastname, String email);
+    MessageContainer deleteCustomer(Integer id);
 }

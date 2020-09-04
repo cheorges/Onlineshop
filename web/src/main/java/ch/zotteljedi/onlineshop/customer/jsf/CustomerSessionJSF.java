@@ -1,6 +1,7 @@
 package ch.zotteljedi.onlineshop.customer.jsf;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
+import ch.zotteljedi.onlineshop.customer.dto.ImmutableCustomer;
 import ch.zotteljedi.onlineshop.customer.jsf.dto.PublicCustomer;
 import ch.zotteljedi.onlineshop.customer.jsf.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.customer.jsf.mapper.PublicCustomerMapper;
@@ -57,17 +58,12 @@ public class CustomerSessionJSF implements Serializable {
     }
 
     void update() throws UnauthorizedAccessException {
-//        authenticatedCustomer = Optional.of(ImmutableCustomer.copyOf(authenticatedCustomer.orElseThrow(UnauthorizedAccessException::new))
-//              .withEmail(customer.getEmail())
-//              .withFirstname(customer.getFirstname())
-//              .withLastname(customer.getLastname())
-//              .withUsername(customer.getUsername()));
-        Customer privateCustomer = authenticatedPrivateCustomer.orElseThrow(UnauthorizedAccessException::new);
         PublicCustomer customer = authenticatedPublicCustomer.orElseThrow(UnauthorizedAccessException::new);
-        privateCustomer.setEmail(customer.getEmail());
-        privateCustomer.setFirstname(customer.getFirstname());
-        privateCustomer.setLastname(customer.getLastname());
-        privateCustomer.setUsername(customer.getUsername());
+        authenticatedPrivateCustomer = Optional.of(ImmutableCustomer.copyOf(authenticatedPrivateCustomer.orElseThrow(UnauthorizedAccessException::new))
+              .withEmail(customer.getEmail())
+              .withFirstname(customer.getFirstname())
+              .withLastname(customer.getLastname())
+              .withUsername(customer.getUsername()));
     }
 
 }

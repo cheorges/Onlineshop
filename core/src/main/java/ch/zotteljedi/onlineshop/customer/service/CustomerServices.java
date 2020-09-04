@@ -80,6 +80,12 @@ public class CustomerServices extends ApplicationService implements CustomerServ
         return getMessageContainer();
     }
 
+    @Override
+    public MessageContainer deleteCustomer(Integer id) {
+        em.remove(getCustomerEntityById(id));
+        return getMessageContainer();
+    }
+
     private CustomerEntity getCustomerEntityById(Integer id) {
         return em.createNamedQuery("CustomerEntity.getById", CustomerEntity.class)
                 .setParameter("id", id)

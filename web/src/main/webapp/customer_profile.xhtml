@@ -113,6 +113,26 @@
                             </h:form>
                         </div>
                     </div>
+                    <br/>
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h:form id="customerDeleteForm">
+                                <h:message for="customerDeleteForm" class="text-danger" />
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <h:inputSecret binding="#{passwordInput}"
+                                                   class="form-control"
+                                                   id="password"
+                                                   maxlength="255"
+                                                   required="true"
+                                                   requiredMessage="#{messageJSF.requiredMassage}" />
+                                    <h:message for="password" class="text-danger"/>
+                                </div>
+                                <h:commandButton value="Delete Customer Profile" class="btn btn-outline-danger"
+                                                 actionListener="#{customerJSF.deleteCustomer(passwordInput.value)}" />
+                            </h:form>
+                        </div>
+                    </div>
                 </div>
             </div>
     </ui:define>

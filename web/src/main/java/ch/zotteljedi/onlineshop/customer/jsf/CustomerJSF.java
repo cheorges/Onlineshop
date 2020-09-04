@@ -1,6 +1,7 @@
 package ch.zotteljedi.onlineshop.customer.jsf;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
+import ch.zotteljedi.onlineshop.customer.dto.ImmutableCustomer;
 import ch.zotteljedi.onlineshop.customer.dto.Message;
 import ch.zotteljedi.onlineshop.customer.jsf.dto.PublicCustomer;
 import ch.zotteljedi.onlineshop.customer.jsf.exception.UnauthorizedAccessException;
@@ -27,12 +28,13 @@ public class CustomerJSF implements Serializable {
 
    public void addNewCustomer(String username, String firstname, String lastname, String email, String password) {
       try {
-         Customer customer = new Customer();
-         customer.setUsername(username);
-         customer.setFirstname(firstname);
-         customer.setLastname(lastname);
-         customer.setEmail(email);
-         customer.setPassword(Hash256.INSTANCE.hash256(password));
+         Customer customer = ImmutableCustomer.builder()
+               .username(username)
+               .firstname(firstname)
+               .lastname(lastname)
+               .email(email)
+               .password(Hash256.INSTANCE.hash256(password))
+               .build();
          if (!customerServicesLocal.addNewCustomer(customer)
                .hasMessagesThenProvide(msg -> showMessage("customerRegisterForm", msg))) {
             showMessage(null, () -> "Registration successful.");
@@ -62,6 +64,21 @@ public class CustomerJSF implements Serializable {
          if (customerServicesLocal.checkCredentials(customer.getUsername(), Hash256.INSTANCE.hash256(oldPassword))) {
             customerServicesLocal.changeCustomerPassword(customer.getId(), Hash256.INSTANCE.hash256(newPassword));
             showMessage(null, () -> "Password changed.");
+         } else {
+            showMessage("customerChangePassordForm", () -> "Invalid credentials.");
+         }
+      } catch (NoSuchAlgorithmException e) {
+         e.printStackTrace();
+      }
+   }
+
+   public void deleteCustomer(String password) throws UnauthorizedAccessException {
+      try {
+         PublicCustomer customer = customerSessionJSF.getCustomer();
+         if (customerServicesLocal.checkCredentials(customer.getUsername(), Hash256.INSTANCE.hash256(password))) {
+            customerServicesLocal.deleteCustomer(customer.getId());
+            showMessage(null, () -> "Customer profile successfully deleted.");
+            customerSessionJSF.logout();
          } else {
             showMessage("customerChangePassordForm", () -> "Invalid credentials.");
          }

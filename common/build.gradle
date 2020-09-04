@@ -13,6 +13,7 @@ repositories {
 
 dependencies {
 
+    implementation 'org.jetbrains:annotations:19.0.0'
     compileOnly('javax:javaee-api:8.0.1')
 
     apt('org.immutables:value:2.8.2')

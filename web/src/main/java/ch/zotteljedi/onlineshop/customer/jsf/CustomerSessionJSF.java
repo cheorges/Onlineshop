@@ -1,20 +1,22 @@
 package ch.zotteljedi.onlineshop.customer.jsf;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
+import ch.zotteljedi.onlineshop.customer.jsf.dto.PublicCustomer;
 import ch.zotteljedi.onlineshop.customer.jsf.exception.UnauthorizedAccessException;
+import ch.zotteljedi.onlineshop.customer.jsf.mapper.PublicCustomerMapper;
 import ch.zotteljedi.onlineshop.customer.services.CustomerServicesLocal;
 import ch.zotteljedi.onlineshop.helper.Hash256;
 
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named
 @SessionScoped
@@ -23,38 +25,49 @@ public class CustomerSessionJSF implements Serializable {
     @Inject
     private CustomerServicesLocal customerServicesLocal;
 
-    private Optional<Customer> authenticatedCustomer = Optional.empty();
+    private Optional<Customer> authenticatedPrivateCustomer = Optional.empty();
+    private Optional<PublicCustomer> authenticatedPublicCustomer;
 
     public boolean isAuthenticated() {
-        return authenticatedCustomer.isPresent();
+        return authenticatedPrivateCustomer.isPresent();
     }
 
-    public Customer getCustomer() throws UnauthorizedAccessException {
-        return authenticatedCustomer.orElseThrow(UnauthorizedAccessException::new);
+    public PublicCustomer getCustomer() throws UnauthorizedAccessException {
+        return authenticatedPublicCustomer.orElseThrow(UnauthorizedAccessException::new);
     }
 
     public void login(final String username, final String password) {
         try {
             if (customerServicesLocal.checkCredentials(username, Hash256.INSTANCE.hash256(password))) {
-                authenticatedCustomer = customerServicesLocal.getCustomerByUsername(username);
+                authenticatedPrivateCustomer = customerServicesLocal.getCustomerByUsername(username);
+                authenticatedPublicCustomer = Optional.of(PublicCustomerMapper.INSTANCE.map(authenticatedPrivateCustomer.orElseThrow(UnauthorizedAccessException::new)));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login successful."));
                 return;
             }
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException | UnauthorizedAccessException e) {
             Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
         }
 
-        authenticatedCustomer = Optional.empty();
+        authenticatedPrivateCustomer = Optional.empty();
         FacesContext.getCurrentInstance().addMessage("customerLoginForm", new FacesMessage("Invalid credentials."));
     }
 
     public void logout() {
-        authenticatedCustomer = Optional.empty();
+        authenticatedPrivateCustomer = Optional.empty();
     }
 
-    public void update() throws UnauthorizedAccessException {
-        if (isAuthenticated()) {
-            login(getCustomer().getUsername(), getCustomer().getPassword());
-        }
+    void update() throws UnauthorizedAccessException {
+//        authenticatedCustomer = Optional.of(ImmutableCustomer.copyOf(authenticatedCustomer.orElseThrow(UnauthorizedAccessException::new))
+//              .withEmail(customer.getEmail())
+//              .withFirstname(customer.getFirstname())
+//              .withLastname(customer.getLastname())
+//              .withUsername(customer.getUsername()));
+        Customer privateCustomer = authenticatedPrivateCustomer.orElseThrow(UnauthorizedAccessException::new);
+        PublicCustomer customer = authenticatedPublicCustomer.orElseThrow(UnauthorizedAccessException::new);
+        privateCustomer.setEmail(customer.getEmail());
+        privateCustomer.setFirstname(customer.getFirstname());
+        privateCustomer.setLastname(customer.getLastname());
+        privateCustomer.setUsername(customer.getUsername());
     }
 
 }

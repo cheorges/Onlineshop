@@ -67,7 +67,7 @@ public class CustomerServices extends ApplicationService implements CustomerServ
     @Override
     public MessageContainer changeCustomerPassword(Integer id, String username) {
         CustomerEntity customerEntity = getCustomerEntityById(id);
-        customerEntity.setUsername(username);
+        customerEntity.setPassword(username);
         return getMessageContainer();
     }
 

@@ -79,13 +79,12 @@
         </div>
     </nav>
 
-    <h:messages globalOnly="true" showDetail="false" showSummary="true"
-                infoClass="text-success" warnClass="text-warning" errorClass="text-danger"/>
+    <h:messages globalOnly="true" showDetail="false" showSummary="true" class="alert alert-success px-5 mt-4 mb-0" role="alert" />
 
     <div class="container">
+        <h:messages globalOnly="true" class="alert alert-success px-5 my-3" role="alert" />
         <ui:insert id="content" name="content"></ui:insert>
     </div>
-
 </h:body>
 
 </html>

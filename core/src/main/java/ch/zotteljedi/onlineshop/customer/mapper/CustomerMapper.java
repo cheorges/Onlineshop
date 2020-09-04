@@ -1,12 +1,9 @@
 package ch.zotteljedi.onlineshop.customer.mapper;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
-import ch.zotteljedi.onlineshop.customer.dto.ImmutableCustomer;
 import ch.zotteljedi.onlineshop.entity.CustomerEntity;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -16,7 +13,6 @@ public interface CustomerMapper {
 
     CustomerEntity map(Customer customer);
 
-    @Mapping(target = "from", ignore = true)
-    ImmutableCustomer map(CustomerEntity customerEntity);
+    Customer map(CustomerEntity customerEntity);
 
 }

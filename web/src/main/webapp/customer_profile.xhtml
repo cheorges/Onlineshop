@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/template.xhtml"
+                xml:lang="en" lang="en">
+
+    <ui:define name="content">
+        <br/>
+            <div class="card">
+                <div class="card-header">
+                    <br/>
+                    <h1>Profile</h1>
+                    <br/>
+                </div>
+                <div class="card-body">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h:form id="customerUsernameChangeForm">
+                                <h:message for="customerUsernameChangeForm" class="text-danger" />
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <h:inputText binding="#{changeUsernameInput}"
+                                                 class="form-control"
+                                                 id="username"
+                                                 maxlength="255"
+                                                 required="true"
+                                                 requiredMessage="#{messageJSF.requiredMassage}"
+                                                 value="#{customerSessionJSF.customer.username}" />
+                                    <h:message for="username" class="text-danger"/>
+                                </div>
+                                <h:commandButton value="Change to" class="btn btn-primary"
+                                                 actionListener="#{customerJSF.changeUsername(changeUsernameInput.value)}" />
+                            </h:form>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h:form id="customerChangeForm">
+                                <h:message for="customerChangeForm" class="text-danger" />
+                                <div class="form-group">
+                                    <label for="firstname">Firstname</label>
+                                    <h:inputText binding="#{changeFirstnameInput}"
+                                                 class="form-control"
+                                                 id="firstname"
+                                                 maxlength="255" required="true"
+                                                 requiredMessage="#{messageJSF.requiredMassage}"
+                                                 value="#{customerSessionJSF.customer.firstname}"/>
+                                    <h:message for="firstname" class="text-danger"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastname">Lastname</label>
+                                    <h:inputText binding="#{changeLastnameInput}"
+                                                 class="changeLastnameInput form-control"
+                                                 id="lastname"
+                                                 maxlength="255"
+                                                 required="true"
+                                                 requiredMessage="#{messageJSF.requiredMassage}"
+                                                 value="#{customerSessionJSF.customer.lastname}"/>
+                                    <h:message for="lastname" class="text-danger"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <h:inputText binding="#{changeEmailInput}"
+                                                 class="form-control"
+                                                 id="email"
+                                                 maxlength="255"
+                                                 required="true"
+                                                 requiredMessage="#{messageJSF.requiredMassage}"
+                                                 validatorMessage="#{messageJSF.emailMessage}"
+                                                 value="#{customerSessionJSF.customer.email}">
+                                        <f:validateRegex pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9-.]+$" for="email" />
+                                    </h:inputText>
+                                    <h:message for="email" class="text-danger"/>
+                                </div>
+                                <h:commandButton value="Change to" class="btn btn-primary"
+                                                 actionListener="#{customerJSF.changeCustomer(
+                                                        changeFirstnameInput.value,
+                                                        changeLastnameInput.value,
+                                                        changeEmailInput.value)}" />
+                            </h:form>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h:form id="customerChangePassordForm">
+                                <h:message for="customerChangePassordForm" class="text-danger" />
+                                <div class="form-group">
+                                    <label for="oldPassword">Old Password</label>
+                                    <h:inputSecret binding="#{changeOldPasswordInput}"
+                                                   class="form-control"
+                                                   id="oldPassword"
+                                                   maxlength="255"
+                                                   required="true"
+                                                   requiredMessage="#{messageJSF.requiredMassage}" />
+                                    <h:message for="oldPassword" class="text-danger"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <h:inputSecret binding="#{changeNewPasswordInput}"
+                                                   class="regNewPasswordInput form-control"
+                                                   id="newPassword"
+                                                   maxlength="255"
+                                                   required="true"
+                                                   requiredMessage="#{messageJSF.requiredMassage}" />
+                                    <h:message for="newPassword" class="text-danger"/>
+                                </div>
+                                <h:commandButton value="Change to" class="btn btn-primary"
+                                                 actionListener="#{customerJSF.changePassword(changeOldPasswordInput.value, changeNewPasswordInput.value)}" />
+                            </h:form>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h:form id="customerDeleteForm">
+                                <h:message for="customerDeleteForm" class="text-danger" />
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <h:inputSecret binding="#{passwordInput}"
+                                                   class="form-control"
+                                                   id="password"
+                                                   maxlength="255"
+                                                   required="true"
+                                                   requiredMessage="#{messageJSF.requiredMassage}" />
+                                    <h:message for="password" class="text-danger"/>
+                                </div>
+                                <h:commandButton value="Delete Customer Profile" class="btn btn-outline-danger"
+                                                 actionListener="#{customerJSF.deleteCustomer(passwordInput.value)}" />
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </ui:define>
+
+</ui:composition>

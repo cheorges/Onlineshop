@@ -8,9 +8,7 @@
 
     <ui:define name="content">
         <br/>
-        <h1>Zotteltec - Onlineshop</h1>
-        <ui:fragment rendered="#{customerSessionJSF.authenticated eq true}">
-            <p>#{customerSessionJSF.customer.representation}</p>
-        </ui:fragment>
+        <h1>My Products</h1>
+        <p>#{customerSessionJSF.customer.representation}</p>
     </ui:define>
 </ui:composition>

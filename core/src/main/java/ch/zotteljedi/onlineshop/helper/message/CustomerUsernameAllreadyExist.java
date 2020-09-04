@@ -2,11 +2,11 @@ package ch.zotteljedi.onlineshop.helper.message;
 
 import ch.zotteljedi.onlineshop.customer.dto.Message;
 
-public class CustomerNotFoundByUsername implements Message {
+public class CustomerUsernameAllreadyExist implements Message {
 
     private final String username;
 
-    public CustomerNotFoundByUsername(String username) {
+    public CustomerUsernameAllreadyExist(String username) {
         this.username = username;
     }
 

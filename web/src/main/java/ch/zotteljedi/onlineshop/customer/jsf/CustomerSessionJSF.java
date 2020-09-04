@@ -1,85 +1,69 @@
 package ch.zotteljedi.onlineshop.customer.jsf;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
+import ch.zotteljedi.onlineshop.customer.dto.ImmutableCustomer;
+import ch.zotteljedi.onlineshop.customer.jsf.dto.PublicCustomer;
+import ch.zotteljedi.onlineshop.customer.jsf.exception.UnauthorizedAccessException;
+import ch.zotteljedi.onlineshop.customer.jsf.mapper.PublicCustomerMapper;
 import ch.zotteljedi.onlineshop.customer.services.CustomerServicesLocal;
 import ch.zotteljedi.onlineshop.helper.Hash256;
 
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.Objects;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named
 @SessionScoped
 public class CustomerSessionJSF implements Serializable {
 
-    private static final String IS_AUTHENTICATED_KEY = "IS_AUTHENTICATED_KEY";
-    private static final String EMPTY = "";
-
     @Inject
     private CustomerServicesLocal customerServicesLocal;
 
+    private Optional<Customer> authenticatedPrivateCustomer = Optional.empty();
+    private Optional<PublicCustomer> authenticatedPublicCustomer;
+
     public boolean isAuthenticated() {
-        return getAuthenticatedCustomer().isPresent();
+        return authenticatedPrivateCustomer.isPresent();
     }
 
-    public String getCustomerRepresentation() {
-        final Optional<Customer> authenticatedCustomer = getAuthenticatedCustomer();
-        if (authenticatedCustomer.isPresent()) {
-            return authenticatedCustomer.get().getRepresentation();
-        }
-        forceLogout();
-        return EMPTY;
+    public PublicCustomer getCustomer() throws UnauthorizedAccessException {
+        return authenticatedPublicCustomer.orElseThrow(UnauthorizedAccessException::new);
     }
 
     public void login(final String username, final String password) {
-        final ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
             if (customerServicesLocal.checkCredentials(username, Hash256.INSTANCE.hash256(password))) {
-                final Optional<Customer> authentificatedCustomer = customerServicesLocal.getCustomerByUsername(username);
-                if (authentificatedCustomer.isPresent()) {
-                    externalContext.getSessionMap().put(IS_AUTHENTICATED_KEY, authentificatedCustomer.get());
-                    externalContext.redirect("index.xhtml");
-                    return;
-                } else {
-                    // The customer should always be present at this point. Otherwise the check of the credentials data would fail.
-                    Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, "Customer by username not found.");
-                }
+                authenticatedPrivateCustomer = customerServicesLocal.getCustomerByUsername(username);
+                authenticatedPublicCustomer = Optional.of(PublicCustomerMapper.INSTANCE.map(authenticatedPrivateCustomer.orElseThrow(UnauthorizedAccessException::new)));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login successful."));
+                return;
             }
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException | UnauthorizedAccessException e) {
             Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
         }
 
-        externalContext.getSessionMap().put(IS_AUTHENTICATED_KEY, Optional.empty());
+        authenticatedPrivateCustomer = Optional.empty();
         FacesContext.getCurrentInstance().addMessage("customerLoginForm", new FacesMessage("Invalid credentials."));
     }
 
     public void logout() {
-        forceLogout();
+        authenticatedPrivateCustomer = Optional.empty();
     }
 
-    private void forceLogout() {
-        final ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.getSessionMap().put(IS_AUTHENTICATED_KEY, Optional.empty());
-        try {
-            externalContext.redirect("index.xhtml");
-        } catch (IOException e) {
-            Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
-        }
-    }
-
-    private Optional<Customer> getAuthenticatedCustomer() {
-        final ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        final Object obj = externalContext.getSessionMap().get(IS_AUTHENTICATED_KEY);
-        return (!Objects.isNull(obj) && obj instanceof Customer) ? Optional.of((Customer) obj) : Optional.empty();
+    void update() throws UnauthorizedAccessException {
+        PublicCustomer customer = authenticatedPublicCustomer.orElseThrow(UnauthorizedAccessException::new);
+        authenticatedPrivateCustomer = Optional.of(ImmutableCustomer.copyOf(authenticatedPrivateCustomer.orElseThrow(UnauthorizedAccessException::new))
+              .withEmail(customer.getEmail())
+              .withFirstname(customer.getFirstname())
+              .withLastname(customer.getLastname())
+              .withUsername(customer.getUsername()));
     }
 
 }

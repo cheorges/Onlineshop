@@ -1,7 +1,6 @@
 package ch.zotteljedi.onlineshop.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity

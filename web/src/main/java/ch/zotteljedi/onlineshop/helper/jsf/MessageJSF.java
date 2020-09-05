@@ -17,4 +17,8 @@ public class MessageJSF  implements Serializable {
     public String getEmailMessage() {
         return "Enter an E-Mail address.";
     }
+
+    public String getPriceMessage() {
+        return "Enter a price (x.xx).";
+    }
 }

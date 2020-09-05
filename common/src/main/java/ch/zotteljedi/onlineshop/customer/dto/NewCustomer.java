@@ -1,13 +1,10 @@
 package ch.zotteljedi.onlineshop.customer.dto;
 
-import ch.zotteljedi.onlineshop.common.dto.Entity;
+import ch.zotteljedi.onlineshop.common.dto.ValueObject;
 import org.immutables.value.Value;
-import org.jetbrains.annotations.Nullable;
-
-import java.io.Serializable;
 
 @Value.Immutable
-public interface Customer extends Entity<CustomerId> {
+public interface NewCustomer extends ValueObject {
     String getUsername();
     String getFirstname();
     String getLastname();

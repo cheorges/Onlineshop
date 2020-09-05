@@ -1,11 +1,12 @@
 package ch.zotteljedi.onlineshop.customer.jsf;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
+import ch.zotteljedi.onlineshop.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.customer.dto.ImmutableCustomer;
-import ch.zotteljedi.onlineshop.customer.jsf.dto.PublicCustomer;
-import ch.zotteljedi.onlineshop.customer.jsf.exception.UnauthorizedAccessException;
-import ch.zotteljedi.onlineshop.customer.jsf.mapper.PublicCustomerMapper;
-import ch.zotteljedi.onlineshop.customer.services.CustomerServicesLocal;
+import ch.zotteljedi.onlineshop.customer.dto.PublicCustomer;
+import ch.zotteljedi.onlineshop.customer.exception.UnauthorizedAccessException;
+import ch.zotteljedi.onlineshop.customer.dto.mapper.PublicCustomerMapper;
+import ch.zotteljedi.onlineshop.customer.service.CustomerServiceLocal;
 import ch.zotteljedi.onlineshop.helper.Hash256;
 
 import java.io.Serializable;
@@ -24,7 +25,7 @@ import javax.inject.Named;
 public class CustomerSessionJSF implements Serializable {
 
     @Inject
-    private CustomerServicesLocal customerServicesLocal;
+    private CustomerServiceLocal customerServiceLocal;
 
     private Optional<Customer> authenticatedPrivateCustomer = Optional.empty();
     private Optional<PublicCustomer> authenticatedPublicCustomer;
@@ -37,10 +38,14 @@ public class CustomerSessionJSF implements Serializable {
         return authenticatedPublicCustomer.orElseThrow(UnauthorizedAccessException::new);
     }
 
+    public CustomerId getCustomerId() throws UnauthorizedAccessException {
+        return getCustomer().getId();
+    }
+
     public void login(final String username, final String password) {
         try {
-            if (customerServicesLocal.checkCredentials(username, Hash256.INSTANCE.hash256(password))) {
-                authenticatedPrivateCustomer = customerServicesLocal.getCustomerByUsername(username);
+            if (customerServiceLocal.checkCredentials(username, Hash256.INSTANCE.hash256(password))) {
+                authenticatedPrivateCustomer = customerServiceLocal.getCustomerByUsername(username);
                 authenticatedPublicCustomer = Optional.of(PublicCustomerMapper.INSTANCE.map(authenticatedPrivateCustomer.orElseThrow(UnauthorizedAccessException::new)));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login successful."));
                 return;

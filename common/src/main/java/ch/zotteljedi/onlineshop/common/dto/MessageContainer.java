@@ -1,11 +1,11 @@
-package ch.zotteljedi.onlineshop.customer.dto;
+package ch.zotteljedi.onlineshop.common.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class MessageContainer implements Serializable {
+public class MessageContainer implements ValueObject {
     private final List<Message> messages = new ArrayList<>();
 
     public void add(Message message) {

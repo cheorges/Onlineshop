@@ -1,7 +1,7 @@
-package ch.zotteljedi.onlineshop.customer.jsf.mapper;
+package ch.zotteljedi.onlineshop.customer.dto.mapper;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
-import ch.zotteljedi.onlineshop.customer.jsf.dto.PublicCustomer;
+import ch.zotteljedi.onlineshop.customer.dto.PublicCustomer;
 import javax.annotation.processing.Generated;
 
 @Generated(

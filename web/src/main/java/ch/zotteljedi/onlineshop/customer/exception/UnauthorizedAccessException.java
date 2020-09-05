@@ -1,4 +1,4 @@
-package ch.zotteljedi.onlineshop.customer.jsf.exception;
+package ch.zotteljedi.onlineshop.customer.exception;
 
 public class UnauthorizedAccessException extends IllegalAccessException {
     public UnauthorizedAccessException() {

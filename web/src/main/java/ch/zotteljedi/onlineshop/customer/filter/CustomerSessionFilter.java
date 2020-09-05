@@ -1,4 +1,4 @@
-package ch.zotteljedi.onlineshop.customer.jsf.filter;
+package ch.zotteljedi.onlineshop.customer.filter;
 
 import ch.zotteljedi.onlineshop.customer.jsf.CustomerSessionJSF;
 

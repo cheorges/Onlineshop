@@ -1,19 +1,19 @@
-package ch.zotteljedi.onlineshop.customer.jsf.dto;
+package ch.zotteljedi.onlineshop.customer.dto;
 
 import java.io.Serializable;
 
 public class PublicCustomer implements Serializable {
-   private final Integer id;
+   private final CustomerId id;
    private String username;
    private String firstname;
    private String lastname;
    private String email;
 
-   public PublicCustomer(Integer id) {
+   public PublicCustomer(CustomerId id) {
       this.id = id;
    }
 
-   public Integer getId() {
+   public CustomerId getId() {
       return id;
    }
 

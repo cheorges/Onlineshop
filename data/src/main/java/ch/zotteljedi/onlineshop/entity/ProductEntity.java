@@ -10,7 +10,7 @@ import java.util.Objects;
 @NamedQuery(name = "ProductEntity.getById",
         query = "select p from ProductEntity p where p.id = :id")
 @NamedQuery(name = "ProductEntity.getBySeller",
-        query = "select p from ProductEntity p where p.username = :username")
+        query = "select p from ProductEntity p where p.seller = :seller")
 public class ProductEntity {
 
     @Id
@@ -27,6 +27,8 @@ public class ProductEntity {
     @Column(name = "price", nullable = false, precision = 2)
     private Double price;
 
+
+    @Basic(fetch=FetchType.LAZY)
     @Column(name = "photo", nullable = false)
     private byte[] photo;
 

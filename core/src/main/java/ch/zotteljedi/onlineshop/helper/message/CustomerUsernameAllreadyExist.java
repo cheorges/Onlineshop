@@ -1,6 +1,6 @@
 package ch.zotteljedi.onlineshop.helper.message;
 
-import ch.zotteljedi.onlineshop.customer.dto.Message;
+import ch.zotteljedi.onlineshop.common.dto.Message;
 
 public class CustomerUsernameAllreadyExist implements Message {
 

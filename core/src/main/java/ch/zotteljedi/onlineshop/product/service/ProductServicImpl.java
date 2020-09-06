@@ -4,6 +4,7 @@ import ch.zotteljedi.onlineshop.common.dto.MessageContainer;
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
 import ch.zotteljedi.onlineshop.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.customer.dto.mapper.CustomerMapper;
+import ch.zotteljedi.onlineshop.customer.service.CustomerServiceImpl;
 import ch.zotteljedi.onlineshop.customer.service.CustomerServiceLocal;
 import ch.zotteljedi.onlineshop.entity.CustomerEntity;
 import ch.zotteljedi.onlineshop.entity.ProductEntity;
@@ -33,26 +34,21 @@ public class ProductServicImpl extends ApplicationService implements ProductServ
     private EntityManager em;
 
     @Inject
-    private CustomerServiceLocal customerServiceLocal;
+    private CustomerServiceImpl customerService;
 
     @Override
     public List<Product> getProductsBySeller(CustomerId id) {
         List<ProductEntity> productEntities = em.createNamedQuery("ProductEntity.getBySeller", ProductEntity.class)
-                .setParameter("seller", customerServiceLocal.getCustomerById(id).get())
+                .setParameter("seller", customerService.getCustomerEntityById(id))
                 .getResultList();
         return ProductMapper.INSTANCE.map(productEntities).stream().map(it -> (Product) it).collect(Collectors.toList());
     }
 
     @Override
     public MessageContainer addNewProduct(NewProduct product) {
-        Optional<Customer> seller = customerServiceLocal.getCustomerById(product.getCustomerId());
-        if (seller.isPresent()) {
-            ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
-            productEntity.setSeller(CustomerMapper.INSTANCE.map(seller.get()));
-            em.persist(productEntity);
-        } else {
-            addMessage(new CustomerByIdNotFound(product.getCustomerId()));
-        }
+        ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
+        productEntity.setSeller(customerService.getCustomerEntityById(product.getCustomerId()));
+        em.persist(productEntity);
         return getMessageContainer();
     }
 }

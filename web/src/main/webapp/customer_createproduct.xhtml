@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/resources/templates/template.xhtml"
                 xml:lang="en" lang="en">
@@ -47,7 +47,7 @@
                                              required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
                                              validatorMessage="#{messageJSF.priceMessage}">
-                                    <f:validateRegex pattern="\d+[\.,]?(\d\d)?" for="newPrice"/>
+                                    <c:validateRegex pattern="\d+[\.,]?(\d\d)?" for="newPrice"/>
                                 </h:inputText>
                                 <h:message for="newPrice" class="text-danger"/>
                             </div>

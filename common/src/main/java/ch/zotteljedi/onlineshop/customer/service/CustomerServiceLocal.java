@@ -13,7 +13,6 @@ import java.util.Optional;
 public interface CustomerServiceLocal extends Serializable {
     MessageContainer addNewCustomer(NewCustomer newCustomer);
     Optional<Customer> getCustomerByUsername(String username);
-    Optional<Customer> getCustomerById(CustomerId customerId);
     boolean checkCredentials(String username, String password);
     MessageContainer changeCustomerUsername(CustomerId id, String username);
     MessageContainer changeCustomerPassword(CustomerId id, String username);

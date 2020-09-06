@@ -46,11 +46,6 @@ public class CustomerServiceImpl extends ApplicationService implements CustomerS
     }
 
     @Override
-    public Optional<Customer> getCustomerById(CustomerId customerId) {
-        return Optional.of(CustomerMapper.INSTANCE.map(getCustomerEntityById(customerId)));
-    }
-
-    @Override
     public boolean checkCredentials(String username, String password) {
         List<CustomerEntity> customerEntities = em.createNamedQuery("CustomerEntity.getByUsernameAndPassword", CustomerEntity.class)
                 .setParameter("username", username)
@@ -92,7 +87,7 @@ public class CustomerServiceImpl extends ApplicationService implements CustomerS
         return getMessageContainer();
     }
 
-    private CustomerEntity getCustomerEntityById(CustomerId id) {
+    public CustomerEntity getCustomerEntityById(CustomerId id) {
         return em.createNamedQuery("CustomerEntity.getById", CustomerEntity.class)
                 .setParameter("id", id.getValue())
                 .getSingleResult();

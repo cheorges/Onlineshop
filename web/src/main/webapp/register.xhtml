@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/resources/templates/template.xhtml"
                 xml:lang="en" lang="en">
@@ -57,7 +57,7 @@
                                              required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
                                              validatorMessage="#{messageJSF.emailMessage}">
-                                    <f:validateRegex pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9-.]+$" for="email" />
+                                    <c:validateRegex pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9-.]+$" for="email" />
                                 </h:inputText>
                                 <h:message for="email" class="text-danger"/>
                             </div>

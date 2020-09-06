@@ -42,13 +42,13 @@ public class CustomerSessionJSF implements Serializable {
         return getCustomer().getId();
     }
 
-    public void login(final String username, final String password) {
+    public String login(final String username, final String password) {
         try {
             if (customerServiceLocal.checkCredentials(username, Hash256.INSTANCE.hash256(password))) {
                 authenticatedPrivateCustomer = customerServiceLocal.getCustomerByUsername(username);
                 authenticatedPublicCustomer = Optional.of(PublicCustomerMapper.INSTANCE.map(authenticatedPrivateCustomer.orElseThrow(UnauthorizedAccessException::new)));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login successful."));
-                return;
+                return "customer_overviewproduct";
             }
         } catch (NoSuchAlgorithmException | UnauthorizedAccessException e) {
             Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
@@ -56,6 +56,7 @@ public class CustomerSessionJSF implements Serializable {
 
         authenticatedPrivateCustomer = Optional.empty();
         FacesContext.getCurrentInstance().addMessage("customerLoginForm", new FacesMessage("Invalid credentials."));
+        return "login";
     }
 
     public void logout() {

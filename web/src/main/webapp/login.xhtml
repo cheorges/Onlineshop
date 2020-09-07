@@ -36,8 +36,9 @@
                                                requiredMessage="#{messageJSF.requiredMassage}" />
                                 <h:message for="password" class="text-danger" />
                             </div>
-                            <h:commandButton value="Login" class="btn btn-primary"
-                                             actionListener="#{customerSessionJSF.login(logUsernameInput.value, logPasswordInput.value)}"/>
+                            <h:commandButton value="Login"
+                                             class="btn btn-primary"
+                                             actionListener="#{customerSessionJSF.login(logUsernameInput.value, logPasswordInput.value)}" />
                         </h:form>
                     </div>
                 </div>

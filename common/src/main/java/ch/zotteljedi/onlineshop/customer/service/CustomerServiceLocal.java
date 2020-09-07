@@ -1,7 +1,7 @@
 package ch.zotteljedi.onlineshop.customer.service;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
-import ch.zotteljedi.onlineshop.common.dto.MessageContainer;
+import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.customer.dto.NewCustomer;
 

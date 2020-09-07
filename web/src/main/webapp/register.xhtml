@@ -26,7 +26,8 @@
                                              id="username"
                                              maxlength="255"
                                              required="true"
-                                             requiredMessage="#{messageJSF.requiredMassage}" />
+                                             requiredMessage="#{messageJSF.requiredMassage}"
+                                             value=""/>
                                 <h:message for="username" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -68,10 +69,11 @@
                                                id="password"
                                                maxlength="255"
                                                required="true"
-                                               requiredMessage="#{messageJSF.requiredMassage}" />
+                                               requiredMessage="#{messageJSF.requiredMassage}"/>
                                 <h:message for="password" class="text-danger"/>
                             </div>
-                            <h:commandButton value="Register" class="btn btn-primary"
+                            <h:commandButton value="Register"
+                                             class="btn btn-primary"
                                              actionListener="#{customerJSF.addNewCustomer(
                                                     regUsernameInput.value,
                                                     regFirstnameInput.value,
@@ -84,5 +86,4 @@
             </div>
         </div>
     </ui:define>
-
 </ui:composition>

@@ -1,7 +1,7 @@
 package ch.zotteljedi.onlineshop.customer.jsf;
 
 import ch.zotteljedi.onlineshop.customer.dto.*;
-import ch.zotteljedi.onlineshop.common.dto.Message;
+import ch.zotteljedi.onlineshop.common.message.Message;
 import ch.zotteljedi.onlineshop.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.customer.service.CustomerServiceLocal;
 import ch.zotteljedi.onlineshop.helper.Hash256;

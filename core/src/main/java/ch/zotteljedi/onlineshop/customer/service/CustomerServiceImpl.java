@@ -1,13 +1,13 @@
 package ch.zotteljedi.onlineshop.customer.service;
 
-import ch.zotteljedi.onlineshop.common.dto.MessageContainer;
+import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
 import ch.zotteljedi.onlineshop.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.customer.dto.NewCustomer;
-import ch.zotteljedi.onlineshop.customer.dto.mapper.CustomerMapper;
+import ch.zotteljedi.onlineshop.customer.mapper.CustomerMapper;
 import ch.zotteljedi.onlineshop.entity.CustomerEntity;
 import ch.zotteljedi.onlineshop.helper.ApplicationService;
-import ch.zotteljedi.onlineshop.helper.message.CustomerUsernameAllreadyExist;
+import ch.zotteljedi.onlineshop.customer.message.CustomerUsernameAllreadyExist;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;

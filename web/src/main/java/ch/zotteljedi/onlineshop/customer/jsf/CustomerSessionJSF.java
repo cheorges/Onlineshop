@@ -5,7 +5,7 @@ import ch.zotteljedi.onlineshop.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.customer.dto.ImmutableCustomer;
 import ch.zotteljedi.onlineshop.customer.dto.PublicCustomer;
 import ch.zotteljedi.onlineshop.customer.exception.UnauthorizedAccessException;
-import ch.zotteljedi.onlineshop.customer.dto.mapper.PublicCustomerMapper;
+import ch.zotteljedi.onlineshop.customer.mapper.PublicCustomerMapper;
 import ch.zotteljedi.onlineshop.customer.service.CustomerServiceLocal;
 import ch.zotteljedi.onlineshop.helper.Hash256;
 

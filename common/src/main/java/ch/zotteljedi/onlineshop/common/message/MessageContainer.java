@@ -1,6 +1,7 @@
-package ch.zotteljedi.onlineshop.common.dto;
+package ch.zotteljedi.onlineshop.common.message;
 
-import java.io.Serializable;
+import ch.zotteljedi.onlineshop.common.dto.ValueObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;

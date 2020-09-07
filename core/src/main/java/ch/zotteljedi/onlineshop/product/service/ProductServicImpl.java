@@ -1,18 +1,13 @@
 package ch.zotteljedi.onlineshop.product.service;
 
-import ch.zotteljedi.onlineshop.common.dto.MessageContainer;
-import ch.zotteljedi.onlineshop.customer.dto.Customer;
+import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.customer.dto.CustomerId;
-import ch.zotteljedi.onlineshop.customer.dto.mapper.CustomerMapper;
 import ch.zotteljedi.onlineshop.customer.service.CustomerServiceImpl;
-import ch.zotteljedi.onlineshop.customer.service.CustomerServiceLocal;
-import ch.zotteljedi.onlineshop.entity.CustomerEntity;
 import ch.zotteljedi.onlineshop.entity.ProductEntity;
 import ch.zotteljedi.onlineshop.helper.ApplicationService;
-import ch.zotteljedi.onlineshop.helper.message.CustomerByIdNotFound;
-import ch.zotteljedi.onlineshop.helper.message.CustomerUsernameAllreadyExist;
 import ch.zotteljedi.onlineshop.product.dto.NewProduct;
 import ch.zotteljedi.onlineshop.product.dto.Product;
+import ch.zotteljedi.onlineshop.product.dto.ProductId;
 import ch.zotteljedi.onlineshop.product.dto.mapper.ProductMapper;
 
 import javax.ejb.Local;
@@ -42,6 +37,21 @@ public class ProductServicImpl extends ApplicationService implements ProductServ
                 .setParameter("seller", customerService.getCustomerEntityById(id))
                 .getResultList();
         return ProductMapper.INSTANCE.map(productEntities).stream().map(it -> (Product) it).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        List<ProductEntity> products = em.createNamedQuery("ProductEntity.get", ProductEntity.class).getResultList();
+        return ProductMapper.INSTANCE.map(products).stream().map(it -> (Product) it).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Product> getProductById(ProductId id) {
+        return em.createNamedQuery("ProductEntity.getById", ProductEntity.class)
+              .getResultList()
+              .stream()
+              .findFirst()
+              .map(ProductMapper.INSTANCE::map);
     }
 
     @Override

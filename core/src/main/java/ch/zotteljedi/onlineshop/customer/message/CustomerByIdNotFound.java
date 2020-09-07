@@ -1,6 +1,6 @@
-package ch.zotteljedi.onlineshop.helper.message;
+package ch.zotteljedi.onlineshop.customer.message;
 
-import ch.zotteljedi.onlineshop.common.dto.Message;
+import ch.zotteljedi.onlineshop.common.message.Message;
 import ch.zotteljedi.onlineshop.customer.dto.CustomerId;
 
 public class CustomerByIdNotFound implements Message {

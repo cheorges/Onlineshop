@@ -1,14 +1,18 @@
 package ch.zotteljedi.onlineshop.product.jsf;
 
+import ch.zotteljedi.onlineshop.common.message.Message;
 import ch.zotteljedi.onlineshop.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.customer.jsf.CustomerJSF;
 import ch.zotteljedi.onlineshop.customer.jsf.CustomerSessionJSF;
+import ch.zotteljedi.onlineshop.helper.Photo;
 import ch.zotteljedi.onlineshop.product.dto.ImmutableNewProduct;
 import ch.zotteljedi.onlineshop.product.dto.NewProduct;
 import ch.zotteljedi.onlineshop.product.dto.Product;
 import ch.zotteljedi.onlineshop.product.service.ProductServicLocal;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
@@ -46,13 +50,26 @@ public class ProductJSF implements Serializable {
                     .title(title)
                     .description(description)
                     .price(price)
-                    .photo(outputStream.toByteArray())
+                    .photo(Photo.scale(outputStream.toByteArray()))
                     .customerId(customerSessionJSF.getCustomerId())
                     .build();
             productServicLocal.addNewProduct(product);
+            showMessage(null, () -> "Product created successful.");
         } catch (IOException | UnauthorizedAccessException e) {
             Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
         }
+    }
+
+    public void changeProduct() {
+
+    }
+
+    public List<Product> getAll() {
+        return productServicLocal.getAllProducts();
+    }
+
+    private void showMessage(final String clientId, final Message message) {
+        FacesContext.getCurrentInstance().addMessage(clientId, new FacesMessage(message.getMessage()));
     }
 
 }

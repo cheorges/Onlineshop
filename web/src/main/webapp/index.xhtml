@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:h="http://java.sun.com/jsf/html"
                 template="/resources/templates/template.xhtml"
                 xml:lang="en" lang="en">
 
     <ui:define name="content">
         <br/>
         <h1>Zotteltec - Onlineshop</h1>
-        <ui:fragment rendered="#{customerSessionJSF.authenticated eq true}">
-            <p>#{customerSessionJSF.customer.representation}</p>
-        </ui:fragment>
+        <hr/>
+        <div class="row">
+            <div class="col-sm-6        ">
+                <h:form>
+                    <c:forEach items="#{productJSF.all}" var="product" varStatus="metadata">
+                        <div class="card">
+                            <h:graphicImage class="card-img-top" url="image?id=#{product.id}"/>
+                            <div class="card-body">
+                                <h5 class="card-title">#{product.title}</h5>
+                                <p class="card-text">#{product.description}</p>
+                                <a href="#" class="btn btn-primary">Buy</a>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </h:form>
+            </div>
+        </div>
     </ui:define>
 </ui:composition>

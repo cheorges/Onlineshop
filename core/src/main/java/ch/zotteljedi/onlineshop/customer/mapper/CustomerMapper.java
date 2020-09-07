@@ -1,4 +1,4 @@
-package ch.zotteljedi.onlineshop.customer.dto.mapper;
+package ch.zotteljedi.onlineshop.customer.mapper;
 
 import ch.zotteljedi.onlineshop.customer.dto.Customer;
 import ch.zotteljedi.onlineshop.customer.dto.CustomerId;

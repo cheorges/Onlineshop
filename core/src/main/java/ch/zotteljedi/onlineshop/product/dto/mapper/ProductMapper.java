@@ -1,6 +1,6 @@
 package ch.zotteljedi.onlineshop.product.dto.mapper;
 
-import ch.zotteljedi.onlineshop.customer.dto.mapper.CustomerMapper;
+import ch.zotteljedi.onlineshop.customer.mapper.CustomerMapper;
 import ch.zotteljedi.onlineshop.entity.ProductEntity;
 import ch.zotteljedi.onlineshop.product.dto.ImmutableProduct;
 import ch.zotteljedi.onlineshop.product.dto.NewProduct;

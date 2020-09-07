@@ -1,7 +1,7 @@
 package ch.zotteljedi.onlineshop.helper;
 
-import ch.zotteljedi.onlineshop.common.dto.Message;
-import ch.zotteljedi.onlineshop.common.dto.MessageContainer;
+import ch.zotteljedi.onlineshop.common.message.Message;
+import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 
 public abstract class ApplicationService {
     private final MessageContainer messageContainer = new MessageContainer();

@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Stateless
@@ -44,6 +45,15 @@ public class CustomerServiceImpl extends ApplicationService implements CustomerS
                 .stream()
                 .findFirst()
                 .map(CustomerMapper.INSTANCE::map);
+    }
+
+    @Override
+    public Optional<Customer> getCustomerById(CustomerId id) {
+        CustomerEntity customerEntity = getCustomerEntityById(id);
+        if (Objects.isNull(customerEntity)) {
+            return Optional.empty();
+        }
+        return Optional.of(CustomerMapper.INSTANCE.map(customerEntity));
     }
 
     @Override

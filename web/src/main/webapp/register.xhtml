@@ -18,7 +18,7 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <h:form id="customerRegisterForm">
-                            <h:message for="customerRegisterForm" class="text-danger" />
+                            <h:message for="customerRegisterForm" class="text-danger"/>
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <h:inputText binding="#{regUsernameInput}"
@@ -27,7 +27,7 @@
                                              maxlength="255"
                                              required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
-                                             value="#{customerJSF.newCustomer.username}"/>
+                                             value="#{customerRegisterJSF.registerPageCustomer.username}"/>
                                 <h:message for="username" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -36,7 +36,8 @@
                                              class="form-control"
                                              id="firstname"
                                              maxlength="255" required="true"
-                                             requiredMessage="#{messageJSF.requiredMassage}" />
+                                             requiredMessage="#{messageJSF.requiredMassage}"
+                                             value="#{customerRegisterJSF.registerPageCustomer.firstname}"/>
                                 <h:message for="firstname" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -46,7 +47,8 @@
                                              id="lastname"
                                              maxlength="255"
                                              required="true"
-                                             requiredMessage="#{messageJSF.requiredMassage}"/>
+                                             requiredMessage="#{messageJSF.requiredMassage}"
+                                             value="#{customerRegisterJSF.registerPageCustomer.lastname}"/>
                                 <h:message for="lastname" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -57,8 +59,10 @@
                                              maxlength="255"
                                              required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
-                                             validatorMessage="#{messageJSF.emailMessage}">
-                                    <c:validateRegex pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9-.]+$" for="email" />
+                                             validatorMessage="#{messageJSF.emailMessage}"
+                                             value="#{customerRegisterJSF.registerPageCustomer.email}">
+                                    <c:validateRegex pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9-.]+$"
+                                                     for="email"/>
                                 </h:inputText>
                                 <h:message for="email" class="text-danger"/>
                             </div>
@@ -69,12 +73,13 @@
                                                id="password"
                                                maxlength="255"
                                                required="true"
-                                               requiredMessage="#{messageJSF.requiredMassage}"/>
+                                               requiredMessage="#{messageJSF.requiredMassage}"
+                                               value="#{customerRegisterJSF.registerPageCustomer.password}"/>
                                 <h:message for="password" class="text-danger"/>
                             </div>
                             <h:commandButton value="Register"
                                              class="btn btn-primary"
-                                             action="#{customerJSF.addNewCustomer}" />
+                                             action="#{customerRegisterJSF.register}"/>
                         </h:form>
                     </div>
                 </div>

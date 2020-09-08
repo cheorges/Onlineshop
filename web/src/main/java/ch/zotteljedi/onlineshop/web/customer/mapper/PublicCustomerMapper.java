@@ -1,7 +1,7 @@
 package ch.zotteljedi.onlineshop.web.customer.mapper;
 
 import ch.zotteljedi.onlineshop.common.customer.dto.Customer;
-import ch.zotteljedi.onlineshop.web.customer.dto.PublicCustomer;
+import ch.zotteljedi.onlineshop.web.customer.dto.PersistPageCustomer;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -12,10 +12,10 @@ import org.mapstruct.factory.Mappers;
 public interface PublicCustomerMapper {
    PublicCustomerMapper INSTANCE = Mappers.getMapper(PublicCustomerMapper.class);
 
-   PublicCustomer map(Customer customer, @MappingTarget PublicCustomer publicCustomer);
+   PersistPageCustomer map(Customer customer, @MappingTarget PersistPageCustomer changeCustomer);
 
-   default PublicCustomer map(final Customer customer) {
-      return map(customer, new PublicCustomer(customer.getId()));
+   default PersistPageCustomer map(final Customer customer) {
+      return map(customer, new PersistPageCustomer(customer.getId()));
    }
 
 }

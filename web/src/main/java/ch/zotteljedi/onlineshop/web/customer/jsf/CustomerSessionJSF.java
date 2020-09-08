@@ -2,8 +2,8 @@ package ch.zotteljedi.onlineshop.web.customer.jsf;
 
 import ch.zotteljedi.onlineshop.common.customer.dto.Customer;
 import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
-import ch.zotteljedi.onlineshop.common.customer.dto.ImmutableCustomer;
-import ch.zotteljedi.onlineshop.web.customer.dto.PublicCustomer;
+import ch.zotteljedi.onlineshop.web.customer.dto.LoginPageCustomer;
+import ch.zotteljedi.onlineshop.web.customer.dto.PersistPageCustomer;
 import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.web.customer.mapper.PublicCustomerMapper;
 import ch.zotteljedi.onlineshop.common.customer.service.CustomerServiceLocal;
@@ -27,26 +27,31 @@ public class CustomerSessionJSF implements Serializable {
     @Inject
     private CustomerServiceLocal customerServiceLocal;
 
-    private Optional<Customer> authenticatedPrivateCustomer = Optional.empty();
-    private Optional<PublicCustomer> authenticatedPublicCustomer;
+    private final LoginPageCustomer loginPageCustomer = new LoginPageCustomer();
+    private Optional<PersistPageCustomer> authenticatedPersistPageCustomer = Optional.empty();
 
-    public boolean isAuthenticated() {
-        return authenticatedPrivateCustomer.isPresent();
+    public LoginPageCustomer getLoginPageCustomer() {
+        return loginPageCustomer;
     }
 
-    public PublicCustomer getCustomer() throws UnauthorizedAccessException {
-        return authenticatedPublicCustomer.orElseThrow(UnauthorizedAccessException::new);
+    public boolean isAuthenticated() {
+        return authenticatedPersistPageCustomer.isPresent();
     }
 
     public CustomerId getCustomerId() throws UnauthorizedAccessException {
-        return getCustomer().getId();
+        return authenticatedPersistPageCustomer.orElseThrow(UnauthorizedAccessException::new).getId();
     }
 
-    public String login(final String username, final String password) {
+    public PersistPageCustomer getPersistPageCustomer() throws UnauthorizedAccessException {
+        return authenticatedPersistPageCustomer.orElseThrow(UnauthorizedAccessException::new);
+    }
+
+    public String login() {
+        loginPageCustomer.reset();
         try {
-            if (customerServiceLocal.checkCredentials(username, Hash256.INSTANCE.hash256(password))) {
-                authenticatedPrivateCustomer = customerServiceLocal.getCustomerByUsername(username);
-                authenticatedPublicCustomer = Optional.of(PublicCustomerMapper.INSTANCE.map(authenticatedPrivateCustomer.orElseThrow(UnauthorizedAccessException::new)));
+            if (customerServiceLocal.checkCredentials(getLoginPageCustomer().getUsername(), Hash256.INSTANCE.hash256(getLoginPageCustomer().getPassword()))) {
+                Optional<Customer> customer = customerServiceLocal.getCustomerByUsername(getLoginPageCustomer().getUsername());
+                authenticatedPersistPageCustomer = Optional.of(PublicCustomerMapper.INSTANCE.map(customer.orElseThrow(UnauthorizedAccessException::new)));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login successful."));
                 return "customer_overviewproduct";
             }
@@ -54,22 +59,18 @@ public class CustomerSessionJSF implements Serializable {
             Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
         }
 
-        authenticatedPrivateCustomer = Optional.empty();
+        authenticatedPersistPageCustomer = Optional.empty();
         FacesContext.getCurrentInstance().addMessage("customerLoginForm", new FacesMessage("Invalid credentials."));
         return "login";
     }
 
-    public void logout() {
-        authenticatedPrivateCustomer = Optional.empty();
+    public String logout() {
+        authenticatedPersistPageCustomer = Optional.empty();
+        return "index";
     }
 
-    void update() throws UnauthorizedAccessException {
-        PublicCustomer customer = authenticatedPublicCustomer.orElseThrow(UnauthorizedAccessException::new);
-        authenticatedPrivateCustomer = Optional.of(ImmutableCustomer.copyOf(authenticatedPrivateCustomer.orElseThrow(UnauthorizedAccessException::new))
-              .withEmail(customer.getEmail())
-              .withFirstname(customer.getFirstname())
-              .withLastname(customer.getLastname())
-              .withUsername(customer.getUsername()));
+    public void update() throws UnauthorizedAccessException {
+        Optional<Customer> customer = customerServiceLocal.getCustomerById(getCustomerId());
+        authenticatedPersistPageCustomer = Optional.of(PublicCustomerMapper.INSTANCE.map(customer.orElseThrow(UnauthorizedAccessException::new)));
     }
-
 }

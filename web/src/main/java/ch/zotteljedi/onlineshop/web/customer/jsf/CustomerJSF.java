@@ -1,10 +1,8 @@
 package ch.zotteljedi.onlineshop.web.customer.jsf;
 
-import ch.zotteljedi.onlineshop.common.customer.dto.ImmutableNewCustomer;
-import ch.zotteljedi.onlineshop.common.customer.dto.NewCustomer;
 import ch.zotteljedi.onlineshop.common.customer.service.CustomerServiceLocal;
 import ch.zotteljedi.onlineshop.common.message.Message;
-import ch.zotteljedi.onlineshop.web.customer.dto.PublicCustomer;
+import ch.zotteljedi.onlineshop.web.customer.dto.PersistPageCustomer;
 import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.web.helper.Hash256;
 
@@ -26,27 +24,9 @@ public class CustomerJSF implements Serializable {
    @Inject
    private CustomerSessionJSF customerSessionJSF;
 
-   public void addNewCustomer(String username, String firstname, String lastname, String email, String password) {
-      try {
-         NewCustomer newCustomer = ImmutableNewCustomer.builder()
-               .username(username)
-               .firstname(firstname)
-               .lastname(lastname)
-               .email(email)
-               .password(Hash256.INSTANCE.hash256(password))
-               .build();
-         if (!customerServiceLocal.addNewCustomer(newCustomer)
-               .hasMessagesThenProvide(msg -> showMessage("customerRegisterForm", msg))) {
-            showMessage(null, () -> "Registration successful.");
-         }
-      } catch (NoSuchAlgorithmException e) {
-         showMessage("customerRegisterForm", () -> "No hash value of the password could be generated. No profile was created.");
-      }
-   }
-
    public void changeUsername(String username) throws UnauthorizedAccessException {
       if (!customerServiceLocal.changeCustomerUsername(customerSessionJSF.getCustomerId(), username)
-            .hasMessagesThenProvide((msg) -> showMessage("customerUsernameChangeForm", msg))) {
+            .hasMessagesThenProvide(msg -> showMessage("customerUsernameChangeForm", msg))) {
          customerSessionJSF.update();
          showMessage(null, () -> "Username changed.");
       }
@@ -60,7 +40,7 @@ public class CustomerJSF implements Serializable {
 
    public void changePassword(String oldPassword, String newPassword) throws UnauthorizedAccessException {
       try {
-         PublicCustomer customer = customerSessionJSF.getCustomer();
+         PersistPageCustomer customer = customerSessionJSF.getPersistPageCustomer();
          if (customerServiceLocal.checkCredentials(customer.getUsername(), Hash256.INSTANCE.hash256(oldPassword))) {
             customerServiceLocal.changeCustomerPassword(customer.getId(), Hash256.INSTANCE.hash256(newPassword));
             showMessage(null, () -> "Password changed.");
@@ -74,7 +54,7 @@ public class CustomerJSF implements Serializable {
 
    public void deleteCustomer(String password) throws UnauthorizedAccessException {
       try {
-         PublicCustomer customer = customerSessionJSF.getCustomer();
+         PersistPageCustomer customer = customerSessionJSF.getPersistPageCustomer();
          if (customerServiceLocal.checkCredentials(customer.getUsername(), Hash256.INSTANCE.hash256(password))) {
             customerServiceLocal.deleteCustomer(customer.getId());
             showMessage(null, () -> "Customer profile successfully deleted.");

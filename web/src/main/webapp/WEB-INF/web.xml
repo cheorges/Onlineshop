@@ -9,10 +9,6 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>ImageServlet</servlet-name>
-        <servlet-class>ch.zotteljedi.onlineshop.product.servlet.ImageServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>

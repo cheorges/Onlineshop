@@ -27,7 +27,7 @@
                                              maxlength="255"
                                              required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
-                                             value=""/>
+                                             value="#{customerJSF.newCustomer.username}"/>
                                 <h:message for="username" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -74,12 +74,7 @@
                             </div>
                             <h:commandButton value="Register"
                                              class="btn btn-primary"
-                                             actionListener="#{customerJSF.addNewCustomer(
-                                                    regUsernameInput.value,
-                                                    regFirstnameInput.value,
-                                                    regLastnameInput.value,
-                                                    regEmailInput.value,
-                                                    regPasswordInput.value)}" />
+                                             action="#{customerJSF.addNewCustomer}" />
                         </h:form>
                     </div>
                 </div>

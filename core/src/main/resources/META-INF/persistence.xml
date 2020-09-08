@@ -5,8 +5,8 @@
     <persistence-unit name="MyEclipseLinkExample">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>jdbc/default</jta-data-source>
-        <class>ch.zotteljedi.onlineshop.entity.CustomerEntity</class>
-        <class>ch.zotteljedi.onlineshop.entity.ProductEntity</class>
+        <class>ch.zotteljedi.onlineshop.data.entity.CustomerEntity</class>
+        <class>ch.zotteljedi.onlineshop.data.entity.ProductEntity</class>
         <properties>
             <property name="tomee.jpa.factory.lazy" value="true" />
             <property name="hibernate.hbm2ddl.auto" value="update"/>

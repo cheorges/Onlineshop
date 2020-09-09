@@ -15,11 +15,13 @@
                 <h:form>
                     <c:forEach items="#{productJSF.all}" var="product" varStatus="metadata">
                         <div class="card">
-                            <h:graphicImage class="card-img-top" url="image?id=#{product.id}"/>
+                            <h:graphicImage class="card-img-top" url="image2?id=#{product.id}"/>
                             <div class="card-body">
-                                <h5 class="card-title">#{product.title} : #{product.id}</h5>
+                                <h5 class="card-title">#{product.title}</h5>
                                 <p class="card-text">#{product.description}</p>
-                                <a href="#" class="btn btn-primary">Buy</a>
+                                <c:if test="#{customerSessionJSF.authenticated}">
+                                    <a href="#" class="btn btn-primary">Buy</a>
+                                </c:if>
                             </div>
                         </div>
                     </c:forEach>

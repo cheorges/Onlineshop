@@ -27,7 +27,7 @@
                                              maxlength="255"
                                              required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
-                                             value="#{customerSessionJSF.persistPageCustomer.username}"/>
+                                             value="#{customerSessionJSF.customer.username}"/>
                                 <h:message for="username" class="text-danger"/>
                             </div>
                             <h:commandButton value="Change to" class="btn btn-primary"
@@ -47,7 +47,7 @@
                                              id="firstname"
                                              maxlength="255" required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
-                                             value="#{customerSessionJSF.persistPageCustomer.firstname}"/>
+                                             value="#{customerSessionJSF.customer.firstname}"/>
                                 <h:message for="firstname" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -58,7 +58,7 @@
                                              maxlength="255"
                                              required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
-                                             value="#{customerSessionJSF.persistPageCustomer.lastname}"/>
+                                             value="#{customerSessionJSF.customer.lastname}"/>
                                 <h:message for="lastname" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -70,7 +70,7 @@
                                              required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
                                              validatorMessage="#{messageJSF.emailMessage}"
-                                             value="#{customerSessionJSF.persistPageCustomer.email}">
+                                             value="#{customerSessionJSF.customer.email}">
                                     <c:validateRegex pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9-.]+$"
                                                      for="email"/>
                                 </h:inputText>
@@ -130,7 +130,7 @@
                                 <h:message for="password" class="text-danger"/>
                             </div>
                             <h:commandButton value="Delete Customer Profile" class="btn btn-outline-danger"
-                                             actionListener="#{customerJSF.deleteCustomer(passwordInput.value)}"/>
+                                             action="#{customerJSF.deleteCustomer(passwordInput.value)}"/>
                         </h:form>
                     </div>
                 </div>

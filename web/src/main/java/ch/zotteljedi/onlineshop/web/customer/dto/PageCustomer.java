@@ -1,51 +1,58 @@
 package ch.zotteljedi.onlineshop.web.customer.dto;
 
+import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
+
 import java.io.Serializable;
 
 public class PageCustomer implements Serializable {
-    private String username;
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String password;
+   private final CustomerId id;
+   private String username;
+   private String firstname;
+   private String lastname;
+   private String email;
 
-    public String getUsername() {
-        return username;
-    }
+   public PageCustomer(CustomerId id) {
+      this.id = id;
+   }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+   public String getRepresentation() {
+      return getFirstname() + " " + getLastname();
+   }
 
-    public String getFirstname() {
-        return firstname;
-    }
+   public CustomerId getId() {
+      return id;
+   }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+   public String getUsername() {
+      return username;
+   }
 
-    public String getLastname() {
-        return lastname;
-    }
+   public void setUsername(String username) {
+      this.username = username;
+   }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+   public String getFirstname() {
+      return firstname;
+   }
 
-    public String getEmail() {
-        return email;
-    }
+   public void setFirstname(String firstname) {
+      this.firstname = firstname;
+   }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+   public String getLastname() {
+      return lastname;
+   }
 
-    public String getPassword() {
-        return password;
-    }
+   public void setLastname(String lastname) {
+      this.lastname = lastname;
+   }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+   public String getEmail() {
+      return email;
+   }
+
+   public void setEmail(String email) {
+      this.email = email;
+   }
+
 }

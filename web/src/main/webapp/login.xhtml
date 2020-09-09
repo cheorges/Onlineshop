@@ -24,8 +24,7 @@
                                              id="username"
                                              maxlength="255"
                                              required="true"
-                                             requiredMessage="#{messageJSF.requiredMassage}"
-                                             value="#{customerSessionJSF.loginPageCustomer.username}"/>
+                                             requiredMessage="#{messageJSF.requiredMassage}"/>
                                 <h:message for="username" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -34,13 +33,12 @@
                                                id="password"
                                                maxlength="255"
                                                required="true"
-                                               requiredMessage="#{messageJSF.requiredMassage}"
-                                               value="#{customerSessionJSF.loginPageCustomer.password}"/>
+                                               requiredMessage="#{messageJSF.requiredMassage}"/>
                                 <h:message for="password" class="text-danger"/>
                             </div>
                             <h:commandButton value="Login"
                                              class="btn btn-primary"
-                                             action="#{customerSessionJSF.login}"/>
+                                             action="#{customerSessionJSF.login(logUsernameInput.value, logPasswordInput.value)}"/>
                         </h:form>
                     </div>
                 </div>

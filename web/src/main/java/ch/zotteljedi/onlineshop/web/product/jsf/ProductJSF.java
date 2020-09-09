@@ -38,7 +38,7 @@ public class ProductJSF implements Serializable {
         return productServicLocal.getProductsBySeller(customerSessionJSF.getCustomerId());
     }
 
-    public void saleNewProduct(String title, String description, Double price, Part photo) {
+    public String saleNewProduct(String title, String description, Double price, Part photo) {
         try {
             InputStream inputStream = photo.getInputStream();
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -55,9 +55,11 @@ public class ProductJSF implements Serializable {
                     .build();
             productServicLocal.addNewProduct(product);
             showMessage(null, () -> "Product created successful.");
+            return "customer_overviewproduct";
         } catch (IOException | UnauthorizedAccessException e) {
             Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
         }
+        return "customer_createproduct";
     }
 
     public void changeProduct() {

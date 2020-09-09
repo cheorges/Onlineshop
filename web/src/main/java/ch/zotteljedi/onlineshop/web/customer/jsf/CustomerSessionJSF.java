@@ -2,11 +2,10 @@ package ch.zotteljedi.onlineshop.web.customer.jsf;
 
 import ch.zotteljedi.onlineshop.common.customer.dto.Customer;
 import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
-import ch.zotteljedi.onlineshop.web.customer.dto.LoginPageCustomer;
-import ch.zotteljedi.onlineshop.web.customer.dto.PersistPageCustomer;
+import ch.zotteljedi.onlineshop.common.customer.service.CustomerServiceLocal;
+import ch.zotteljedi.onlineshop.web.customer.dto.PageCustomer;
 import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.web.customer.mapper.PublicCustomerMapper;
-import ch.zotteljedi.onlineshop.common.customer.service.CustomerServiceLocal;
 import ch.zotteljedi.onlineshop.web.helper.Hash256;
 
 import java.io.Serializable;
@@ -27,12 +26,7 @@ public class CustomerSessionJSF implements Serializable {
     @Inject
     private CustomerServiceLocal customerServiceLocal;
 
-    private final LoginPageCustomer loginPageCustomer = new LoginPageCustomer();
-    private Optional<PersistPageCustomer> authenticatedPersistPageCustomer = Optional.empty();
-
-    public LoginPageCustomer getLoginPageCustomer() {
-        return loginPageCustomer;
-    }
+    private Optional<PageCustomer> authenticatedPersistPageCustomer = Optional.empty();
 
     public boolean isAuthenticated() {
         return authenticatedPersistPageCustomer.isPresent();
@@ -42,15 +36,14 @@ public class CustomerSessionJSF implements Serializable {
         return authenticatedPersistPageCustomer.orElseThrow(UnauthorizedAccessException::new).getId();
     }
 
-    public PersistPageCustomer getPersistPageCustomer() throws UnauthorizedAccessException {
+    public PageCustomer getCustomer() throws UnauthorizedAccessException {
         return authenticatedPersistPageCustomer.orElseThrow(UnauthorizedAccessException::new);
     }
 
-    public String login() {
-        loginPageCustomer.reset();
+    public String login(String username, String password) {
         try {
-            if (customerServiceLocal.checkCredentials(getLoginPageCustomer().getUsername(), Hash256.INSTANCE.hash256(getLoginPageCustomer().getPassword()))) {
-                Optional<Customer> customer = customerServiceLocal.getCustomerByUsername(getLoginPageCustomer().getUsername());
+            if (customerServiceLocal.checkCredentials(username, Hash256.INSTANCE.hash256(password))) {
+                Optional<Customer> customer = customerServiceLocal.getCustomerByUsername(username);
                 authenticatedPersistPageCustomer = Optional.of(PublicCustomerMapper.INSTANCE.map(customer.orElseThrow(UnauthorizedAccessException::new)));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login successful."));
                 return "customer_overviewproduct";
@@ -66,6 +59,7 @@ public class CustomerSessionJSF implements Serializable {
 
     public String logout() {
         authenticatedPersistPageCustomer = Optional.empty();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Logout successful."));
         return "index";
     }
 

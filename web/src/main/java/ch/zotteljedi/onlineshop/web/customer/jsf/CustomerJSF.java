@@ -2,17 +2,19 @@ package ch.zotteljedi.onlineshop.web.customer.jsf;
 
 import ch.zotteljedi.onlineshop.common.customer.service.CustomerServiceLocal;
 import ch.zotteljedi.onlineshop.common.message.Message;
-import ch.zotteljedi.onlineshop.web.customer.dto.PersistPageCustomer;
+import ch.zotteljedi.onlineshop.web.customer.dto.PageCustomer;
 import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.web.helper.Hash256;
 
+import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 
 @Named
 @SessionScoped
@@ -40,7 +42,7 @@ public class CustomerJSF implements Serializable {
 
    public void changePassword(String oldPassword, String newPassword) throws UnauthorizedAccessException {
       try {
-         PersistPageCustomer customer = customerSessionJSF.getPersistPageCustomer();
+         PageCustomer customer = customerSessionJSF.getCustomer();
          if (customerServiceLocal.checkCredentials(customer.getUsername(), Hash256.INSTANCE.hash256(oldPassword))) {
             customerServiceLocal.changeCustomerPassword(customer.getId(), Hash256.INSTANCE.hash256(newPassword));
             showMessage(null, () -> "Password changed.");
@@ -48,23 +50,24 @@ public class CustomerJSF implements Serializable {
             showMessage("customerChangePassordForm", () -> "Invalid credentials.");
          }
       } catch (NoSuchAlgorithmException e) {
-         e.printStackTrace();
+         Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
       }
    }
 
-   public void deleteCustomer(String password) throws UnauthorizedAccessException {
+   public String deleteCustomer(String password) throws UnauthorizedAccessException {
       try {
-         PersistPageCustomer customer = customerSessionJSF.getPersistPageCustomer();
+         PageCustomer customer = customerSessionJSF.getCustomer();
          if (customerServiceLocal.checkCredentials(customer.getUsername(), Hash256.INSTANCE.hash256(password))) {
             customerServiceLocal.deleteCustomer(customer.getId());
             showMessage(null, () -> "Customer profile successfully deleted.");
-            customerSessionJSF.logout();
+            return customerSessionJSF.logout();
          } else {
             showMessage("customerChangePassordForm", () -> "Invalid credentials.");
          }
       } catch (NoSuchAlgorithmException e) {
-         e.printStackTrace();
+         Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
       }
+      return "custumer_profile";
    }
 
    private void showMessage(final String clientId, final Message message) {

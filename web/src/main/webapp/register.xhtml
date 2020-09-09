@@ -26,8 +26,7 @@
                                              id="username"
                                              maxlength="255"
                                              required="true"
-                                             requiredMessage="#{messageJSF.requiredMassage}"
-                                             value="#{customerRegisterJSF.registerPageCustomer.username}"/>
+                                             requiredMessage="#{messageJSF.requiredMassage}"/>
                                 <h:message for="username" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -36,8 +35,7 @@
                                              class="form-control"
                                              id="firstname"
                                              maxlength="255" required="true"
-                                             requiredMessage="#{messageJSF.requiredMassage}"
-                                             value="#{customerRegisterJSF.registerPageCustomer.firstname}"/>
+                                             requiredMessage="#{messageJSF.requiredMassage}"/>
                                 <h:message for="firstname" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -47,8 +45,7 @@
                                              id="lastname"
                                              maxlength="255"
                                              required="true"
-                                             requiredMessage="#{messageJSF.requiredMassage}"
-                                             value="#{customerRegisterJSF.registerPageCustomer.lastname}"/>
+                                             requiredMessage="#{messageJSF.requiredMassage}"/>
                                 <h:message for="lastname" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -59,8 +56,7 @@
                                              maxlength="255"
                                              required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
-                                             validatorMessage="#{messageJSF.emailMessage}"
-                                             value="#{customerRegisterJSF.registerPageCustomer.email}">
+                                             validatorMessage="#{messageJSF.emailMessage}">
                                     <c:validateRegex pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9-.]+$"
                                                      for="email"/>
                                 </h:inputText>
@@ -73,13 +69,17 @@
                                                id="password"
                                                maxlength="255"
                                                required="true"
-                                               requiredMessage="#{messageJSF.requiredMassage}"
-                                               value="#{customerRegisterJSF.registerPageCustomer.password}"/>
+                                               requiredMessage="#{messageJSF.requiredMassage}"/>
                                 <h:message for="password" class="text-danger"/>
                             </div>
                             <h:commandButton value="Register"
                                              class="btn btn-primary"
-                                             action="#{customerRegisterJSF.register}"/>
+                                             action="#{customerRegisterJSF.register(
+                                                     regUsernameInput.value,
+                                                     regFirstnameInput.value,
+                                                     regLastnameInput.value,
+                                                     regEmailInput.value,
+                                                     regPasswordInput.value)}"/>
                         </h:form>
                     </div>
                 </div>

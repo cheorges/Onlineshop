@@ -5,7 +5,7 @@ import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.customer.service.CustomerServiceLocal;
 import ch.zotteljedi.onlineshop.web.customer.dto.PageCustomer;
 import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
-import ch.zotteljedi.onlineshop.web.customer.mapper.PublicCustomerMapper;
+import ch.zotteljedi.onlineshop.web.customer.mapper.PageCustomerMapper;
 import ch.zotteljedi.onlineshop.web.helper.Hash256;
 
 import java.io.Serializable;
@@ -44,9 +44,9 @@ public class CustomerSessionJSF implements Serializable {
         try {
             if (customerServiceLocal.checkCredentials(username, Hash256.INSTANCE.hash256(password))) {
                 Optional<Customer> customer = customerServiceLocal.getCustomerByUsername(username);
-                authenticatedPersistPageCustomer = Optional.of(PublicCustomerMapper.INSTANCE.map(customer.orElseThrow(UnauthorizedAccessException::new)));
+                authenticatedPersistPageCustomer = Optional.of(PageCustomerMapper.INSTANCE.map(customer.orElseThrow(UnauthorizedAccessException::new)));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login successful."));
-                return "customer_overviewproduct";
+                return "customer_overview";
             }
         } catch (NoSuchAlgorithmException | UnauthorizedAccessException e) {
             Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
@@ -65,6 +65,6 @@ public class CustomerSessionJSF implements Serializable {
 
     public void update() throws UnauthorizedAccessException {
         Optional<Customer> customer = customerServiceLocal.getCustomerById(getCustomerId());
-        authenticatedPersistPageCustomer = Optional.of(PublicCustomerMapper.INSTANCE.map(customer.orElseThrow(UnauthorizedAccessException::new)));
+        authenticatedPersistPageCustomer = Optional.of(PageCustomerMapper.INSTANCE.map(customer.orElseThrow(UnauthorizedAccessException::new)));
     }
 }

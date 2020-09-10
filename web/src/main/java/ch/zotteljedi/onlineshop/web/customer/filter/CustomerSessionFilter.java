@@ -17,10 +17,11 @@ public class CustomerSessionFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        if (httpRequest.getRequestURI().indexOf("image") > -1) {
+        if (httpRequest.getRequestURI().contains("image")) {
             chain.doFilter(request, response);
             return;
         }
+
         if (customerSessionJSF.isAuthenticated()
                 && (httpRequest.getRequestURI().endsWith("login.xhtml") || httpRequest.getRequestURI().endsWith("register.xhtml"))) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("index.xhtml");

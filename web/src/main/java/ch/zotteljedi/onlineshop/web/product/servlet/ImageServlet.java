@@ -42,9 +42,6 @@ public class ImageServlet extends HttpServlet {
             response.reset();
             response.getOutputStream().write(product.get().getPhoto());
          }
-         // OutputStream out = response.getOutputStream();
-          // out.wirte(image);
-          // out.flush();
       } catch (IOException |  NumberFormatException e) {
          Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
       }

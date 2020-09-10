@@ -9,10 +9,10 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR)
-public interface PublicCustomerMapper {
-   PublicCustomerMapper INSTANCE = Mappers.getMapper(PublicCustomerMapper.class);
+public interface PageCustomerMapper {
+   PageCustomerMapper INSTANCE = Mappers.getMapper(PageCustomerMapper.class);
 
-   PageCustomer map(Customer customer, @MappingTarget PageCustomer changeCustomer);
+   PageCustomer map(Customer customer, @MappingTarget PageCustomer pageCustomer);
 
    default PageCustomer map(final Customer customer) {
       return map(customer, new PageCustomer(customer.getId()));

@@ -1,4 +1,4 @@
-package ch.zotteljedi.onlineshop.web.helper.jsf;
+package ch.zotteljedi.onlineshop.web.common.jsf;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;

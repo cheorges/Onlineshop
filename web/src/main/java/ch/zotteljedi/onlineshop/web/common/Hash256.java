@@ -1,4 +1,4 @@
-package ch.zotteljedi.onlineshop.web.helper;
+package ch.zotteljedi.onlineshop.web.common;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

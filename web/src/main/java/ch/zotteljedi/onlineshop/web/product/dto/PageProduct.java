@@ -4,20 +4,20 @@ import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
 import ch.zotteljedi.onlineshop.web.customer.dto.PageCustomer;
 
 import java.io.Serializable;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 
 public class PageProduct implements Serializable {
-   private final ProductId id;
    private String title;
    private String description;
    private Double price;
    private PageCustomer seller;
 
-   public PageProduct(ProductId id) {
-      this.id = id;
-   }
+   private final NumberFormat formatter = NumberFormat.getInstance();
 
-   public ProductId getId() {
-      return id;
+   public PageProduct() {
+      formatter.setMinimumFractionDigits(2);
+      formatter.setMaximumFractionDigits(2);
    }
 
    public String getTitle() {

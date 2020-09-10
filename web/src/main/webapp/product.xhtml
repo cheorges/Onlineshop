@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsf/core"
+                xmlns:cc="http://java.sun.com/jsp/jstl/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/templates/template.xhtml"
+                xml:lang="en" lang="en">
+
+    <c:metadata>
+        <c:viewParam name="id" value="#{productJSF.productId}"/>
+        <c:event listener="#{productJSF.refreshPageProduct(productJSF.productId)}" type="preRenderView"/>
+    </c:metadata>
+
+    <ui:define name="content">
+        <br/>
+        <div class="card">
+            <div class="card-header">
+                <br/>
+                <h1>Product</h1>
+                <br/>
+            </div>
+            <div class="card-body">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h:form id="newProductForm" enctype="multipart/form-data">
+                            <h:message for="newProductForm" class="text-danger"/>
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <h:inputText binding="#{titleInput}"
+                                             class="form-control"
+                                             id="title"
+                                             maxlength="255"
+                                             required="true"
+                                             requiredMessage="#{messageJSF.requiredMassage}"
+                                             value="#{productJSF.product.title}"/>
+                                <h:message for="title" class="text-danger"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <h:inputTextarea binding="#{descriptionInput}"
+                                                 class="form-control"
+                                                 id="description"
+                                                 rows="5"
+                                                 maxlength="1500"
+                                                 value="#{productJSF.product.description}"/>
+                                <h:message for="description" class="text-danger"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <h:inputText binding="#{priceInput}"
+                                             class="form-control"
+                                             id="price"
+                                             type="number"
+                                             required="true"
+                                             requiredMessage="#{messageJSF.requiredMassage}"
+                                             validatorMessage="#{messageJSF.priceMessage}"
+                                             value="#{productJSF.product.price}">
+                                    <!-- c:validateRegex pattern="\d+[\.,]?(\d\d)?" for="price"/-->
+                                </h:inputText>
+                                <h:message for="price" class="text-danger"/>
+                            </div>
+                            <cc:if test="#{productJSF.productId == 0}">
+                                <div class="form-group">
+                                    <label for="photo">Photo</label>
+                                    <h:inputFile binding="#{photoInput}"
+                                                 class="form-control-file"
+                                                 id="photo"
+                                                 required="true"
+                                                 requiredMessage="#{messageJSF.requiredMassage}"/>
+                                    <h:message for="photo" class="text-danger"/>
+                                </div>
+                            </cc:if>
+                            <cc:if test="#{productJSF.productId != 0}">
+                                <div class="form-group">
+                                    <label for="photo">Photo</label>
+                                    <h:inputFile binding="#{photoInput}"
+                                                 class="form-control-file"
+                                                 id="photo"/>
+                                    <h:message for="photo" class="text-danger"/>
+                                </div>
+                            </cc:if>
+                            <h:commandButton value="Save" class="btn btn-primary"
+                                             action="#{productJSF.save(
+                                                    titleInput.value,
+                                                    descriptionInput.value,
+                                                    priceInput.value,
+                                                    photoInput.value)}"/>
+                        </h:form>
+                    </div>
+                </div>
+                <cc:if test="#{productJSF.productId != 0}">
+                <br/>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <p class="card-text">Photo Preview</p>
+                    </div>
+                    <img class="card-img-bottom" src="image?id=#{productJSF.productId}" alt="#{productJSF.product.title}" />
+                </div>
+                </cc:if>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

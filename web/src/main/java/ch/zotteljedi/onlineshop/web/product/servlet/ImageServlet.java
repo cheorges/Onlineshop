@@ -30,17 +30,12 @@ public class ImageServlet extends HttpServlet {
       try {
          Optional<Product> product;
          String idAsString = request.getParameter("id");
-         if (Objects.isNull(idAsString)) {
+         if (Objects.nonNull(idAsString)) {
             product = productServicLocal.getProductById(Id.of(Integer.parseInt(idAsString), ProductId.class));
-         }
-
-        else {
-            product = productServicLocal.getProductById(Id.of(Integer.parseInt(idAsString), ProductId.class));
-         }
-
-         if (product.isPresent()) {
-            response.reset();
-            response.getOutputStream().write(product.get().getPhoto());
+            if (product.isPresent()) {
+               response.reset();
+               response.getOutputStream().write(product.get().getPhoto());
+            }
          }
       } catch (IOException |  NumberFormatException e) {
          Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());

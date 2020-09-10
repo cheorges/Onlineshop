@@ -1,5 +1,8 @@
 package ch.zotteljedi.onlineshop.data.entity;
 
+
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -29,6 +32,7 @@ public class CustomerEntity {
     private String lastname;
 
     @Column(name = "email", nullable = false)
+    @Email(message = "Is not a valid email.")
     private String email;
 
     @Column(name = "password", nullable = false)

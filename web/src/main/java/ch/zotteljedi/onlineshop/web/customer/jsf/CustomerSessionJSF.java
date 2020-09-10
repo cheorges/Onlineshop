@@ -6,7 +6,8 @@ import ch.zotteljedi.onlineshop.common.customer.service.CustomerServiceLocal;
 import ch.zotteljedi.onlineshop.web.customer.dto.PageCustomer;
 import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.web.customer.mapper.PageCustomerMapper;
-import ch.zotteljedi.onlineshop.web.helper.Hash256;
+import ch.zotteljedi.onlineshop.web.common.Hash256;
+import ch.zotteljedi.onlineshop.web.common.massage.MessageFactory;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
@@ -14,8 +15,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -25,6 +24,9 @@ public class CustomerSessionJSF implements Serializable {
 
     @Inject
     private CustomerServiceLocal customerServiceLocal;
+
+    @Inject
+    private MessageFactory messageFactory;
 
     private Optional<PageCustomer> authenticatedPersistPageCustomer = Optional.empty();
 
@@ -45,21 +47,21 @@ public class CustomerSessionJSF implements Serializable {
             if (customerServiceLocal.checkCredentials(username, Hash256.INSTANCE.hash256(password))) {
                 Optional<Customer> customer = customerServiceLocal.getCustomerByUsername(username);
                 authenticatedPersistPageCustomer = Optional.of(PageCustomerMapper.INSTANCE.map(customer.orElseThrow(UnauthorizedAccessException::new)));
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login successful."));
-                return "customer_overview";
+                messageFactory.showInfo("Login successful.");
+                return "overview";
             }
         } catch (NoSuchAlgorithmException | UnauthorizedAccessException e) {
             Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
         }
 
         authenticatedPersistPageCustomer = Optional.empty();
-        FacesContext.getCurrentInstance().addMessage("customerLoginForm", new FacesMessage("Invalid credentials."));
+        messageFactory.showError("Invalid credentials.");
         return "login";
     }
 
     public String logout() {
         authenticatedPersistPageCustomer = Optional.empty();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Logout successful."));
+        messageFactory.showInfo("Logout successful.");
         return "index";
     }
 

@@ -55,15 +55,17 @@
                 </ul>
                 <ui:fragment rendered="#{customerSessionJSF.authenticated eq true}">
                     <span class="navbar-nav navbar-text nav-item dropdown text-dark">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             #{customerSessionJSF.customer.representation}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-dark " href="customer_overview.xhtml">My Products</a>
-                            <a class="dropdown-item text-dark " href="customer_profile.xhtml">Profiel</a>
+                            <a class="dropdown-item text-dark " href="overview.xhtml">Product</a>
+                            <a class="dropdown-item text-dark " href="profile.xhtml">Profiel</a>
                             <a class="dropdown-item text-dark" href="#">Shopping cart</a>
                             <div class="dropdown-divider"></div>
-                            <h:form><h:commandButton action="#{customerSessionJSF.logout}" value="Logout" class="dropdown-item text-dark" /></h:form>
+                            <h:form><h:commandButton action="#{customerSessionJSF.logout}" value="Logout"
+                                                     class="dropdown-item text-dark"/></h:form>
                         </div>
                     </span>
                 </ui:fragment>
@@ -79,7 +81,11 @@
         </div>
     </nav>
     <div class="container">
-        <h:messages style="list-style: none" globalOnly="true" showDetail="false" showSummary="true" class="alert alert-success px-5 mt-4 mb-0" role="alert" />
+        <h:messages style="list-style: none"
+                    errorClass="alert alert-danger mt-4 mb-0"
+                    infoClass="alert alert-success mt-4 mb-0"
+                    globalOnly="true" showDetail="false" showSummary="true" role="alert"
+                    class="m-0 p-0"/>
         <ui:insert id="content" name="content"></ui:insert>
     </div>
 </h:body>

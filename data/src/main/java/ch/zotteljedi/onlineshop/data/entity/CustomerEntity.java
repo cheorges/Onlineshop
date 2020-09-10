@@ -1,5 +1,7 @@
 package ch.zotteljedi.onlineshop.data.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 import java.util.Objects;
 

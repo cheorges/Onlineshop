@@ -15,8 +15,6 @@ public interface CustomerServiceLocal extends Serializable {
     Optional<Customer> getCustomerByUsername(String username);
     Optional<Customer> getCustomerById(CustomerId id);
     boolean checkCredentials(String username, String password);
-    MessageContainer changeCustomerUsername(CustomerId id, String username);
-    MessageContainer changeCustomerPassword(CustomerId id, String username);
-    MessageContainer changeCustomer(CustomerId id, String firstname, String lastname, String email);
+    MessageContainer changeCustomer(Customer customer);
     MessageContainer deleteCustomer(CustomerId id);
 }

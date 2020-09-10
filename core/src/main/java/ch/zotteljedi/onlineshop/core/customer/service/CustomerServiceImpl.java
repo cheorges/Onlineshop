@@ -1,14 +1,14 @@
 package ch.zotteljedi.onlineshop.core.customer.service;
 
-import ch.zotteljedi.onlineshop.common.customer.service.CustomerServiceLocal;
-import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.common.customer.dto.Customer;
 import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.customer.dto.NewCustomer;
-import ch.zotteljedi.onlineshop.core.customer.message.CustomerUsernameAllreadyExist;
+import ch.zotteljedi.onlineshop.common.customer.service.CustomerServiceLocal;
+import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.core.customer.mapper.CustomerMapper;
-import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
+import ch.zotteljedi.onlineshop.core.customer.message.CustomerUsernameAllreadyExist;
 import ch.zotteljedi.onlineshop.core.service.ApplicationService;
+import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -66,29 +66,9 @@ public class CustomerServiceImpl extends ApplicationService implements CustomerS
     }
 
     @Override
-    public MessageContainer changeCustomerUsername(CustomerId id, String username) {
-        if (getCustomerEntityByUsername(username).isEmpty()) {
-            CustomerEntity customerEntity = getCustomerEntityById(id);
-            customerEntity.setUsername(username);
-        } else {
-            addMessage(new CustomerUsernameAllreadyExist(username));
-        }
-        return getMessageContainer();
-    }
-
-    @Override
-    public MessageContainer changeCustomerPassword(CustomerId id, String username) {
-        CustomerEntity customerEntity = getCustomerEntityById(id);
-        customerEntity.setPassword(username);
-        return getMessageContainer();
-    }
-
-    @Override
-    public MessageContainer changeCustomer(CustomerId id, String firstname, String lastname, String email) {
-        CustomerEntity customerEntity = getCustomerEntityById(id);
-        customerEntity.setFirstname(firstname);
-        customerEntity.setLastname(lastname);
-        customerEntity.setEmail(email);
+    public MessageContainer changeCustomer(Customer customer) {
+        CustomerEntity customerEntity = CustomerMapper.INSTANCE.map(customer);
+        em.merge(customerEntity);
         return getMessageContainer();
     }
 

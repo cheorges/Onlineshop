@@ -4,12 +4,21 @@ import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
 import ch.zotteljedi.onlineshop.web.customer.dto.PageCustomer;
 
 import java.io.Serializable;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 
 public class PageProduct implements Serializable {
    private String title;
    private String description;
    private Double price;
    private PageCustomer seller;
+
+   private final NumberFormat formatter = NumberFormat.getInstance();
+
+   public PageProduct() {
+      formatter.setMinimumFractionDigits(2);
+      formatter.setMaximumFractionDigits(2);
+   }
 
    public String getTitle() {
       return title;

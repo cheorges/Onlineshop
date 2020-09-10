@@ -46,7 +46,7 @@ public class CustomerSessionJSF implements Serializable {
                 Optional<Customer> customer = customerServiceLocal.getCustomerByUsername(username);
                 authenticatedPersistPageCustomer = Optional.of(PageCustomerMapper.INSTANCE.map(customer.orElseThrow(UnauthorizedAccessException::new)));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login successful."));
-                return "customer_overview";
+                return "overview";
             }
         } catch (NoSuchAlgorithmException | UnauthorizedAccessException e) {
             Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());

@@ -9,11 +9,13 @@ import ch.zotteljedi.onlineshop.core.customer.mapper.CustomerMapper;
 import ch.zotteljedi.onlineshop.core.customer.message.CustomerUsernameAllreadyExist;
 import ch.zotteljedi.onlineshop.core.service.ApplicationService;
 import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
+import org.hibernate.exception.ConstraintViolationException;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TransactionRequiredException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
@@ -68,7 +70,12 @@ public class CustomerServiceImpl extends ApplicationService implements CustomerS
     @Override
     public MessageContainer changeCustomer(Customer customer) {
         CustomerEntity customerEntity = CustomerMapper.INSTANCE.map(customer);
-        em.merge(customerEntity);
+        try {
+            em.merge(customerEntity);
+            em.flush();
+        } catch (Exception e) {
+            addMessage(new CustomerUsernameAllreadyExist(customer.getUsername()));
+        }
         return getMessageContainer();
     }
 

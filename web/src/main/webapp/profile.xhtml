@@ -17,8 +17,8 @@
             <div class="card-body">
                 <div class="card shadow">
                     <div class="card-body">
-                        <h:form id="customerUsernameChangeForm">
-                            <h:message for="customerUsernameChangeForm" class="text-danger"/>
+                        <h:form id="customerChangeForm">
+                            <h:message for="customerChangeForm" class="text-danger"/>
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <h:inputText binding="#{changeUsernameInput}"
@@ -30,16 +30,6 @@
                                              value="#{customerSessionJSF.customer.username}"/>
                                 <h:message for="username" class="text-danger"/>
                             </div>
-                            <h:commandButton value="Change to" class="btn btn-primary"
-                                             actionListener="#{customerJSF.changeUsername(changeUsernameInput.value)}"/>
-                        </h:form>
-                    </div>
-                </div>
-                <br/>
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h:form id="customerChangeForm">
-                            <h:message for="customerChangeForm" class="text-danger"/>
                             <div class="form-group">
                                 <label for="firstname">Firstname</label>
                                 <h:inputText binding="#{changeFirstnameInput}"
@@ -78,6 +68,7 @@
                             </div>
                             <h:commandButton value="Change to" class="btn btn-primary"
                                              actionListener="#{customerJSF.changeCustomer(
+                                                        changeUsernameInput.value,
                                                         changeFirstnameInput.value,
                                                         changeLastnameInput.value,
                                                         changeEmailInput.value)}"/>

@@ -29,7 +29,7 @@ public class ProductEntity {
 
 
     @Basic(fetch=FetchType.LAZY)
-    @Column(name = "photo", nullable = false)
+    @Column(name = "photo", nullable = true)
     private byte[] photo;
 
     @ManyToOne

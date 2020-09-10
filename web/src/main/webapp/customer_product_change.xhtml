@@ -6,6 +6,11 @@
                 template="/resources/templates/template.xhtml"
                 xml:lang="en" lang="en">
 
+    <c:metadata>
+        <c:viewParam name="id" value="#{productJSF.productId}"/>
+        <c:event listener="#{productJSF.refreshPageProduct(productJSF.productId)}" type="preRenderView"/>
+    </c:metadata>
+
     <ui:define name="content">
         <br/>
         <div class="card">
@@ -27,7 +32,7 @@
                                              maxlength="255"
                                              required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
-                                value="#{}"/>
+                                             value="#{productJSF.product.title}"/>
                                 <h:message for="newTitle" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -36,7 +41,8 @@
                                                  class="form-control"
                                                  id="newDescription"
                                                  rows="5"
-                                                 maxlength="1500"/>
+                                                 maxlength="1500"
+                                                 value="#{productJSF.product.description}"/>
                                 <h:message for="newDescription" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -47,7 +53,8 @@
                                              type="number"
                                              required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
-                                             validatorMessage="#{messageJSF.priceMessage}">
+                                             validatorMessage="#{messageJSF.priceMessage}"
+                                             value="#{productJSF.product.price}">
                                     <c:validateRegex pattern="\d+[\.,]?(\d\d)?" for="newPrice"/>
                                 </h:inputText>
                                 <h:message for="newPrice" class="text-danger"/>
@@ -62,7 +69,7 @@
                                 <h:message for="newPhoto" class="text-danger"/>
                             </div>
                             <h:commandButton value="Save" class="btn btn-primary"
-                                             action="#{productJSF.saleNewProduct(
+                                             action="#{productJSF.save(
                                                     newTitleInput.value,
                                                     newDescriptionInput.value,
                                                     newPriceInput.value,

@@ -6,19 +6,10 @@ import ch.zotteljedi.onlineshop.web.customer.dto.PageCustomer;
 import java.io.Serializable;
 
 public class PageProduct implements Serializable {
-   private final ProductId id;
    private String title;
    private String description;
    private Double price;
    private PageCustomer seller;
-
-   public PageProduct(ProductId id) {
-      this.id = id;
-   }
-
-   public ProductId getId() {
-      return id;
-   }
 
    public String getTitle() {
       return title;

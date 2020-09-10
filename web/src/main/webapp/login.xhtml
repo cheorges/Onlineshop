@@ -17,15 +17,15 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <h:form id="customerLoginForm">
-                            <h:message for="customerLoginForm" class="text-danger" />
+                            <h:message for="customerLoginForm" class="text-danger"/>
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <h:inputText binding="#{logUsernameInput}" class="forUsername form-control"
                                              id="username"
                                              maxlength="255"
                                              required="true"
-                                             requiredMessage="#{messageJSF.requiredMassage}" />
-                                <h:message for="username" class="text-danger" />
+                                             requiredMessage="#{messageJSF.requiredMassage}"/>
+                                <h:message for="username" class="text-danger"/>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
@@ -33,11 +33,12 @@
                                                id="password"
                                                maxlength="255"
                                                required="true"
-                                               requiredMessage="#{messageJSF.requiredMassage}" />
-                                <h:message for="password" class="text-danger" />
+                                               requiredMessage="#{messageJSF.requiredMassage}"/>
+                                <h:message for="password" class="text-danger"/>
                             </div>
-                            <h:commandButton value="Login" class="btn btn-primary"
-                                             actionListener="#{customerSessionJSF.login(logUsernameInput.value, logPasswordInput.value)}"/>
+                            <h:commandButton value="Login"
+                                             class="btn btn-primary"
+                                             action="#{customerSessionJSF.login(logUsernameInput.value, logPasswordInput.value)}"/>
                         </h:form>
                     </div>
                 </div>

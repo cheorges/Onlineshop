@@ -59,7 +59,7 @@
                             #{customerSessionJSF.customer.representation}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-dark " href="customer_product.xhtml">My Products</a>
+                            <a class="dropdown-item text-dark " href="customer_overview.xhtml">My Products</a>
                             <a class="dropdown-item text-dark " href="customer_profile.xhtml">Profiel</a>
                             <a class="dropdown-item text-dark" href="#">Shopping cart</a>
                             <div class="dropdown-divider"></div>
@@ -79,7 +79,7 @@
         </div>
     </nav>
     <div class="container">
-        <h:messages globalOnly="true" showDetail="false" showSummary="true" class="alert alert-success px-5 mt-4 mb-0" role="alert" />
+        <h:messages style="list-style: none" globalOnly="true" showDetail="false" showSummary="true" class="alert alert-success px-5 mt-4 mb-0" role="alert" />
         <ui:insert id="content" name="content"></ui:insert>
     </div>
 </h:body>

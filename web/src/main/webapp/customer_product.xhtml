@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/resources/templates/template.xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xml:lang="en" lang="en">
 
     <ui:define name="content">
         <br/>
-        <h1>My Products</h1>
-        <p>#{customerSessionJSF.customer.representation}</p>
+        <div class="card">
+            <div class="card-header">
+                <br/>
+                <h1>Prepare product for sale</h1>
+                <br/>
+            </div>
+            <div class="card-body">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h:form id="newProductForm" enctype="multipart/form-data">
+                            <h:message for="newProductForm" class="text-danger"/>
+                            <div class="form-group">
+                                <label for="newTitle">Title</label>
+                                <h:inputText binding="#{newTitleInput}"
+                                             class="form-control"
+                                             id="newTitle"
+                                             maxlength="255"
+                                             required="true"
+                                             requiredMessage="#{messageJSF.requiredMassage}"/>
+                                <h:message for="newTitle" class="text-danger"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="newDescription">Description</label>
+                                <h:inputTextarea binding="#{newDescriptionInput}"
+                                                 class="form-control"
+                                                 id="newDescription"
+                                                 rows="5"
+                                                 maxlength="1500"/>
+                                <h:message for="newDescription" class="text-danger"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPrice">Price</label>
+                                <h:inputText binding="#{newPriceInput}"
+                                             class="form-control"
+                                             id="newPrice"
+                                             type="number"
+                                             required="true"
+                                             requiredMessage="#{messageJSF.requiredMassage}"
+                                             validatorMessage="#{messageJSF.priceMessage}">
+                                    <c:validateRegex pattern="\d+[\.,]?(\d\d)?" for="newPrice"/>
+                                </h:inputText>
+                                <h:message for="newPrice" class="text-danger"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPhoto">Photo</label>
+                                <h:inputFile binding="#{newPhotoInput}"
+                                             class="form-control-file"
+                                             id="newPhoto"
+                                             required="true"
+                                             requiredMessage="#{messageJSF.requiredMassage}"/>
+                                <h:message for="newPhoto" class="text-danger"/>
+                            </div>
+                            <h:commandButton value="Save" class="btn btn-primary"
+                                             action="#{productJSF.saleNewProduct(
+                                                    newTitleInput.value,
+                                                    newDescriptionInput.value,
+                                                    newPriceInput.value,
+                                                    newPhotoInput.value)}"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </ui:define>
 </ui:composition>

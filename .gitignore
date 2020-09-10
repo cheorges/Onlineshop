@@ -122,6 +122,8 @@ gradle-app.setting
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 
+
+
 ### MetaProgrammingSystem template
 workspace.xml
 junitvmwatcher*.properties
@@ -507,3 +509,4 @@ FodyWeavers.xsd
 # generated source
 common/src/main/generated
 core/src/main/generated
+/web/src/main/generated/

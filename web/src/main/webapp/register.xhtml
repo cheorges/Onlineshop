@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/resources/templates/template.xhtml"
                 xml:lang="en" lang="en">
@@ -18,7 +18,7 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <h:form id="customerRegisterForm">
-                            <h:message for="customerRegisterForm" class="text-danger" />
+                            <h:message for="customerRegisterForm" class="text-danger"/>
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <h:inputText binding="#{regUsernameInput}"
@@ -26,7 +26,7 @@
                                              id="username"
                                              maxlength="255"
                                              required="true"
-                                             requiredMessage="#{messageJSF.requiredMassage}" />
+                                             requiredMessage="#{messageJSF.requiredMassage}"/>
                                 <h:message for="username" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -35,7 +35,7 @@
                                              class="form-control"
                                              id="firstname"
                                              maxlength="255" required="true"
-                                             requiredMessage="#{messageJSF.requiredMassage}" />
+                                             requiredMessage="#{messageJSF.requiredMassage}"/>
                                 <h:message for="firstname" class="text-danger"/>
                             </div>
                             <div class="form-group">
@@ -57,7 +57,8 @@
                                              required="true"
                                              requiredMessage="#{messageJSF.requiredMassage}"
                                              validatorMessage="#{messageJSF.emailMessage}">
-                                    <f:validateRegex pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9-.]+$" for="email" />
+                                    <c:validateRegex pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9-.]+$"
+                                                     for="email"/>
                                 </h:inputText>
                                 <h:message for="email" class="text-danger"/>
                             </div>
@@ -68,21 +69,21 @@
                                                id="password"
                                                maxlength="255"
                                                required="true"
-                                               requiredMessage="#{messageJSF.requiredMassage}" />
+                                               requiredMessage="#{messageJSF.requiredMassage}"/>
                                 <h:message for="password" class="text-danger"/>
                             </div>
-                            <h:commandButton value="Register" class="btn btn-primary"
-                                             actionListener="#{customerJSF.addNewCustomer(
-                                                    regUsernameInput.value,
-                                                    regFirstnameInput.value,
-                                                    regLastnameInput.value,
-                                                    regEmailInput.value,
-                                                    regPasswordInput.value)}" />
+                            <h:commandButton value="Register"
+                                             class="btn btn-primary"
+                                             action="#{customerRegisterJSF.register(
+                                                     regUsernameInput.value,
+                                                     regFirstnameInput.value,
+                                                     regLastnameInput.value,
+                                                     regEmailInput.value,
+                                                     regPasswordInput.value)}"/>
                         </h:form>
                     </div>
                 </div>
             </div>
         </div>
     </ui:define>
-
 </ui:composition>

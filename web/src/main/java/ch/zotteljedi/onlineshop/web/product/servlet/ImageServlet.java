@@ -31,7 +31,7 @@ public class ImageServlet extends HttpServlet {
          Optional<Product> product;
          String idAsString = request.getParameter("id");
          if (Objects.isNull(idAsString)) {
-            product = productServicLocal.getProductById(Id.of(3, ProductId.class));
+            product = productServicLocal.getProductById(Id.of(Integer.parseInt(idAsString), ProductId.class));
          }
 
         else {
@@ -42,6 +42,9 @@ public class ImageServlet extends HttpServlet {
             response.reset();
             response.getOutputStream().write(product.get().getPhoto());
          }
+         // OutputStream out = response.getOutputStream();
+          // out.wirte(image);
+          // out.flush();
       } catch (IOException |  NumberFormatException e) {
          Logger.getLogger(CustomerJSF.class.getCanonicalName()).log(Level.INFO, e.getMessage());
       }

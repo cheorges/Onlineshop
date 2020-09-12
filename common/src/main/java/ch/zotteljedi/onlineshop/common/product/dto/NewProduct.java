@@ -12,5 +12,5 @@ public interface NewProduct extends ValueObject {
     String getDescription();
     Double getPrice();
     byte[] getPhoto();
-    CustomerId getCustomerId();
+    CustomerId getSellerId();
 }

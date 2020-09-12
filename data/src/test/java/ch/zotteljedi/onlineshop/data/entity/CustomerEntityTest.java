@@ -1,39 +1,31 @@
 package ch.zotteljedi.onlineshop.data.entity;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-
-import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
 
 public class CustomerEntityTest {
 
-    private static Validator validator;
-
-    @BeforeClass
-    public static void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-    }
-
     @Test
-    public void manufacturerIsNull() {
+    public void test_init_customer_entity() {
+        // Given
         CustomerEntity customerEntity = new CustomerEntity();
-        customerEntity.setEmail("no valid email");
+        customerEntity.setId(1);
+        customerEntity.setUsername("admin");
+        customerEntity.setFirstname("Administrator");
+        customerEntity.setLastname("Zotteltec");
+        customerEntity.setEmail("admin@zotteltec.ch");
+        customerEntity.setPassword("password");
 
-        Set<ConstraintViolation<CustomerEntity>> constraintViolations = validator.validate(customerEntity);
-
-        assertEquals( 1, constraintViolations.size() );
-        assertEquals("Is not a valid email.", constraintViolations.iterator().next().getMessage()
-        );
+        // Then
+        assertThat(customerEntity.getId(), is(1));
+        assertThat(customerEntity.getUsername(), is("admin"));
+        assertThat(customerEntity.getFirstname(), is("Administrator"));
+        assertThat(customerEntity.getLastname(), is("Zotteltec"));
+        assertThat(customerEntity.getEmail(), is("admin@zotteltec.ch"));
+        assertThat(customerEntity.getPassword(), is("password"));
     }
-
 
 }

@@ -60,7 +60,7 @@ public class ProductServicImpl extends ApplicationService implements ProductServ
     @Override
     public MessageContainer addNewProduct(NewProduct product) {
         ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
-        productEntity.setSeller(customerService.getCustomerEntityById(product.getCustomerId()));
+        productEntity.setSeller(customerService.getCustomerEntityById(product.getSellerId()));
         em.persist(productEntity);
         return getMessageContainer();
     }

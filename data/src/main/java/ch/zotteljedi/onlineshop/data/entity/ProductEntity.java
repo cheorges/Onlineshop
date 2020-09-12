@@ -1,6 +1,11 @@
 package ch.zotteljedi.onlineshop.data.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -19,20 +24,25 @@ public class ProductEntity {
     private int id;
 
     @Column(name = "title", nullable = false)
+    @NotEmpty(message = "Title may not be empty.")
+    @Size(min = 1, max = 255, message = "Title must be between 1 and 255 characters.")
     private String title;
 
     @Column(name = "description", length = 1000)
+    @Size(max = 1000, message = "Description should not be greater than 1000 characters.")
     private String description;
 
     @Column(name = "price", nullable = false, precision = 2)
+    @NotNull(message = "Price may not be blank.")
     private Double price;
 
-
     @Basic(fetch=FetchType.LAZY)
-    @Column(name = "photo", nullable = true)
+    @Column(name = "photo", nullable = false)
+    @NotNull(message = "Photo may not be blank.")
     private byte[] photo;
 
     @ManyToOne
+    @NotNull(message = "Seller may not be blank.")
     private CustomerEntity seller;
 
     public int getId() {

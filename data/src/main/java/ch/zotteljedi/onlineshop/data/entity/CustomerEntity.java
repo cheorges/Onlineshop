@@ -2,8 +2,10 @@ package ch.zotteljedi.onlineshop.data.entity;
 
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -23,19 +25,29 @@ public class CustomerEntity {
     private int id;
 
     @Column(name = "username", nullable = false, unique = true)
+    @NotEmpty(message = "Username may not be empty.")
+    @Size(min = 1, max = 255, message = "Username must be between 1 and 255 characters.")
     private String username;
 
     @Column(name = "firstname", nullable = false)
+    @NotEmpty(message = "Firstname may not be empty.")
+    @Size(min = 1, max = 255, message = "Firstname must be between 1 and 255 characters.")
     private String firstname;
 
     @Column(name = "lastname", nullable = false)
+    @NotEmpty(message = "Lastname may not be empty.")
+    @Size(min = 1, max = 255, message = "Lastname must be between 1 and 255 characters.")
     private String lastname;
 
     @Column(name = "email", nullable = false)
+    @NotEmpty(message = "Email may not be empty.")
     @Email(message = "Is not a valid email.")
+    @Size(min = 1, max = 255, message = "Email must be between 1 and 255 characters.")
     private String email;
 
     @Column(name = "password", nullable = false)
+    @NotEmpty(message = "Password may not be empty.")
+    @Size(min = 6, max = 255, message = "Password must be between 6 and 255 characters.")
     private String password;
 
     public int getId() {

@@ -73,7 +73,7 @@ public class ProductJSF implements Serializable {
                         .description(description)
                         .price(price)
                         .photo(createPhotoStream(photo))
-                        .customerId(customerSessionJSF.getCustomerId())
+                        .sellerId(customerSessionJSF.getCustomerId())
                         .build());
             }
             messageFactory.showInfo("Product created successful.");

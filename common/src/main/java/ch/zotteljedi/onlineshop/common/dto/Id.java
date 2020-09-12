@@ -1,6 +1,7 @@
 package ch.zotteljedi.onlineshop.common.dto;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public abstract class Id implements Serializable {
 

@@ -52,8 +52,8 @@ public class ProductJSF implements Serializable {
         return pageProduct;
     }
 
-    public List<Product> getProductsBySeller() throws UnauthorizedAccessException {
-        return productServicLocal.getProductsBySeller(customerSessionJSF.getCustomerId());
+    public List<PersistPageProduct> getProductsBySeller() throws UnauthorizedAccessException {
+        return PageProductMapper.INSTANCE.map(productServicLocal.getProductsBySeller(customerSessionJSF.getCustomerId()));
     }
 
     public String save(String title, String description, Double price, Integer stock, Part photo) throws UnauthorizedAccessException {
@@ -87,6 +87,12 @@ public class ProductJSF implements Serializable {
         return "product";
     }
 
+    public void delete(ProductId id) {
+        if (!productServicLocal.deleteProduct(id).hasMessagesThenProvide(msg -> messageFactory.showError(msg))) {
+            messageFactory.showInfo("Product deleted successful.");
+        }
+    }
+
     private byte[] createPhotoStream(Part photo) throws IOException {
         InputStream inputStream = photo.getInputStream();
         if (photo.getSize() == 0) {
@@ -106,8 +112,7 @@ public class ProductJSF implements Serializable {
     }
 
     public List<PersistPageProduct> getAll() {
-        List<Product> products = productServicLocal.getAllProducts();
-        return PageProductMapper.INSTANCE.map(products);
+        return PageProductMapper.INSTANCE.map(productServicLocal.getAllProducts());
     }
 
 }

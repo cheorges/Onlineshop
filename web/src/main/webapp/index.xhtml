@@ -27,7 +27,8 @@
                             <footer class="blockquote-footer">#{product.seller.representation}</footer>
                             <cc:if test="#{customerSessionJSF.authenticated}">
                                 <br/>
-                                <a href="#" class="btn btn-primary">Buy</a>
+                                <h:commandButton value="Add To Cart" class="btn btn-primary"
+                                                 actionListener="#{productPurchaseJSF.addToShoppingCart(product)}"/>
                             </cc:if>
                         </div>
                     </div>

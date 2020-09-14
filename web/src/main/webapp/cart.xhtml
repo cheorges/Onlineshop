@@ -11,7 +11,7 @@
         <div class="card">
             <div class="card-header">
                 <br/>
-                <h1>Product</h1>
+                <h1>Shopping Cart</h1>
                 <br/>
             </div>
             <div class="card-body">
@@ -22,26 +22,30 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">Title</th>
+                                    <th scope="col">Unit</th>
                                     <th scope="col">Unitprice</th>
-                                    <th scope="col">Stock</th>
+                                    <th scope="col">Total</th>
                                     <th scope="col">#</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <cc:forEach items="#{productJSF.productsBySeller}" var="product" varStatus="metadata">
+                                <cc:forEach items="#{productPurchaseJSF.shoppingCart}" var="product" varStatus="metadata">
                                     <tr class="align-middle">
-                                        <td class="align-middle">
-                                            <a href="product.xhtml?id=#{product.id.value}"
-                                               class="font-weight-bold text-decoration-none">#{product.title}</a>
-                                        </td>
+                                        <td class="align-middle">#{product.title}</td>
+                                        <td class="align-middle">#{product.unit}</td>
                                         <td class="align-middle">
                                             <h:outputText value="#{product.unitprice}">
                                                 <c:convertNumber minFractionDigits="2"/>
                                             </h:outputText>
                                         </td>
-                                        <td class="align-middle">#{product.stock}</td>
                                         <td class="align-middle">
-                                            <h:commandButton value="X" class="btn btn-outline-danger" actionListener="#{productJSF.delete(product.id)}"/></td>
+                                            <h:outputText value="#{product.totalPrice}">
+                                                <c:convertNumber minFractionDigits="2"/>
+                                            </h:outputText>
+                                        </td>
+                                        <td>
+                                            <h:commandButton value="X" class="btn btn-outline-danger" actionListener="#{productPurchaseJSF.removeFromShoppingCart(product.productId)}"/>
+                                        </td>
                                     </tr>
                                 </cc:forEach>
                                 </tbody>
@@ -52,7 +56,9 @@
                 <br/>
                 <div class="card shadow">
                     <div class="card-body">
-                        <a href="product.xhtml" class="btn btn-primary">New Prodcut</a>
+                        <h:form>
+                            <a href="#" class="btn btn-outline-success">Buy Now</a>
+                        </h:form>
                     </div>
                 </div>
             </div>

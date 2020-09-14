@@ -19,4 +19,5 @@ public interface ProductServicLocal extends Serializable {
     Optional<Product> getProductById(ProductId id);
     MessageContainer addNewProduct(NewProduct product);
     MessageContainer changeProduct(ChangeProduct product);
+    MessageContainer deleteProduct(ProductId id);
 }

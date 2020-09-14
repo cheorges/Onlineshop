@@ -26,4 +26,16 @@ public abstract class Id implements Serializable {
         return value;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Id)) return false;
+        Id id = (Id) o;
+        return Objects.equals(value, id.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
 }

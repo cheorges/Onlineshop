@@ -5,6 +5,7 @@ import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.product.dto.ChangeProduct;
 import ch.zotteljedi.onlineshop.common.product.service.ProductServicLocal;
 import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
+import ch.zotteljedi.onlineshop.core.product.message.ProductByIdNotFound;
 import ch.zotteljedi.onlineshop.data.entity.ProductEntity;
 import ch.zotteljedi.onlineshop.core.service.ApplicationService;
 import ch.zotteljedi.onlineshop.common.product.dto.NewProduct;
@@ -49,12 +50,7 @@ public class ProductServicImpl extends ApplicationService implements ProductServ
 
     @Override
     public Optional<Product> getProductById(ProductId id) {
-        return em.createNamedQuery("ProductEntity.getById", ProductEntity.class)
-                .setParameter("id", id.getValue())
-                .getResultList()
-                .stream()
-                .findFirst()
-                .map(ProductMapper.INSTANCE::map);
+        return getProductEntityById(id).map(ProductMapper.INSTANCE::map);
     }
 
     @Override
@@ -71,6 +67,20 @@ public class ProductServicImpl extends ApplicationService implements ProductServ
         productEntity.setSeller(customerService.getCustomerEntityById(product.getSellerId()));
         em.merge(productEntity);
         return getMessageContainer();
+    }
+
+    @Override
+    public MessageContainer deleteProduct(ProductId id) {
+        getProductEntityById(id).ifPresentOrElse(product -> em.remove(product), () -> addMessage(new ProductByIdNotFound(id)));
+        return getMessageContainer();
+    }
+
+    private Optional<ProductEntity> getProductEntityById(ProductId id) {
+        return em.createNamedQuery("ProductEntity.getById", ProductEntity.class)
+                .setParameter("id", id.getValue())
+                .getResultList()
+                .stream()
+                .findFirst();
     }
 
 }

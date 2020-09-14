@@ -14,14 +14,16 @@ public class ProductEntityTest {
     @Test
     public void test_init_product_entity() {
         // Given
+        byte[] photo = generateRandomByte(20);
+        CustomerEntity seller = mock(CustomerEntity.class);
+
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(1);
         productEntity.setTitle("title");
         productEntity.setDescription("description");
         productEntity.setPrice(42.0);
-        byte[] photo = generateRandomByte(20);
+        productEntity.setStock(5);
         productEntity.setPhoto(photo);
-        CustomerEntity seller = mock(CustomerEntity.class);
         productEntity.setSeller(seller);
 
         // Then
@@ -29,6 +31,7 @@ public class ProductEntityTest {
         assertThat(productEntity.getTitle(), is("title"));
         assertThat(productEntity.getDescription(), is("description"));
         assertThat(productEntity.getPrice(), is(42.0));
+        assertThat(productEntity.getStock(), is(5));
         assertThat(productEntity.getPhoto(), is(photo));
         assertThat(productEntity.getSeller(), is(seller));
     }

@@ -156,6 +156,20 @@ public class ProductEntityValidatorTest {
     }
 
     @Test
+    public void test_no_stock() {
+        // Given
+        productEntity.setStock(null);
+
+        // When
+        Set<ConstraintViolation<ProductEntity>> constraintViolations = validator.validate(productEntity);
+
+        // Then
+        List<String> messages = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+        assertThat(messages.size(), is(1));
+        assertTrue(messages.contains("Stock may not be blank."));
+    }
+
+    @Test
     public void test_no_photo() {
         // Given
         productEntity.setPhoto(null);

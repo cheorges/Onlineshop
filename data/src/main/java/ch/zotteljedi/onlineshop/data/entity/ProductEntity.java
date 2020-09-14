@@ -36,6 +36,10 @@ public class ProductEntity {
     @NotNull(message = "Price may not be blank.")
     private Double price;
 
+    @Column(name = "stock", nullable = false)
+    @NotNull(message = "Stock may not be blank.")
+    private Integer stock;
+
     @Basic(fetch=FetchType.LAZY)
     @Column(name = "photo", nullable = false)
     @NotNull(message = "Photo may not be blank.")
@@ -77,6 +81,14 @@ public class ProductEntity {
         this.price = price;
     }
 
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
     public byte[] getPhoto() {
         return photo;
     }
@@ -102,13 +114,14 @@ public class ProductEntity {
                 title.equals(that.title) &&
                 Objects.equals(description, that.description) &&
                 price.equals(that.price) &&
+                stock.equals(that.stock) &&
                 Arrays.equals(photo, that.photo) &&
                 seller.equals(that.seller);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, title, description, price, seller);
+        int result = Objects.hash(id, title, description, price, stock, seller);
         result = 31 * result + Arrays.hashCode(photo);
         return result;
     }
@@ -120,6 +133,7 @@ public class ProductEntity {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
+                ", stock=" + stock +
                 ", photo=" + Arrays.toString(photo) +
                 ", seller=" + seller +
                 '}';

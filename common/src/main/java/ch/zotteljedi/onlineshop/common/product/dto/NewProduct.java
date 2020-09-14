@@ -11,6 +11,7 @@ public interface NewProduct extends ValueObject {
     @Nullable
     String getDescription();
     Double getPrice();
+    Integer getStock();
     byte[] getPhoto();
     CustomerId getSellerId();
 }

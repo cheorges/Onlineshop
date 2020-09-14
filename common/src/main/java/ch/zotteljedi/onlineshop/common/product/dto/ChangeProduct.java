@@ -11,6 +11,7 @@ public interface ChangeProduct extends Entity<ProductId> {
     @Nullable
     String getDescription();
     Double getPrice();
+    Integer getStock();
     byte[] getPhoto();
     CustomerId getSellerId();
 }

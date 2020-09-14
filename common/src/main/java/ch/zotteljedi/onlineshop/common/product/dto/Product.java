@@ -11,6 +11,7 @@ public interface Product extends Entity<ProductId> {
     @Nullable
     String getDescription();
     Double getPrice();
+    Integer getStock();
     byte[] getPhoto();
     Customer getSeller();
 }

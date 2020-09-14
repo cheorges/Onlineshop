@@ -31,7 +31,8 @@ public class ProductEntityValidatorTest {
         productEntity = new ProductEntity();
         productEntity.setTitle("title");
         productEntity.setDescription("description");
-        productEntity.setPrice(42.0);
+        productEntity.setUnitprice(42.0);
+        productEntity.setStock(5);
         productEntity.setPhoto(generateRandomByte(20));
         productEntity.setSeller(mock(CustomerEntity.class));
     }
@@ -131,7 +132,7 @@ public class ProductEntityValidatorTest {
     @Test
     public void test_no_price() {
         // Given
-        productEntity.setPrice(null);
+        productEntity.setUnitprice(null);
 
         // When
         Set<ConstraintViolation<ProductEntity>> constraintViolations = validator.validate(productEntity);
@@ -145,7 +146,7 @@ public class ProductEntityValidatorTest {
     @Test
     public void test_zero_price() {
         // Given
-        productEntity.setPrice(0.0);
+        productEntity.setUnitprice(0.0);
 
         // When
         Set<ConstraintViolation<ProductEntity>> constraintViolations = validator.validate(productEntity);
@@ -153,6 +154,20 @@ public class ProductEntityValidatorTest {
         // Then
         List<String> messages = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
         assertThat(messages.size(), is(0));
+    }
+
+    @Test
+    public void test_no_stock() {
+        // Given
+        productEntity.setStock(null);
+
+        // When
+        Set<ConstraintViolation<ProductEntity>> constraintViolations = validator.validate(productEntity);
+
+        // Then
+        List<String> messages = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+        assertThat(messages.size(), is(1));
+        assertTrue(messages.contains("Stock may not be blank."));
     }
 
     @Test

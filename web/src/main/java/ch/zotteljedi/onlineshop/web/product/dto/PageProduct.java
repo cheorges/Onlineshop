@@ -1,24 +1,17 @@
 package ch.zotteljedi.onlineshop.web.product.dto;
 
-import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
 import ch.zotteljedi.onlineshop.web.customer.dto.PageCustomer;
 
 import java.io.Serializable;
-import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 public class PageProduct implements Serializable {
    private String title;
    private String description;
-   private Double price;
+   private Double unitprice;
+   private Integer stock;
    private PageCustomer seller;
-
-   private final NumberFormat formatter = NumberFormat.getInstance();
-
-   public PageProduct() {
-      formatter.setMinimumFractionDigits(2);
-      formatter.setMaximumFractionDigits(2);
-   }
 
    public String getTitle() {
       return title;
@@ -36,12 +29,20 @@ public class PageProduct implements Serializable {
       this.description = description;
    }
 
-   public Double getPrice() {
-      return price;
+   public Double getUnitprice() {
+      return unitprice;
    }
 
-   public void setPrice(Double price) {
-      this.price = price;
+   public void setUnitprice(Double unitprice) {
+      this.unitprice = unitprice;
+   }
+
+   public Integer getStock() {
+      return stock;
+   }
+
+   public void setStock(Integer stock) {
+      this.stock = stock;
    }
 
    public PageCustomer getSeller() {

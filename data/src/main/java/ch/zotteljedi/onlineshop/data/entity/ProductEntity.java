@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.Objects;
@@ -34,7 +33,11 @@ public class ProductEntity {
 
     @Column(name = "price", nullable = false, precision = 2)
     @NotNull(message = "Price may not be blank.")
-    private Double price;
+    private Double unitprice;
+
+    @Column(name = "stock", nullable = false)
+    @NotNull(message = "Stock may not be blank.")
+    private Integer stock;
 
     @Basic(fetch=FetchType.LAZY)
     @Column(name = "photo", nullable = false)
@@ -69,12 +72,20 @@ public class ProductEntity {
         this.description = description;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getUnitprice() {
+        return unitprice;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setUnitprice(Double price) {
+        this.unitprice = price;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
     public byte[] getPhoto() {
@@ -101,14 +112,15 @@ public class ProductEntity {
         return id == that.id &&
                 title.equals(that.title) &&
                 Objects.equals(description, that.description) &&
-                price.equals(that.price) &&
+                unitprice.equals(that.unitprice) &&
+                stock.equals(that.stock) &&
                 Arrays.equals(photo, that.photo) &&
                 seller.equals(that.seller);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, title, description, price, seller);
+        int result = Objects.hash(id, title, description, unitprice, stock, seller);
         result = 31 * result + Arrays.hashCode(photo);
         return result;
     }
@@ -119,7 +131,8 @@ public class ProductEntity {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", price=" + price +
+                ", price=" + unitprice +
+                ", stock=" + stock +
                 ", photo=" + Arrays.toString(photo) +
                 ", seller=" + seller +
                 '}';

@@ -10,7 +10,8 @@ public interface Product extends Entity<ProductId> {
     String getTitle();
     @Nullable
     String getDescription();
-    Double getPrice();
+    Double getUnitprice();
+    Integer getStock();
     byte[] getPhoto();
     Customer getSeller();
 }

@@ -4,6 +4,7 @@
                 xmlns:c="http://java.sun.com/jsf/core"
                 xmlns:cc="http://java.sun.com/jsp/jstl/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
                 template="/resources/templates/template.xhtml"
                 xml:lang="en" lang="en">
 
@@ -47,18 +48,29 @@
                                 <h:message for="description" class="text-danger"/>
                             </div>
                             <div class="form-group">
-                                <label for="price">Price</label>
-                                <h:inputText binding="#{priceInput}"
-                                             class="form-control"
-                                             id="price"
-                                             type="number"
-                                             required="true"
-                                             requiredMessage="#{messageJSF.requiredMassage}"
-                                             validatorMessage="#{messageJSF.priceMessage}"
-                                             value="#{productJSF.product.price}">
-                                    <!-- c:validateRegex pattern="\d+[\.,]?(\d\d)?" for="price"/-->
-                                </h:inputText>
-                                <h:message for="price" class="text-danger"/>
+                                <label for="unitprice">Unitprice</label>
+                                <p:inputNumber binding="#{unitpriceInput}"
+                                               inputStyleClass="form-control shadow-none"
+                                               id="unitprice"
+                                               minValue="0.00"
+                                               decimalPlaces="2"
+                                               required="true"
+                                               requiredMessage="#{messageJSF.requiredMassage}"
+                                               value="#{productJSF.product.unitprice}"/>
+                                <h:message for="unitprice" class="text-danger"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="stock">Stock</label>
+                                <p:inputNumber binding="#{stockInput}"
+                                               inputStyleClass="form-control shadow-none"
+                                               styleClass="form-control shadow-none"
+                                               id="stock"
+                                               minValue="0"
+                                               decimalPlaces="0"
+                                               required="true"
+                                               requiredMessage="#{messageJSF.requiredMassage}"
+                                               value="#{productJSF.product.stock}"/>
+                                <p:message for="stock" class="text-danger"/>
                             </div>
                             <cc:if test="#{productJSF.productId == 0}">
                                 <div class="form-group">
@@ -84,19 +96,21 @@
                                              action="#{productJSF.save(
                                                     titleInput.value,
                                                     descriptionInput.value,
-                                                    priceInput.value,
+                                                    unitpriceInput.value,
+                                                    stockInput.value,
                                                     photoInput.value)}"/>
                         </h:form>
                     </div>
                 </div>
                 <cc:if test="#{productJSF.productId != 0}">
-                <br/>
-                <div class="card shadow">
-                    <div class="card-body">
-                        <p class="card-text">Photo Preview</p>
+                    <br/>
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <p class="card-text">Photo Preview</p>
+                        </div>
+                        <img class="card-img-bottom" src="image?id=#{productJSF.productId}"
+                             alt="#{productJSF.product.title}"/>
                     </div>
-                    <img class="card-img-bottom" src="image?id=#{productJSF.productId}" alt="#{productJSF.product.title}" />
-                </div>
                 </cc:if>
             </div>
         </div>

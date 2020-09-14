@@ -52,18 +52,19 @@ public class ProductJSF implements Serializable {
         return pageProduct;
     }
 
-    public List<Product> getProductsBySeller() throws UnauthorizedAccessException {
-        return productServicLocal.getProductsBySeller(customerSessionJSF.getCustomerId());
+    public List<PersistPageProduct> getProductsBySeller() throws UnauthorizedAccessException {
+        return PageProductMapper.INSTANCE.map(productServicLocal.getProductsBySeller(customerSessionJSF.getCustomerId()));
     }
 
-    public String save(String title, String description, Double price, Part photo) throws UnauthorizedAccessException {
+    public String save(String title, String description, Double price, Integer stock, Part photo) throws UnauthorizedAccessException {
         try {
             if (getProduct() instanceof PersistPageProduct) {
                 productServicLocal.changeProduct(ImmutableChangeProduct.builder()
                         .id(Id.of(getProductId(), ProductId.class))
                         .title(title)
                         .description(description)
-                        .price(price)
+                        .unitprice(price)
+                        .stock(stock)
                         .photo(createPhotoStream(photo))
                         .sellerId(customerSessionJSF.getCustomerId())
                         .build());
@@ -71,7 +72,8 @@ public class ProductJSF implements Serializable {
                 productServicLocal.addNewProduct(ImmutableNewProduct.builder()
                         .title(title)
                         .description(description)
-                        .price(price)
+                        .unitprice(price)
+                        .stock(stock)
                         .photo(createPhotoStream(photo))
                         .sellerId(customerSessionJSF.getCustomerId())
                         .build());
@@ -83,6 +85,12 @@ public class ProductJSF implements Serializable {
         }
 
         return "product";
+    }
+
+    public void delete(ProductId id) {
+        if (!productServicLocal.deleteProduct(id).hasMessagesThenProvide(msg -> messageFactory.showError(msg))) {
+            messageFactory.showInfo("Product deleted successful.");
+        }
     }
 
     private byte[] createPhotoStream(Part photo) throws IOException {
@@ -104,8 +112,7 @@ public class ProductJSF implements Serializable {
     }
 
     public List<PersistPageProduct> getAll() {
-        List<Product> products = productServicLocal.getAllProducts();
-        return PageProductMapper.INSTANCE.map(products);
+        return PageProductMapper.INSTANCE.map(productServicLocal.getAllProducts());
     }
 
 }

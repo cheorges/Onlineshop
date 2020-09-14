@@ -21,7 +21,8 @@ public class NewProductTest {
                 .sellerId(Id.of(1, CustomerId.class))
                 .title("title")
                 .description("description")
-                .price(42.0)
+                .unitprice(42.0)
+                .stock(5)
                 .photo(photo)
                 .build();
 
@@ -30,7 +31,8 @@ public class NewProductTest {
         assertThat(product.getSellerId().getValue(), is(1));
         assertThat(product.getTitle(), is("title"));
         assertThat(product.getDescription(), is("description"));
-        assertThat(product.getPrice(), is(42.0));
+        assertThat(product.getUnitprice(), is(42.0));
+        assertThat(product.getStock(), is(5));
         assertThat(product.getPhoto(), is(photo));
     }
 
@@ -41,7 +43,8 @@ public class NewProductTest {
         NewProduct product = ImmutableNewProduct.builder()
                 .sellerId(Id.of(1, CustomerId.class))
                 .title("title")
-                .price(42.0)
+                .unitprice(42.0)
+                .stock(5)
                 .photo(photo)
                 .build();
 
@@ -50,7 +53,8 @@ public class NewProductTest {
         assertThat(product.getSellerId().getValue(), is(1));
         assertThat(product.getTitle(), is("title"));
         assertNull(product.getDescription());
-        assertThat(product.getPrice(), is(42.0));
+        assertThat(product.getUnitprice(), is(42.0));
+        assertThat(product.getStock(), is(5));
         assertThat(product.getPhoto(), is(photo));
     }
 

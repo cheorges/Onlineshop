@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:cc="http://java.sun.com/jsp/jstl/core"
+                xmlns:c="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/resources/templates/template.xhtml"
@@ -12,21 +13,25 @@
         <hr/>
         <div class="card-columns">
             <h:form>
-                <c:forEach items="#{productJSF.all}" var="product" varStatus="metadata">
+                <cc:forEach items="#{productJSF.all}" var="product" varStatus="metadata">
                     <div class="card">
-                        <img class="card-img-top" src="image?id=#{product.id.value}" alt="#{product.title}" />
+                        <img class="card-img-top" src="image?id=#{product.id.value}" alt="#{product.title}"/>
                         <div class="card-body">
                             <h5 class="card-title">#{product.title}</h5>
-                            <p class="card-text text-muted">#{product.price} CHF</p>
+                            <p class="card-text text-muted">
+                                <h:outputText value="#{product.unitprice}">
+                                    <c:convertNumber minFractionDigits="2"/>
+                                </h:outputText> CHF
+                            </p>
                             <p class="card-text">#{product.description}</p>
                             <footer class="blockquote-footer">#{product.seller.representation}</footer>
-                            <c:if test="#{customerSessionJSF.authenticated}">
+                            <cc:if test="#{customerSessionJSF.authenticated}">
                                 <br/>
                                 <a href="#" class="btn btn-primary">Buy</a>
-                            </c:if>
+                            </cc:if>
                         </div>
                     </div>
-                </c:forEach>
+                </cc:forEach>
             </h:form>
         </div>
     </ui:define>

@@ -40,7 +40,8 @@ public class ProductTest {
                 .seller(customer)
                 .title("title")
                 .description("description")
-                .price(42.0)
+                .unitprice(42.0)
+                .stock(5)
                 .photo(photo)
                 .build();
 
@@ -50,7 +51,8 @@ public class ProductTest {
         assertThat(product.getSeller(), is(customer));
         assertThat(product.getTitle(), is("title"));
         assertThat(product.getDescription(), is("description"));
-        assertThat(product.getPrice(), is(42.0));
+        assertThat(product.getUnitprice(), is(42.0));
+        assertThat(product.getStock(), is(5));
         assertThat(product.getPhoto(), is(photo));
     }
 
@@ -62,7 +64,8 @@ public class ProductTest {
                 .id(Id.of(1, ProductId.class))
                 .seller(customer)
                 .title("title")
-                .price(42.0)
+                .unitprice(42.0)
+                .stock(5)
                 .photo(photo)
                 .build();
 
@@ -72,7 +75,8 @@ public class ProductTest {
         assertThat(product.getSeller(), is(customer));
         assertThat(product.getTitle(), is("title"));
         assertNull(product.getDescription());
-        assertThat(product.getPrice(), is(42.0));
+        assertThat(product.getUnitprice(), is(42.0));
+        assertThat(product.getStock(), is(5));
         assertThat(product.getPhoto(), is(photo));
     }
 

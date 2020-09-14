@@ -56,14 +56,15 @@ public class ProductJSF implements Serializable {
         return productServicLocal.getProductsBySeller(customerSessionJSF.getCustomerId());
     }
 
-    public String save(String title, String description, Double price, Part photo) throws UnauthorizedAccessException {
+    public String save(String title, String description, Double price, Integer stock, Part photo) throws UnauthorizedAccessException {
         try {
             if (getProduct() instanceof PersistPageProduct) {
                 productServicLocal.changeProduct(ImmutableChangeProduct.builder()
                         .id(Id.of(getProductId(), ProductId.class))
                         .title(title)
                         .description(description)
-                        .price(price)
+                        .unitprice(price)
+                        .stock(stock)
                         .photo(createPhotoStream(photo))
                         .sellerId(customerSessionJSF.getCustomerId())
                         .build());
@@ -71,7 +72,8 @@ public class ProductJSF implements Serializable {
                 productServicLocal.addNewProduct(ImmutableNewProduct.builder()
                         .title(title)
                         .description(description)
-                        .price(price)
+                        .unitprice(price)
+                        .stock(stock)
                         .photo(createPhotoStream(photo))
                         .sellerId(customerSessionJSF.getCustomerId())
                         .build());

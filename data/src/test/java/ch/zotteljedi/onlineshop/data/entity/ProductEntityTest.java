@@ -1,6 +1,5 @@
 package ch.zotteljedi.onlineshop.data.entity;
 
-import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.security.SecureRandom;
@@ -21,7 +20,7 @@ public class ProductEntityTest {
         productEntity.setId(1);
         productEntity.setTitle("title");
         productEntity.setDescription("description");
-        productEntity.setPrice(42.0);
+        productEntity.setUnitprice(42.0);
         productEntity.setStock(5);
         productEntity.setPhoto(photo);
         productEntity.setSeller(seller);
@@ -30,7 +29,7 @@ public class ProductEntityTest {
         assertThat(productEntity.getId(), is(1));
         assertThat(productEntity.getTitle(), is("title"));
         assertThat(productEntity.getDescription(), is("description"));
-        assertThat(productEntity.getPrice(), is(42.0));
+        assertThat(productEntity.getUnitprice(), is(42.0));
         assertThat(productEntity.getStock(), is(5));
         assertThat(productEntity.getPhoto(), is(photo));
         assertThat(productEntity.getSeller(), is(seller));

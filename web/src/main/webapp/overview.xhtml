@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:cc="http://java.sun.com/jsp/jstl/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsf/core"
                 template="/resources/templates/template.xhtml"
                 xml:lang="en" lang="en">
     <ui:define name="content">
@@ -21,20 +22,25 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">Title</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Buyer</th>
-                                    <th scope="col">Sold</th>
+                                    <th scope="col">Unitprice</th>
+                                    <th scope="col">Stock</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="#{productJSF.productsBySeller}" var="product" varStatus="metadata">
+                                <cc:forEach items="#{productJSF.productsBySeller}" var="product" varStatus="metadata">
                                     <tr class="align-middle">
-                                        <td class="align-middle"><a href="product.xhtml?id=#{product.id.value}" class="font-weight-bold text-decoration-none">#{product.title}</a></td>
-                                        <td class="align-middle">#{product.price}</td>
-                                        <td class="align-middle">TODO</td>
-                                        <td class="align-middle">TODO</td>
+                                        <td class="align-middle">
+                                            <a href="product.xhtml?id=#{product.id.value}"
+                                               class="font-weight-bold text-decoration-none">#{product.title}</a>
+                                        </td>
+                                        <td class="align-middle">
+                                            <h:outputText value="#{product.unitprice}">
+                                                <c:convertNumber minFractionDigits="2"/>
+                                            </h:outputText>
+                                        </td>
+                                        <td class="align-middle">#{product.stock}</td>
                                     </tr>
-                                </c:forEach>
+                                </cc:forEach>
                                 </tbody>
                             </table>
                         </h:form>

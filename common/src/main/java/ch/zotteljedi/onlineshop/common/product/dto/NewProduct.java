@@ -10,7 +10,7 @@ public interface NewProduct extends ValueObject {
     String getTitle();
     @Nullable
     String getDescription();
-    Double getPrice();
+    Double getUnitprice();
     Integer getStock();
     byte[] getPhoto();
     CustomerId getSellerId();

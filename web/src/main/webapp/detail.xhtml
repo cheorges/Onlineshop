@@ -18,7 +18,9 @@
         <hr/>
             <h:form>
                 <div class="card">
-                    <h5 class="card-header">#{productJSF.product.title}</h5>
+                    <h5 class="card-header">
+                        #{productJSF.product.title} <span class="badge badge-pill badge-primary">#{productJSF.product.stock}</span>
+                    </h5>
                     <div class="card-body">
                         <div class="card-deck">
                             <div class="card shadow">

@@ -55,6 +55,7 @@
                                                minValue="0.00"
                                                decimalPlaces="2"
                                                required="true"
+                                               emptyValue="0"
                                                requiredMessage="#{messageJSF.requiredMassage}"
                                                value="#{productJSF.product.unitprice}"/>
                                 <h:message for="unitprice" class="text-danger"/>
@@ -67,6 +68,7 @@
                                                minValue="0"
                                                decimalPlaces="0"
                                                required="true"
+                                               emptyValue="0"
                                                requiredMessage="#{messageJSF.requiredMassage}"
                                                value="#{productJSF.product.stock}"/>
                                 <p:message for="stock" class="text-danger"/>

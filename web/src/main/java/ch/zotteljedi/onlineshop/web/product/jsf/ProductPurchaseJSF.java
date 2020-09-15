@@ -36,7 +36,12 @@ public class ProductPurchaseJSF implements Serializable {
             return;
         }
         shoppingCart.addPageCartProduct(product);
-        messageFactory.showInfo(product.getTitle() + "added to shopping cart.");
+        messageFactory.showInfo(product.getTitle() + " added to shopping cart.");
+    }
+
+    public void updateProductInShoppingCart(ProductId id, Integer unit) {
+        shoppingCart.updatePageCartProduct(id, unit);
+        messageFactory.showInfo("update");
     }
 
     public void removeFromShoppingCart(ProductId id) {

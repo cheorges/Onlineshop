@@ -26,12 +26,17 @@ public class PageShoppingCart implements Serializable {
         }
     }
 
+    public void updatePageCartProduct(ProductId id, Integer unit) {
+        isProductInShoppingCart(id).ifPresent(product -> product.setUnit(unit));
+    }
+
     public List<PageCartProduct> getPageCartProducts() {
         return pageCartProducts;
     }
 
 
     private Optional<PageCartProduct> isProductInShoppingCart(ProductId id) {
-        return pageCartProducts.stream().filter(product -> product.getProductId().equals(id)).findFirst();
+        return pageCartProducts.stream().filter(product -> product.getId().equals(id)).findFirst();
     }
+
 }

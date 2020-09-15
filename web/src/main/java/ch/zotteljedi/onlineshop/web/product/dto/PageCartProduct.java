@@ -5,20 +5,20 @@ import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
 import java.io.Serializable;
 
 public class PageCartProduct implements Serializable {
-    private final ProductId productId;
+    private final ProductId id;
     private final String title;
     private final Double unitprice;
     private Integer unit;
 
-    public PageCartProduct(ProductId productId, String title, Double unitprice) {
-        this.productId = productId;
+    public PageCartProduct(ProductId id, String title, Double unitprice) {
+        this.id = id;
         this.title = title;
         this.unitprice = unitprice;
         this.unit = 1;
     }
 
-    public ProductId getProductId() {
-        return productId;
+    public ProductId getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -50,7 +50,7 @@ public class PageCartProduct implements Serializable {
         if (this == o) return true;
         if (!(o instanceof PageCartProduct)) return false;
         PageCartProduct that = (PageCartProduct) o;
-        return productId.equals(that.productId);
+        return id.equals(that.id);
     }
 
 }

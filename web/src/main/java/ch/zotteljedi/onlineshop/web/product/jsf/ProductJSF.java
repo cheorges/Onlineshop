@@ -3,7 +3,6 @@ package ch.zotteljedi.onlineshop.web.product.jsf;
 import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.common.product.dto.ImmutableChangeProduct;
 import ch.zotteljedi.onlineshop.common.product.dto.ImmutableNewProduct;
-import ch.zotteljedi.onlineshop.common.product.dto.Product;
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
 import ch.zotteljedi.onlineshop.common.product.service.ProductServicLocal;
 import ch.zotteljedi.onlineshop.web.common.exception.ObjectNotFoundByIdException;
@@ -15,14 +14,17 @@ import ch.zotteljedi.onlineshop.web.product.dto.PageProduct;
 import ch.zotteljedi.onlineshop.web.product.dto.PersistPageProduct;
 import ch.zotteljedi.onlineshop.web.product.mapper.PageProductMapper;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
-import java.io.*;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Named
 @ViewScoped
@@ -54,6 +56,10 @@ public class ProductJSF implements Serializable {
 
     public List<PersistPageProduct> getProductsBySeller() throws UnauthorizedAccessException {
         return PageProductMapper.INSTANCE.map(productServicLocal.getProductsBySeller(customerSessionJSF.getCustomerId()));
+    }
+
+    public List<PersistPageProduct> getAll() {
+        return PageProductMapper.INSTANCE.map(productServicLocal.getAllProducts());
     }
 
     public String save(String title, String description, Double price, Integer stock, Part photo) throws UnauthorizedAccessException {
@@ -109,10 +115,6 @@ public class ProductJSF implements Serializable {
     public void refreshPageProduct(int id) {
         productServicLocal.getProductById(Id.of(id, ProductId.class)).ifPresent(
                 product -> pageProduct = PageProductMapper.INSTANCE.map(product));
-    }
-
-    public List<PersistPageProduct> getAll() {
-        return PageProductMapper.INSTANCE.map(productServicLocal.getAllProducts());
     }
 
 }

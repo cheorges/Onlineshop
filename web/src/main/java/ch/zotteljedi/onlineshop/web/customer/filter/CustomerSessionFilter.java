@@ -17,7 +17,7 @@ public class CustomerSessionFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        if (httpRequest.getRequestURI().contains("image")) {
+        if (httpRequest.getRequestURI().contains("image") || httpRequest.getRequestURI().contains("detail")) {
             chain.doFilter(request, response);
             return;
         }

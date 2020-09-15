@@ -23,13 +23,9 @@
                                     <c:convertNumber minFractionDigits="2"/>
                                 </h:outputText> CHF
                             </p>
-                            <p class="card-text">#{product.description}</p>
                             <footer class="blockquote-footer">#{product.seller.representation}</footer>
-                            <cc:if test="#{customerSessionJSF.authenticated}">
-                                <br/>
-                                <h:commandButton value="Add To Cart" class="btn btn-primary"
-                                                 actionListener="#{productPurchaseJSF.addToShoppingCart(product)}"/>
-                            </cc:if>
+                            <br/>
+                            <a class="btn btn-primary" href="detail.xhtml?id=#{product.id.value}">Details</a>
                         </div>
                     </div>
                 </cc:forEach>

@@ -18,6 +18,16 @@ import java.util.List;
 @SessionScoped
 public class ProductPurchaseJSF implements Serializable {
 
+    private String text;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     @Inject
     private CustomerSessionJSF customerSessionJSF;
 
@@ -39,16 +49,19 @@ public class ProductPurchaseJSF implements Serializable {
         messageFactory.showInfo(product.getTitle() + " added to shopping cart.");
     }
 
-    public void updateProductInShoppingCart(ProductId id, Integer unit) {
-        shoppingCart.updatePageCartProduct(id, unit);
-        messageFactory.showInfo("update");
-    }
-
     public void removeFromShoppingCart(ProductId id) {
         if (shoppingCart.removePageCartProduct(id)) {
             messageFactory.showInfo("Product removed successful.");
         } else {
             messageFactory.showError("Product can not removed.");
         }
+    }
+
+    public void decrement(ProductId id) {
+        shoppingCart.decrement(id);
+    }
+
+    public void increment(ProductId id) {
+        shoppingCart.increment(id);
     }
 }

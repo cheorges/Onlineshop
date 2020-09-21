@@ -13,7 +13,10 @@ public class PageShoppingCart implements Serializable {
     public void addPageCartProduct(PersistPageProduct persistPageProduct) {
         isProductInShoppingCart(persistPageProduct.getId())
                 .ifPresentOrElse(PageCartProduct::incrementUnit, () -> pageCartProducts.add(
-                        new PageCartProduct(persistPageProduct.getId(), persistPageProduct.getTitle(), persistPageProduct.getUnitprice())));
+                        new PageCartProduct(persistPageProduct.getId(),
+                              persistPageProduct.getTitle(),
+                              persistPageProduct.getUnitprice(),
+                              persistPageProduct.getStock())));
     }
 
     public boolean removePageCartProduct(ProductId id) {
@@ -26,14 +29,17 @@ public class PageShoppingCart implements Serializable {
         }
     }
 
-    public void updatePageCartProduct(ProductId id, Integer unit) {
-        isProductInShoppingCart(id).ifPresent(product -> product.setUnit(unit));
+    public void increment(ProductId id) {
+        isProductInShoppingCart(id).ifPresent(product -> product.incrementUnit());
+    }
+
+    public void decrement(ProductId id) {
+        isProductInShoppingCart(id).ifPresent(product -> product.decrementUnit());
     }
 
     public List<PageCartProduct> getPageCartProducts() {
         return pageCartProducts;
     }
-
 
     private Optional<PageCartProduct> isProductInShoppingCart(ProductId id) {
         return pageCartProducts.stream().filter(product -> product.getId().equals(id)).findFirst();

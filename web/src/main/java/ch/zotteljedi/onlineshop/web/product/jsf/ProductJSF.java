@@ -58,8 +58,8 @@ public class ProductJSF implements Serializable {
         return PageProductMapper.INSTANCE.map(productServicLocal.getProductsBySeller(customerSessionJSF.getCustomerId()));
     }
 
-    public List<PersistPageProduct> getAll() {
-        return PageProductMapper.INSTANCE.map(productServicLocal.getAllProducts());
+    public List<PersistPageProduct> getAllAvailableProducts() {
+        return PageProductMapper.INSTANCE.map(productServicLocal.getAllAvailableProducts());
     }
 
     public String save(String title, String description, Double price, Integer stock, Part photo) throws UnauthorizedAccessException {

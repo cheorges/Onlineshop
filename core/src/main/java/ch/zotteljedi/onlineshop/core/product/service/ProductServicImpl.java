@@ -43,8 +43,8 @@ public class ProductServicImpl extends ApplicationService implements ProductServ
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        List<ProductEntity> products = em.createNamedQuery("ProductEntity.get", ProductEntity.class).getResultList();
+    public List<Product> getAllAvailableProducts() {
+        List<ProductEntity> products = em.createNamedQuery("ProductEntity.getByStockNotEmpty", ProductEntity.class).getResultList();
         return ProductMapper.INSTANCE.map(products).stream().map(it -> (Product) it).collect(Collectors.toList());
     }
 

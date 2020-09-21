@@ -15,7 +15,7 @@ import java.util.Optional;
 @Local
 public interface ProductServicLocal extends Serializable {
     List<Product> getProductsBySeller(CustomerId id);
-    List<Product> getAllProducts();
+    List<Product> getAllAvailableProducts();
     Optional<Product> getProductById(ProductId id);
     MessageContainer addNewProduct(NewProduct product);
     MessageContainer changeProduct(ChangeProduct product);

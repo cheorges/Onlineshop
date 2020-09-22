@@ -42,12 +42,12 @@
                                             <h:commandButton value="+" class="btn btn-primary"
                                                              actionListener="#{productPurchaseJSF.increment(product.id)}"/>
                                         </td>
-                                        <td class="align-middle text-center">
+                                        <td class="align-middle text-right">
                                             <h:outputText value="#{product.unitprice}">
                                                 <c:convertNumber minFractionDigits="2"/>
                                             </h:outputText>
                                         </td>
-                                        <td class="align-middle text-center">
+                                        <td class="align-middle text-right">
                                             <h:outputText it="totalprice" value="#{product.totalPrice}">
                                                 <c:convertNumber minFractionDigits="2"/>
                                             </h:outputText>
@@ -58,6 +58,15 @@
                                         </td>
                                     </tr>
                                 </cc:forEach>
+                                <tr>
+                                    <th scope="col">Total amount</th>
+                                    <th colspan="3" scope="col" class="text-right">
+                                        <h:outputText it="totalamount" value="#{productPurchaseJSF.totalAmount}">
+                                            <c:convertNumber minFractionDigits="2"/>
+                                        </h:outputText>
+                                    </th>
+                                    <th scope="col"></th>
+                                </tr>
                                 </tbody>
                             </table>
                         </h:form>

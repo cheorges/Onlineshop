@@ -37,6 +37,10 @@ public class PageShoppingCart implements Serializable {
         isProductInShoppingCart(id).ifPresent(product -> product.decrementUnit());
     }
 
+    public Double getTotalAmount() {
+        return pageCartProducts.stream().mapToDouble(PageCartProduct::getTotalPrice).sum();
+    }
+
     public List<PageCartProduct> getPageCartProducts() {
         return pageCartProducts;
     }

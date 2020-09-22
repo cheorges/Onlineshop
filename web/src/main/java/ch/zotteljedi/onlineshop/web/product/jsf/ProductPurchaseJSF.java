@@ -40,6 +40,10 @@ public class ProductPurchaseJSF implements Serializable {
         return shoppingCart.getPageCartProducts();
     }
 
+    public Double getTotalAmount() {
+        return shoppingCart.getTotalAmount();
+    }
+
     public void addToShoppingCart(PersistPageProduct product) throws UnauthorizedAccessException {
         if (customerSessionJSF.getCustomerId().equals(product.getSeller().getId())) {
             messageFactory.showError("You can not buy your own product.");

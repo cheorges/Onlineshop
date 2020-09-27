@@ -1,12 +1,16 @@
 package ch.zotteljedi.onlineshop.web.product.jsf;
 
+import ch.zotteljedi.onlineshop.common.product.dto.ImmutablePurchase;
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
+import ch.zotteljedi.onlineshop.common.product.dto.Purchase;
+import ch.zotteljedi.onlineshop.common.product.service.ProductPurchaseLocal;
 import ch.zotteljedi.onlineshop.web.common.massage.MessageFactory;
 import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.web.customer.jsf.CustomerSessionJSF;
 import ch.zotteljedi.onlineshop.web.product.dto.PageCartProduct;
 import ch.zotteljedi.onlineshop.web.product.dto.PageShoppingCart;
 import ch.zotteljedi.onlineshop.web.product.dto.PersistPageProduct;
+import ch.zotteljedi.onlineshop.web.product.mapper.ProductPurchaseMapper;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -18,18 +22,11 @@ import java.util.List;
 @SessionScoped
 public class ProductPurchaseJSF implements Serializable {
 
-    private String text;
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
     @Inject
     private CustomerSessionJSF customerSessionJSF;
+
+    @Inject
+    private ProductPurchaseLocal productPurchaseLocal;
 
     @Inject
     private MessageFactory messageFactory;
@@ -59,6 +56,11 @@ public class ProductPurchaseJSF implements Serializable {
         } else {
             messageFactory.showError("Product can not removed.");
         }
+    }
+
+    public void buyAllProductsInCart() throws UnauthorizedAccessException {
+        Purchase purchase = ProductPurchaseMapper.INSTANCE.map(customerSessionJSF.getCustomer(), shoppingCart.getPageCartProducts());
+        productPurchaseLocal.newPurchase(purchase);
     }
 
     public void decrement(ProductId id) {

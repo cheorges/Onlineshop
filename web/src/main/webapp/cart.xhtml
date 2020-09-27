@@ -23,8 +23,8 @@
                                 <tr>
                                     <th scope="col">Title</th>
                                     <th scope="col" class="text-center">Unit</th>
-                                    <th scope="col" class="text-center">Unitprice</th>
-                                    <th scope="col" class="text-center">Total</th>
+                                    <th scope="col" class="text-right">Unitprice</th>
+                                    <th scope="col" class="text-right">Total</th>
                                     <th scope="col" class="text-center">#</th>
                                 </tr>
                                 </thead>
@@ -76,7 +76,8 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <h:form>
-                            <a href="#" class="btn btn-outline-success">Buy Now</a>
+                            <h:commandButton value="Buy Now" class="btn btn-outline-success"
+                                             actionListener="#{productPurchaseJSF.buyAllProductsInCart()}"/>
                         </h:form>
                     </div>
                 </div>

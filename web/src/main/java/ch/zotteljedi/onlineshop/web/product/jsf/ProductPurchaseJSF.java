@@ -60,7 +60,10 @@ public class ProductPurchaseJSF implements Serializable {
 
     public void buyAllProductsInCart() throws UnauthorizedAccessException {
         Purchase purchase = ProductPurchaseMapper.INSTANCE.map(customerSessionJSF.getCustomer(), shoppingCart.getPageCartProducts());
-        productPurchaseLocal.newPurchase(purchase);
+        if (!productPurchaseLocal.newPurchase(purchase).hasMessagesThenProvide(msg -> messageFactory.showError(msg))) {
+            shoppingCart.clear();
+            messageFactory.showInfo("Purchase completed successfully.");
+        }
     }
 
     public void decrement(ProductId id) {

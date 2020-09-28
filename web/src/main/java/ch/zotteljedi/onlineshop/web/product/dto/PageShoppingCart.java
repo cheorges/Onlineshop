@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class PageShoppingCart implements Serializable {
-    private List<PageCartProduct> pageCartProducts = new ArrayList<>();
+    private final List<PageCartProduct> pageCartProducts = new ArrayList<>();
 
     public void addPageCartProduct(PersistPageProduct persistPageProduct) {
         isProductInShoppingCart(persistPageProduct.getId())
@@ -43,6 +43,10 @@ public class PageShoppingCart implements Serializable {
 
     public List<PageCartProduct> getPageCartProducts() {
         return pageCartProducts;
+    }
+
+    public void clear() {
+        pageCartProducts.clear();
     }
 
     private Optional<PageCartProduct> isProductInShoppingCart(ProductId id) {

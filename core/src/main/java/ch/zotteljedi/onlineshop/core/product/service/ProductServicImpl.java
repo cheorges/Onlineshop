@@ -75,7 +75,7 @@ public class ProductServicImpl extends ApplicationService implements ProductServ
         return getMessageContainer();
     }
 
-    private Optional<ProductEntity> getProductEntityById(ProductId id) {
+    public Optional<ProductEntity> getProductEntityById(ProductId id) {
         return em.createNamedQuery("ProductEntity.getById", ProductEntity.class)
                 .setParameter("id", id.getValue())
                 .getResultList()

@@ -40,7 +40,7 @@ public class ProductEntity {
    @Size(max = 1000, message = "Description should not be greater than 1000 characters.")
    private String description;
 
-   @Column(name = "price", nullable = false, precision = 2)
+   @Column(name = "unitprice", nullable = false, precision = 2)
    @NotNull(message = "Price may not be blank.")
    private Double unitprice;
 

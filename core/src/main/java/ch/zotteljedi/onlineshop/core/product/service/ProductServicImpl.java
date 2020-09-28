@@ -4,6 +4,7 @@ import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.product.dto.ChangeProduct;
 import ch.zotteljedi.onlineshop.common.product.service.ProductServicLocal;
+import ch.zotteljedi.onlineshop.core.customer.message.CustomerByIdNotFound;
 import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
 import ch.zotteljedi.onlineshop.core.product.message.ProductByIdNotFound;
 import ch.zotteljedi.onlineshop.data.entity.ProductEntity;
@@ -56,7 +57,8 @@ public class ProductServicImpl extends ApplicationService implements ProductServ
     @Override
     public MessageContainer addNewProduct(NewProduct product) {
         ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
-        productEntity.setSeller(customerService.getCustomerEntityById(product.getSellerId()));
+        customerService.getCustomerEntityById(product.getSellerId())
+              .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
         em.persist(productEntity);
         return getMessageContainer();
     }
@@ -64,7 +66,8 @@ public class ProductServicImpl extends ApplicationService implements ProductServ
     @Override
     public MessageContainer changeProduct(ChangeProduct product) {
         ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
-        productEntity.setSeller(customerService.getCustomerEntityById(product.getSellerId()));
+        customerService.getCustomerEntityById(product.getSellerId())
+              .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
         em.merge(productEntity);
         return getMessageContainer();
     }

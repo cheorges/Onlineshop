@@ -4,6 +4,7 @@ import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.common.product.dto.Purchase;
 import ch.zotteljedi.onlineshop.common.product.service.ProductPurchaseLocal;
 import ch.zotteljedi.onlineshop.common.product.service.ProductServicLocal;
+import ch.zotteljedi.onlineshop.core.customer.message.CustomerByIdNotFound;
 import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
 import ch.zotteljedi.onlineshop.core.product.mapper.PurchaseMapper;
 import ch.zotteljedi.onlineshop.core.product.message.ProductByIdNotFound;
@@ -39,7 +40,8 @@ public class ProductPurchaseImpl extends ApplicationService implements ProductPu
    public MessageContainer newPurchase(Purchase purchase) {
       final PurchaseEntitiy purchaseEntitiy = new PurchaseEntitiy();
       purchaseEntitiy.setBoughtAt(LocalDate.now());
-      purchaseEntitiy.setBuyer(customerService.getCustomerEntityById(purchase.getBuyerId()));
+      customerService.getCustomerEntityById(purchase.getBuyerId())
+            .ifPresentOrElse(purchaseEntitiy::setBuyer, () -> addMessage(new CustomerByIdNotFound(purchase.getBuyerId())));
 
       List<PurchaseItemEntity> purchaseItemEntities = purchase.getCartProduct().stream()
             .map(cartProduct -> {
@@ -50,7 +52,7 @@ public class ProductPurchaseImpl extends ApplicationService implements ProductPu
                return purchaseItemEntity;
             }).collect(Collectors.toList());
 
-      purchaseItemEntities.forEach(it -> em.persist(it));
+      getMessageContainer().hasNoMessage(() -> purchaseItemEntities.forEach(it -> em.persist(it)));
 
       return getMessageContainer();
    }

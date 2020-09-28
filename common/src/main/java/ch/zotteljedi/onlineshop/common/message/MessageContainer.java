@@ -21,4 +21,10 @@ public class MessageContainer implements ValueObject {
         messages.clear();
         return true;
     }
+
+   public void hasNoMessage(Runnable action) {
+        if (messages.isEmpty()) {
+            action.run();
+        }
+   }
 }

@@ -4,14 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Arrays;
 import java.util.Objects;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -53,7 +46,7 @@ public class ProductEntity {
    @NotNull(message = "Photo may not be blank.")
    private byte[] photo;
 
-   @ManyToOne
+   @ManyToOne(cascade = CascadeType.REMOVE)
    @NotNull(message = "Seller may not be blank.")
    private CustomerEntity seller;
 

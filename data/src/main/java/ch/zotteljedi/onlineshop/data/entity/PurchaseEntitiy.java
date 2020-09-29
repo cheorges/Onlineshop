@@ -22,7 +22,7 @@ public class PurchaseEntitiy {
     @Column(name = "boughtAt", nullable = false)
     private LocalDate boughtAt;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @NotNull(message = "Buyer may not be blank.")
     private CustomerEntity buyer;
 

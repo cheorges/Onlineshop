@@ -1,12 +1,14 @@
 package ch.zotteljedi.onlineshop.core.product.service;
 
 import ch.zotteljedi.onlineshop.common.message.MessageContainer;
+import ch.zotteljedi.onlineshop.common.product.dto.CartProduct;
 import ch.zotteljedi.onlineshop.common.product.dto.Purchase;
 import ch.zotteljedi.onlineshop.common.product.service.ProductPurchaseLocal;
 import ch.zotteljedi.onlineshop.common.product.service.ProductServicLocal;
 import ch.zotteljedi.onlineshop.core.customer.message.CustomerByIdNotFound;
 import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
 import ch.zotteljedi.onlineshop.core.product.mapper.PurchaseMapper;
+import ch.zotteljedi.onlineshop.core.product.message.NotEnoughProductsAvailable;
 import ch.zotteljedi.onlineshop.core.product.message.ProductByIdNotFound;
 import ch.zotteljedi.onlineshop.core.service.ApplicationService;
 import ch.zotteljedi.onlineshop.data.entity.PurchaseEntitiy;
@@ -42,18 +44,26 @@ public class ProductPurchaseImpl extends ApplicationService implements ProductPu
       purchaseEntitiy.setBoughtAt(LocalDate.now());
       customerService.getCustomerEntityById(purchase.getBuyerId())
             .ifPresentOrElse(purchaseEntitiy::setBuyer, () -> addMessage(new CustomerByIdNotFound(purchase.getBuyerId())));
+      em.persist(purchaseEntitiy);
 
       List<PurchaseItemEntity> purchaseItemEntities = purchase.getCartProduct().stream()
             .map(cartProduct -> {
-               PurchaseItemEntity purchaseItemEntity = PurchaseMapper.INSTANCE.map(cartProduct);
-               purchaseItemEntity.setPurchase(purchaseEntitiy);
-               productService.getProductEntityById(cartProduct.getProductId())
-                     .ifPresentOrElse(purchaseItemEntity::setProduct, () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
-               return purchaseItemEntity;
+               return getPurchaseItemEntity(purchaseEntitiy, cartProduct);
             }).collect(Collectors.toList());
 
       getMessageContainer().hasNoMessage(() -> purchaseItemEntities.forEach(it -> em.persist(it)));
 
       return getMessageContainer();
+   }
+
+   private PurchaseItemEntity getPurchaseItemEntity(final PurchaseEntitiy purchaseEntitiy, final CartProduct cartProduct) {
+      productService.getProductById(cartProduct.getProductId())
+            .ifPresentOrElse(product -> productService.removeStockByProductId(product.getId(), cartProduct.getUnit()).hasMessagesThenProvide(this::addMessage),
+                  () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
+      PurchaseItemEntity purchaseItemEntity = PurchaseMapper.INSTANCE.map(cartProduct);
+      purchaseItemEntity.setPurchase(purchaseEntitiy);
+      productService.getProductEntityById(cartProduct.getProductId())
+            .ifPresentOrElse(purchaseItemEntity::setProduct, () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
+      return purchaseItemEntity;
    }
 }

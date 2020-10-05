@@ -7,6 +7,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class MessageContainerTest {
 
@@ -93,6 +94,33 @@ public class MessageContainerTest {
         assertThat(messages.size(), is(1));
         assertThat(messages.get(0).getMessage(), is("message"));
         assertFalse(messageContainer.hasMessagesThenProvide(messages::add));
+    }
+
+    @Test
+    public void test_has_no_message() {
+        // Given
+        MessageContainer messageContainer = new MessageContainer();
+        Runnable runnable = mock(Runnable.class);
+
+        // When
+        messageContainer.hasNoMessage(runnable);
+
+        // Then
+        verify(runnable).run();
+    }
+
+    @Test
+    public void test_messagecontainer_has_message() {
+        // Given
+        MessageContainer messageContainer = new MessageContainer();
+        messageContainer.add(() -> "message");
+        Runnable runnable = mock(Runnable.class);
+
+        // When
+        messageContainer.hasNoMessage(runnable);
+
+        // Then
+        verify(runnable, never()).run();
     }
 
 }

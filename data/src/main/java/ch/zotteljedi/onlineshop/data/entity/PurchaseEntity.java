@@ -7,12 +7,12 @@ import java.util.Objects;
 
 @Entity
 @NamedQuery(name = "PurchaseEntitiy.get",
-        query = "select p from PurchaseEntitiy p")
+        query = "select p from PurchaseEntity p")
 @NamedQuery(name = "PurchaseEntitiy.getByBuyer",
-        query = "select p from PurchaseEntitiy p where p.buyer = :buyer")
+        query = "select p from PurchaseEntity p where p.buyer = :buyer")
 @NamedQuery(name = "PurchaseEntitiy.getById",
-        query = "select p from PurchaseEntitiy p where p.id = :id")
-public class PurchaseEntitiy {
+        query = "select p from PurchaseEntity p where p.id = :id")
+public class PurchaseEntity {
 
     @Id
     @GeneratedValue
@@ -20,6 +20,7 @@ public class PurchaseEntitiy {
     private int id;
 
     @Column(name = "boughtAt", nullable = false)
+    @NotNull(message = "Purchasedate may not be blank.")
     private LocalDate boughtAt;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
@@ -53,8 +54,8 @@ public class PurchaseEntitiy {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PurchaseEntitiy)) return false;
-        PurchaseEntitiy that = (PurchaseEntitiy) o;
+        if (!(o instanceof PurchaseEntity)) return false;
+        PurchaseEntity that = (PurchaseEntity) o;
         return id == that.id &&
                 boughtAt.equals(that.boughtAt) &&
                 buyer.equals(that.buyer);

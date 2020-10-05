@@ -8,10 +8,9 @@ import ch.zotteljedi.onlineshop.common.product.service.ProductServicLocal;
 import ch.zotteljedi.onlineshop.core.customer.message.CustomerByIdNotFound;
 import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
 import ch.zotteljedi.onlineshop.core.product.mapper.PurchaseMapper;
-import ch.zotteljedi.onlineshop.core.product.message.NotEnoughProductsAvailable;
 import ch.zotteljedi.onlineshop.core.product.message.ProductByIdNotFound;
 import ch.zotteljedi.onlineshop.core.service.ApplicationService;
-import ch.zotteljedi.onlineshop.data.entity.PurchaseEntitiy;
+import ch.zotteljedi.onlineshop.data.entity.PurchaseEntity;
 import ch.zotteljedi.onlineshop.data.entity.PurchaseItemEntity;
 
 import java.time.LocalDate;
@@ -40,15 +39,15 @@ public class ProductPurchaseImpl extends ApplicationService implements ProductPu
 
    @Override
    public MessageContainer newPurchase(Purchase purchase) {
-      final PurchaseEntitiy purchaseEntitiy = new PurchaseEntitiy();
-      purchaseEntitiy.setBoughtAt(LocalDate.now());
+      final PurchaseEntity purchaseEntity = new PurchaseEntity();
+      purchaseEntity.setBoughtAt(LocalDate.now());
       customerService.getCustomerEntityById(purchase.getBuyerId())
-            .ifPresentOrElse(purchaseEntitiy::setBuyer, () -> addMessage(new CustomerByIdNotFound(purchase.getBuyerId())));
-      em.persist(purchaseEntitiy);
+            .ifPresentOrElse(purchaseEntity::setBuyer, () -> addMessage(new CustomerByIdNotFound(purchase.getBuyerId())));
+      em.persist(purchaseEntity);
 
       List<PurchaseItemEntity> purchaseItemEntities = purchase.getCartProduct().stream()
             .map(cartProduct -> {
-               return getPurchaseItemEntity(purchaseEntitiy, cartProduct);
+               return getPurchaseItemEntity(purchaseEntity, cartProduct);
             }).collect(Collectors.toList());
 
       getMessageContainer().hasNoMessage(() -> purchaseItemEntities.forEach(it -> em.persist(it)));
@@ -56,12 +55,12 @@ public class ProductPurchaseImpl extends ApplicationService implements ProductPu
       return getMessageContainer();
    }
 
-   private PurchaseItemEntity getPurchaseItemEntity(final PurchaseEntitiy purchaseEntitiy, final CartProduct cartProduct) {
+   private PurchaseItemEntity getPurchaseItemEntity(final PurchaseEntity purchaseEntity, final CartProduct cartProduct) {
       productService.getProductById(cartProduct.getProductId())
             .ifPresentOrElse(product -> productService.removeStockByProductId(product.getId(), cartProduct.getUnit()).hasMessagesThenProvide(this::addMessage),
                   () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
       PurchaseItemEntity purchaseItemEntity = PurchaseMapper.INSTANCE.map(cartProduct);
-      purchaseItemEntity.setPurchase(purchaseEntitiy);
+      purchaseItemEntity.setPurchase(purchaseEntity);
       productService.getProductEntityById(cartProduct.getProductId())
             .ifPresentOrElse(purchaseItemEntity::setProduct, () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
       return purchaseItemEntity;

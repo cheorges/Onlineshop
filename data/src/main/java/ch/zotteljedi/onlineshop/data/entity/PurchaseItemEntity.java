@@ -28,7 +28,7 @@ public class PurchaseItemEntity {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @NotNull(message = "Purchase may not be blank.")
-    private PurchaseEntitiy purchase;
+    private PurchaseEntity purchase;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @NotNull(message = "Product may not be blank.")
@@ -58,11 +58,11 @@ public class PurchaseItemEntity {
         this.unit = unit;
     }
 
-    public PurchaseEntitiy getPurchase() {
+    public PurchaseEntity getPurchase() {
         return purchase;
     }
 
-    public void setPurchase(PurchaseEntitiy purchase) {
+    public void setPurchase(PurchaseEntity purchase) {
         this.purchase = purchase;
     }
 

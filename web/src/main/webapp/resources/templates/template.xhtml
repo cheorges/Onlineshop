@@ -60,9 +60,10 @@
                             #{customerSessionJSF.customer.representation}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-dark " href="overview.xhtml">Product</a>
-                            <a class="dropdown-item text-dark " href="profile.xhtml">Profiel</a>
                             <a class="dropdown-item text-dark" href="cart.xhtml">Shopping cart</a>
+                            <a class="dropdown-item text-dark " href="overview.xhtml">Product</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-dark " href="profile.xhtml">Profiel</a>
                             <div class="dropdown-divider"></div>
                             <h:form><h:commandButton action="#{customerSessionJSF.logout}" value="Logout"
                                                      class="dropdown-item text-dark"/></h:form>

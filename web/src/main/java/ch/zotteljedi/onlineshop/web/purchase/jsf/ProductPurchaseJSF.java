@@ -1,16 +1,15 @@
-package ch.zotteljedi.onlineshop.web.product.jsf;
+package ch.zotteljedi.onlineshop.web.purchase.jsf;
 
-import ch.zotteljedi.onlineshop.common.product.dto.ImmutablePurchase;
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
-import ch.zotteljedi.onlineshop.common.product.dto.Purchase;
-import ch.zotteljedi.onlineshop.common.product.service.ProductPurchaseLocal;
+import ch.zotteljedi.onlineshop.common.purchase.dto.Purchase;
+import ch.zotteljedi.onlineshop.common.purchase.service.ProductPurchaseLocal;
 import ch.zotteljedi.onlineshop.web.common.massage.MessageFactory;
 import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.web.customer.jsf.CustomerSessionJSF;
-import ch.zotteljedi.onlineshop.web.product.dto.PageCartProduct;
-import ch.zotteljedi.onlineshop.web.product.dto.PageShoppingCart;
+import ch.zotteljedi.onlineshop.web.purchase.dto.PageCartProduct;
+import ch.zotteljedi.onlineshop.web.purchase.dto.PageShoppingCart;
 import ch.zotteljedi.onlineshop.web.product.dto.PersistPageProduct;
-import ch.zotteljedi.onlineshop.web.product.mapper.ProductPurchaseMapper;
+import ch.zotteljedi.onlineshop.web.purchase.mapper.ProductPurchaseMapper;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;

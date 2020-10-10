@@ -4,7 +4,7 @@ import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.common.product.dto.ImmutableChangeProduct;
 import ch.zotteljedi.onlineshop.common.product.dto.ImmutableNewProduct;
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
-import ch.zotteljedi.onlineshop.common.product.service.ProductServicLocal;
+import ch.zotteljedi.onlineshop.common.product.service.ProductServiceLocal;
 import ch.zotteljedi.onlineshop.web.common.exception.ObjectNotFoundByIdException;
 import ch.zotteljedi.onlineshop.web.common.massage.MessageFactory;
 import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
@@ -31,7 +31,7 @@ import javax.servlet.http.Part;
 public class ProductJSF implements Serializable {
 
     @Inject
-    private ProductServicLocal productServicLocal;
+    private ProductServiceLocal productServiceLocal;
 
     @Inject
     private CustomerSessionJSF customerSessionJSF;
@@ -55,17 +55,17 @@ public class ProductJSF implements Serializable {
     }
 
     public List<PersistPageProduct> getProductsBySeller() throws UnauthorizedAccessException {
-        return PageProductMapper.INSTANCE.map(productServicLocal.getProductsBySeller(customerSessionJSF.getCustomerId()));
+        return PageProductMapper.INSTANCE.map(productServiceLocal.getProductsBySeller(customerSessionJSF.getCustomerId()));
     }
 
     public List<PersistPageProduct> getAllAvailableProducts() {
-        return PageProductMapper.INSTANCE.map(productServicLocal.getAllAvailableProducts());
+        return PageProductMapper.INSTANCE.map(productServiceLocal.getAllAvailableProducts());
     }
 
     public String save(String title, String description, Double price, Integer stock, Part photo) throws UnauthorizedAccessException {
         try {
             if (getProduct() instanceof PersistPageProduct) {
-                productServicLocal.changeProduct(ImmutableChangeProduct.builder()
+                productServiceLocal.changeProduct(ImmutableChangeProduct.builder()
                         .id(Id.of(getProductId(), ProductId.class))
                         .title(title)
                         .description(description)
@@ -75,7 +75,7 @@ public class ProductJSF implements Serializable {
                         .sellerId(customerSessionJSF.getCustomerId())
                         .build());
             } else {
-                productServicLocal.addNewProduct(ImmutableNewProduct.builder()
+                productServiceLocal.addNewProduct(ImmutableNewProduct.builder()
                         .title(title)
                         .description(description)
                         .unitprice(price)
@@ -94,7 +94,7 @@ public class ProductJSF implements Serializable {
     }
 
     public void delete(ProductId id) {
-        if (!productServicLocal.deleteProduct(id).hasMessagesThenProvide(msg -> messageFactory.showError(msg))) {
+        if (!productServiceLocal.deleteProduct(id).hasMessagesThenProvide(msg -> messageFactory.showError(msg))) {
             messageFactory.showInfo("Product deleted successful.");
         }
     }
@@ -102,7 +102,7 @@ public class ProductJSF implements Serializable {
     private byte[] createPhotoStream(Part photo) throws IOException {
         InputStream inputStream = photo.getInputStream();
         if (photo.getSize() == 0) {
-            return productServicLocal.getProductById(Id.of(getProductId(), ProductId.class)).orElseThrow(ObjectNotFoundByIdException::new).getPhoto();
+            return productServiceLocal.getProductById(Id.of(getProductId(), ProductId.class)).orElseThrow(ObjectNotFoundByIdException::new).getPhoto();
         }
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[(int) photo.getSize()];
@@ -113,7 +113,7 @@ public class ProductJSF implements Serializable {
     }
 
     public void refreshPageProduct(int id) {
-        productServicLocal.getProductById(Id.of(id, ProductId.class)).ifPresent(
+        productServiceLocal.getProductById(Id.of(id, ProductId.class)).ifPresent(
                 product -> pageProduct = PageProductMapper.INSTANCE.map(product));
     }
 

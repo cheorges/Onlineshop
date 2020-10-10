@@ -8,10 +8,15 @@ import org.jetbrains.annotations.Nullable;
 @Value.Immutable
 public interface NewProduct extends ValueObject {
     String getTitle();
+
     @Nullable
     String getDescription();
+
     Double getUnitprice();
+
     Integer getStock();
+
     byte[] getPhoto();
+
     CustomerId getSellerId();
 }

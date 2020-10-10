@@ -1,4 +1,4 @@
-package ch.zotteljedi.onlineshop.web.product.dto;
+package ch.zotteljedi.onlineshop.web.purchase.dto;
 
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
 

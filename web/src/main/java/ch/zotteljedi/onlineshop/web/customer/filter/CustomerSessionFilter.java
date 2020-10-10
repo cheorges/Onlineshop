@@ -17,7 +17,14 @@ public class CustomerSessionFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        if (httpRequest.getRequestURI().contains("image") || httpRequest.getRequestURI().contains("detail")) {
+        if (httpRequest.getRequestURI().contains("image")
+                || httpRequest.getRequestURI().contains("detail")
+                || httpRequest.getRequestURI().contains("cart")
+                || httpRequest.getRequestURI().contains("overview")
+                || httpRequest.getRequestURI().contains("product")
+                || httpRequest.getRequestURI().contains("purchase")
+                || httpRequest.getRequestURI().contains("purchasedetail")
+                || httpRequest.getRequestURI().contains("profile")) {
             chain.doFilter(request, response);
             return;
         }

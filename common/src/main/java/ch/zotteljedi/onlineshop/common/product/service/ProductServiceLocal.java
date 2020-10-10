@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Local
-public interface ProductServicLocal extends Serializable {
+public interface ProductServiceLocal extends Serializable {
     List<Product> getProductsBySeller(CustomerId id);
     List<Product> getAllAvailableProducts();
     Optional<Product> getProductById(ProductId id);

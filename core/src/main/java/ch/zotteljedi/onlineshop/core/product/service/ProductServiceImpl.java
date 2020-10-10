@@ -3,7 +3,7 @@ package ch.zotteljedi.onlineshop.core.product.service;
 import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.product.dto.ChangeProduct;
-import ch.zotteljedi.onlineshop.common.product.service.ProductServicLocal;
+import ch.zotteljedi.onlineshop.common.product.service.ProductServiceLocal;
 import ch.zotteljedi.onlineshop.core.customer.message.CustomerByIdNotFound;
 import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
 import ch.zotteljedi.onlineshop.core.product.message.NotEnoughProductsAvailable;
@@ -15,7 +15,6 @@ import ch.zotteljedi.onlineshop.common.product.dto.NewProduct;
 import ch.zotteljedi.onlineshop.common.product.dto.Product;
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
 import ch.zotteljedi.onlineshop.core.product.mapper.ProductMapper;
-import edu.emory.mathcs.backport.java.util.Collections;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -29,9 +28,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Stateless
-@Local(ProductServicLocal.class)
+@Local(ProductServiceLocal.class)
 @Transactional
-public class ProductServicImpl extends ApplicationService implements ProductServicLocal {
+public class ProductServiceImpl extends ApplicationService implements ProductServiceLocal {
 
     @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
     private EntityManager em;

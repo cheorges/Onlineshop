@@ -1,6 +1,7 @@
-package ch.zotteljedi.onlineshop.web.product.dto;
+package ch.zotteljedi.onlineshop.web.purchase.dto;
 
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
+import ch.zotteljedi.onlineshop.web.product.dto.PersistPageProduct;
 
 import java.io.Serializable;
 import java.util.ArrayList;

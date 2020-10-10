@@ -1,7 +1,7 @@
-package ch.zotteljedi.onlineshop.common.product.service;
+package ch.zotteljedi.onlineshop.common.purchase.service;
 
 import ch.zotteljedi.onlineshop.common.message.MessageContainer;
-import ch.zotteljedi.onlineshop.common.product.dto.Purchase;
+import ch.zotteljedi.onlineshop.common.purchase.dto.Purchase;
 
 import javax.ejb.Local;
 import java.io.Serializable;

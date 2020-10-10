@@ -5,7 +5,7 @@ import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.web.customer.jsf.CustomerJSF;
 import ch.zotteljedi.onlineshop.common.product.dto.Product;
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
-import ch.zotteljedi.onlineshop.common.product.service.ProductServicLocal;
+import ch.zotteljedi.onlineshop.common.product.service.ProductServiceLocal;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ImageServlet extends HttpServlet {
 
    @Inject
-   ProductServicLocal productServicLocal;
+   ProductServiceLocal productServiceLocal;
 
    @Override
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,7 +31,7 @@ public class ImageServlet extends HttpServlet {
          Optional<Product> product;
          String idAsString = request.getParameter("id");
          if (Objects.nonNull(idAsString)) {
-            product = productServicLocal.getProductById(Id.of(Integer.parseInt(idAsString), ProductId.class));
+            product = productServiceLocal.getProductById(Id.of(Integer.parseInt(idAsString), ProductId.class));
             if (product.isPresent()) {
                response.reset();
                response.getOutputStream().write(product.get().getPhoto());

@@ -1,9 +1,9 @@
-package ch.zotteljedi.onlineshop.web.product.mapper;
+package ch.zotteljedi.onlineshop.web.purchase.mapper;
 
-import ch.zotteljedi.onlineshop.common.product.dto.ImmutableCartProduct;
-import ch.zotteljedi.onlineshop.common.product.dto.ImmutablePurchase;
+import ch.zotteljedi.onlineshop.common.purchase.dto.ImmutableCartProduct;
+import ch.zotteljedi.onlineshop.common.purchase.dto.ImmutablePurchase;
 import ch.zotteljedi.onlineshop.web.customer.dto.PageCustomer;
-import ch.zotteljedi.onlineshop.web.product.dto.PageCartProduct;
+import ch.zotteljedi.onlineshop.web.purchase.dto.PageCartProduct;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

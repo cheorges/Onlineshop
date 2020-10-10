@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProductServicImpl extends ApplicationService implements ProductServicLocal {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
     private EntityManager em;
 
     @Inject

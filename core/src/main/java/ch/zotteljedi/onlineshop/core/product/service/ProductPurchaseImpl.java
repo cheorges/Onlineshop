@@ -28,7 +28,7 @@ import javax.transaction.Transactional;
 @Transactional
 public class ProductPurchaseImpl extends ApplicationService implements ProductPurchaseLocal {
 
-   @PersistenceContext
+   @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
    private EntityManager em;
 
    @Inject

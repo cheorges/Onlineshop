@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class CustomerServiceImpl extends ApplicationService implements CustomerServiceLocal {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
     EntityManager em;
 
     @Override

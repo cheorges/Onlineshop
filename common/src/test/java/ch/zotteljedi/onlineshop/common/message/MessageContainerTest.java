@@ -97,13 +97,13 @@ public class MessageContainerTest {
     }
 
     @Test
-    public void test_has_no_message() {
+    public void test_has_no_message_then_provide_runnable() {
         // Given
         MessageContainer messageContainer = new MessageContainer();
         Runnable runnable = mock(Runnable.class);
 
         // When
-        messageContainer.hasNoMessage(runnable);
+        messageContainer.hasNoMessageThenProvide(runnable);
 
         // Then
         verify(runnable).run();
@@ -117,10 +117,32 @@ public class MessageContainerTest {
         Runnable runnable = mock(Runnable.class);
 
         // When
-        messageContainer.hasNoMessage(runnable);
+        messageContainer.hasNoMessageThenProvide(runnable);
 
         // Then
         verify(runnable, never()).run();
+    }
+
+    @Test
+    public void test_has_message() {
+        MessageContainer messageContainer = new MessageContainer();
+        messageContainer.add(() -> "message");
+        assertTrue(messageContainer.hasMessages());
+    }
+
+    @Test
+    public void test_has_no_message() {
+        MessageContainer messageContainer = new MessageContainer();
+        assertFalse(messageContainer.hasMessages());
+    }
+
+    @Test
+    public void test_get_messages() {
+        MessageContainer messageContainer = new MessageContainer();
+        messageContainer.add(() -> "message");
+        assertNotNull(messageContainer.getMessages());
+        assertThat(messageContainer.getMessages().size(), is(1));
+        assertThat(messageContainer.getMessages().get(0).getMessage(), is("message"));
     }
 
 }

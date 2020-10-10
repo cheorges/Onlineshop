@@ -1,10 +1,7 @@
 package ch.zotteljedi.onlineshop.common.product.dto;
 
-import ch.zotteljedi.onlineshop.common.customer.dto.Customer;
 import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
-import ch.zotteljedi.onlineshop.common.customer.dto.ImmutableCustomer;
 import ch.zotteljedi.onlineshop.common.dto.Id;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 

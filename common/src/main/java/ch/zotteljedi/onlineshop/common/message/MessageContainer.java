@@ -14,7 +14,7 @@ public class MessageContainer implements ValueObject {
     }
 
     public boolean hasMessagesThenProvide(Consumer<Message> action) {
-        if (messages.isEmpty()) {
+        if (!hasMessages()) {
             return false;
         }
         messages.forEach(action);
@@ -22,9 +22,17 @@ public class MessageContainer implements ValueObject {
         return true;
     }
 
-   public void hasNoMessage(Runnable action) {
-        if (messages.isEmpty()) {
+    public void hasNoMessageThenProvide(Runnable action) {
+        if (!hasMessages()) {
             action.run();
         }
-   }
+    }
+
+    public boolean hasMessages() {
+        return !messages.isEmpty();
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
 }

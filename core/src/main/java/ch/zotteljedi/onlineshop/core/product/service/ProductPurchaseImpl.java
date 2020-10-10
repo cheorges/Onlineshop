@@ -50,7 +50,7 @@ public class ProductPurchaseImpl extends ApplicationService implements ProductPu
                return getPurchaseItemEntity(purchaseEntity, cartProduct);
             }).collect(Collectors.toList());
 
-      getMessageContainer().hasNoMessage(() -> purchaseItemEntities.forEach(it -> em.persist(it)));
+      getMessageContainer().hasNoMessageThenProvide(() -> purchaseItemEntities.forEach(it -> em.persist(it)));
 
       return getMessageContainer();
    }

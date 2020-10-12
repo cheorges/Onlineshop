@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

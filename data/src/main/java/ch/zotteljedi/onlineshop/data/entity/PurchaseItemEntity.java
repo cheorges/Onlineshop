@@ -7,10 +7,12 @@ import java.util.Objects;
 @Entity
 @NamedQuery(name = "PurchaseItemEntity.get",
         query = "select p from PurchaseItemEntity p")
-@NamedQuery(name = "PurchaseItemEntity.getByPruchase",
-        query = "select p from PurchaseItemEntity p where p.purchase = :purchase")
 @NamedQuery(name = "PurchaseItemEntity.getById",
         query = "select p from PurchaseItemEntity p where p.id = :id")
+@NamedQuery(name = "PurchaseItemEntity.getByPruchase",
+        query = "select p from PurchaseItemEntity p where p.purchase = :purchase")
+@NamedQuery(name = "PurchaseItemEntity.getByProduct",
+        query = "select p from PurchaseItemEntity p where p.product = :product")
 public class PurchaseItemEntity {
 
     @Id

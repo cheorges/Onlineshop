@@ -6,7 +6,6 @@ import ch.zotteljedi.onlineshop.common.purchase.dto.PurchaseItemOverview;
 import ch.zotteljedi.onlineshop.common.purchase.dto.PurchaseOverview;
 import ch.zotteljedi.onlineshop.common.purchase.service.PurchaseServiceLocal;
 import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
-import ch.zotteljedi.onlineshop.core.product.service.ProductServiceImpl;
 import ch.zotteljedi.onlineshop.core.purchase.mapper.PurchaseMapper;
 import ch.zotteljedi.onlineshop.core.service.ApplicationService;
 import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
@@ -35,10 +34,6 @@ public class PurchaseImpl extends ApplicationService implements PurchaseServiceL
 
    @Inject
    private CustomerServiceImpl customerService;
-
-   @Inject
-   private ProductServiceImpl productService;
-
 
    @Override
    public List<PurchaseOverview> getPurchaseByCustomer(CustomerId customerId) {
@@ -73,15 +68,11 @@ public class PurchaseImpl extends ApplicationService implements PurchaseServiceL
       final List<PurchaseOverview> purchaseOverviews = new ArrayList<>();
       purchaseEntities.forEach(purchaseEntity -> {
          List<PurchaseItemOverview> items = getPurchaseItemEntity(purchaseEntity).stream()
-                 .map(purchaseItemEntity -> PurchaseMapper.INSTANCE.map(purchaseItemEntity, buildSellerRepresentation(purchaseItemEntity.getProduct().getSeller())))
+                 .map(purchaseItemEntity -> PurchaseMapper.INSTANCE.map(purchaseItemEntity, customerService.buildCustomerRepresentation(purchaseItemEntity.getProduct().getSeller())))
                  .collect(Collectors.toList());
          purchaseOverviews.add(PurchaseMapper.INSTANCE.map(purchaseEntity, items));
       });
       return purchaseOverviews;
-   }
-
-   private String buildSellerRepresentation(final CustomerEntity seller) {
-      return seller.getFirstname() + " " + seller.getLastname();
    }
 
    private List<PurchaseItemEntity> getPurchaseItemEntity(final PurchaseEntity purchaseEntity) {

@@ -5,7 +5,6 @@ import ch.zotteljedi.onlineshop.common.purchase.dto.*;
 import ch.zotteljedi.onlineshop.core.customer.mapper.CustomerMapper;
 import ch.zotteljedi.onlineshop.data.entity.PurchaseEntity;
 import ch.zotteljedi.onlineshop.data.entity.PurchaseItemEntity;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -14,7 +13,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR, uses = {CustomerMapper.class})
+@Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR, uses = CustomerMapper.class)
 public interface PurchaseMapper {
 
    PurchaseMapper INSTANCE = Mappers.getMapper(PurchaseMapper.class);

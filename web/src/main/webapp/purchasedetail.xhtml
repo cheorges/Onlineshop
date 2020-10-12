@@ -28,16 +28,17 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">Title</th>
+                                    <th scope="col">Seller</th>
                                     <th scope="col">Unit</th>
                                     <th scope="col" class="text-right">Price</th>
                                     <th scope="col" class="text-right">Totalprice</th>
-                                    <th scope="col">Seller</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <cc:forEach items="#{purchaseJSF.purchaseItems}" var="item" varStatus="metadata">
                                     <tr class="align-middle">
                                         <td class="align-middle">#{item.title}</td>
+                                        <td class="align-middle">#{item.sellerRepresentation}</td>
                                         <td class="align-middle">#{item.unit}</td>
                                         <td class="align-middle text-right">
                                             <h:outputText value="#{item.unitprice}">
@@ -49,17 +50,15 @@
                                                 <c:convertNumber minFractionDigits="2"/>
                                             </h:outputText>
                                         </td>
-                                        <td class="align-middle">#{item.sellerRepresentation}</td>
                                     </tr>
                                 </cc:forEach>
                                 <tr>
                                     <th scope="col">Total amount</th>
-                                    <th colspan="3" scope="col" class="text-right">
+                                    <th colspan="4" scope="col" class="text-right">
                                         <h:outputText it="totalamount" value="#{purchaseJSF.purchase.totalAmount}">
                                             <c:convertNumber minFractionDigits="2"/>
                                         </h:outputText>
                                     </th>
-                                    <th scope="col"></th>
                                 </tr>
                                 </tbody>
                             </table>

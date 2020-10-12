@@ -1,8 +1,5 @@
 package ch.zotteljedi.onlineshop.common.purchase.dto;
 
-import ch.zotteljedi.onlineshop.common.dto.Id;
-import junit.framework.TestCase;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -10,11 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 public class PurchaseItemOverviewTest {
-
-    @Before
-    public void setUp() {
-
-    }
 
     @Test
     public void test_create_purchase_item_overview_dto() {

@@ -14,10 +14,15 @@ import java.util.Optional;
 
 @Local
 public interface ProductServiceLocal extends Serializable {
-    List<Product> getProductsBySeller(CustomerId id);
+    List<Product> getProductsBySeller(CustomerId customerId);
+
     List<Product> getAllAvailableProducts();
+
     Optional<Product> getProductById(ProductId id);
+
     MessageContainer addNewProduct(NewProduct product);
+
     MessageContainer changeProduct(ChangeProduct product);
+
     MessageContainer deleteProduct(ProductId id);
 }

@@ -88,11 +88,6 @@ public class CustomerServiceImpl extends ApplicationService implements CustomerS
         return getMessageContainer();
     }
 
-    private List<CustomerEntity> getCustomerEntityByUsername(String username) {
-        return em.createNamedQuery("CustomerEntity.getByUsername", CustomerEntity.class)
-                .setParameter("username", username)
-                .getResultList();
-    }
 
     public Optional<CustomerEntity> getCustomerEntityById(CustomerId id) {
         return em.createNamedQuery("CustomerEntity.getById", CustomerEntity.class)
@@ -100,6 +95,16 @@ public class CustomerServiceImpl extends ApplicationService implements CustomerS
                 .getResultList()
                 .stream()
                 .findFirst();
+    }
+
+    public String buildCustomerRepresentation(final CustomerEntity customer) {
+        return customer.getFirstname() + " " + customer.getLastname();
+    }
+
+    private List<CustomerEntity> getCustomerEntityByUsername(String username) {
+        return em.createNamedQuery("CustomerEntity.getByUsername", CustomerEntity.class)
+                .setParameter("username", username)
+                .getResultList();
     }
 
     private boolean validate(CustomerEntity customer) {

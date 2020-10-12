@@ -39,15 +39,8 @@ public class ProductServiceImpl extends ApplicationService implements ProductSer
     private CustomerServiceImpl customerService;
 
     @Override
-    public List<Product> getProductsBySeller(CustomerId id) {
-        Optional<CustomerEntity> customer = customerService.getCustomerEntityById(id);
-        if (customer.isPresent()) {
-            List<ProductEntity> productEntities = em.createNamedQuery("ProductEntity.getBySeller", ProductEntity.class)
-                  .setParameter("seller", customer.get())
-                  .getResultList();
-            return ProductMapper.INSTANCE.map(productEntities).stream().map(it -> (Product) it).collect(Collectors.toList());
-        }
-        return new ArrayList<>();
+    public List<Product> getProductsBySeller(CustomerId customerId) {
+        return ProductMapper.INSTANCE.map(getProductEntitiyByCustomerId(customerId)).stream().map(it -> (Product) it).collect(Collectors.toList());
     }
 
     @Override
@@ -65,7 +58,7 @@ public class ProductServiceImpl extends ApplicationService implements ProductSer
     public MessageContainer addNewProduct(NewProduct product) {
         ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
         customerService.getCustomerEntityById(product.getSellerId())
-              .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
+                .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
         em.persist(productEntity);
         return getMessageContainer();
     }
@@ -74,7 +67,7 @@ public class ProductServiceImpl extends ApplicationService implements ProductSer
     public MessageContainer changeProduct(ChangeProduct product) {
         ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
         customerService.getCustomerEntityById(product.getSellerId())
-              .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
+                .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
         em.merge(productEntity);
         return getMessageContainer();
     }
@@ -104,6 +97,16 @@ public class ProductServiceImpl extends ApplicationService implements ProductSer
             }
         }, () -> addMessage(new ProductByIdNotFound(id)));
         return getMessageContainer();
+    }
+
+    public List<ProductEntity> getProductEntitiyByCustomerId(CustomerId customerId) {
+        Optional<CustomerEntity> customer = customerService.getCustomerEntityById(customerId);
+        if (customer.isPresent()) {
+            return em.createNamedQuery("ProductEntity.getBySeller", ProductEntity.class)
+                    .setParameter("seller", customer.get())
+                    .getResultList();
+        }
+        return new ArrayList<>();
     }
 
 }

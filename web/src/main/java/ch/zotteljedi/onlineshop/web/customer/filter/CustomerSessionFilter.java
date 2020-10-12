@@ -24,6 +24,8 @@ public class CustomerSessionFilter implements Filter {
                 || httpRequest.getRequestURI().contains("product")
                 || httpRequest.getRequestURI().contains("purchase")
                 || httpRequest.getRequestURI().contains("purchasedetail")
+                || httpRequest.getRequestURI().contains("sales")
+                || httpRequest.getRequestURI().contains("salesdetail")
                 || httpRequest.getRequestURI().contains("profile")) {
             chain.doFilter(request, response);
             return;

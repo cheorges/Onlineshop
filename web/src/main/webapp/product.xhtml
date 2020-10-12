@@ -22,97 +22,97 @@
                 <br/>
             </div>
             <div class="card-body">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h:form id="newProductForm" enctype="multipart/form-data">
-                            <h:message for="newProductForm" class="text-danger"/>
-                            <div class="form-group">
-                                <label for="title">Title</label>
-                                <h:inputText binding="#{titleInput}"
-                                             class="form-control"
-                                             id="title"
-                                             maxlength="255"
-                                             required="true"
-                                             requiredMessage="#{messageJSF.requiredMassage}"
-                                             value="#{productJSF.product.title}"/>
-                                <h:message for="title" class="text-danger"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Description</label>
-                                <h:inputTextarea binding="#{descriptionInput}"
-                                                 class="form-control"
-                                                 id="description"
-                                                 rows="5"
-                                                 maxlength="1500"
-                                                 value="#{productJSF.product.description}"/>
-                                <h:message for="description" class="text-danger"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="unitprice">Unitprice</label>
-                                <p:inputNumber binding="#{unitpriceInput}"
-                                               inputStyleClass="form-control shadow-none"
-                                               id="unitprice"
-                                               minValue="0.00"
-                                               decimalPlaces="2"
-                                               required="true"
-                                               emptyValue="0"
-                                               requiredMessage="#{messageJSF.requiredMassage}"
-                                               value="#{productJSF.product.unitprice}"/>
-                                <h:message for="unitprice" class="text-danger"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="stock">Stock</label>
-                                <p:inputNumber binding="#{stockInput}"
-                                               inputStyleClass="form-control shadow-none"
-                                               id="stock"
-                                               minValue="0"
-                                               decimalPlaces="0"
-                                               required="true"
-                                               emptyValue="0"
-                                               requiredMessage="#{messageJSF.requiredMassage}"
-                                               value="#{productJSF.product.stock}"/>
-                                <p:message for="stock" class="text-danger"/>
-                            </div>
-                            <cc:if test="#{productJSF.productId == 0}">
-                                <div class="form-group">
-                                    <label for="photo">Photo</label>
-                                    <h:inputFile binding="#{photoInput}"
-                                                 class="form-control-file"
-                                                 id="photo"
-                                                 required="true"
-                                                 requiredMessage="#{messageJSF.requiredMassage}"/>
-                                    <h:message for="photo" class="text-danger"/>
-                                </div>
-                            </cc:if>
-                            <cc:if test="#{productJSF.productId != 0}">
-                                <div class="form-group">
-                                    <label for="photo">Photo</label>
-                                    <h:inputFile binding="#{photoInput}"
-                                                 class="form-control-file"
-                                                 id="photo"/>
-                                    <h:message for="photo" class="text-danger"/>
-                                </div>
-                            </cc:if>
-                            <h:commandButton value="Save" class="btn btn-primary"
-                                             action="#{productJSF.save(
-                                                    titleInput.value,
-                                                    descriptionInput.value,
-                                                    unitpriceInput.value,
-                                                    stockInput.value,
-                                                    photoInput.value)}"/>
-                        </h:form>
-                    </div>
-                </div>
-                <cc:if test="#{productJSF.productId != 0}">
-                    <br/>
+                <div class="card-deck">
                     <div class="card shadow">
                         <div class="card-body">
-                            <p class="card-text">Photo Preview</p>
+                            <h:form id="newProductForm" enctype="multipart/form-data">
+                                <h:message for="newProductForm" class="text-danger"/>
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <h:inputText binding="#{titleInput}"
+                                                 class="form-control"
+                                                 id="title"
+                                                 maxlength="255"
+                                                 required="true"
+                                                 requiredMessage="#{messageJSF.requiredMassage}"
+                                                 value="#{productJSF.product.title}"/>
+                                    <h:message for="title" class="text-danger"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <h:inputTextarea binding="#{descriptionInput}"
+                                                     class="form-control"
+                                                     id="description"
+                                                     rows="5"
+                                                     maxlength="1500"
+                                                     value="#{productJSF.product.description}"/>
+                                    <h:message for="description" class="text-danger"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="unitprice">Unitprice</label>
+                                    <p:inputNumber binding="#{unitpriceInput}"
+                                                   inputStyleClass="form-control shadow-none"
+                                                   id="unitprice"
+                                                   minValue="0.00"
+                                                   decimalPlaces="2"
+                                                   required="true"
+                                                   emptyValue="0"
+                                                   requiredMessage="#{messageJSF.requiredMassage}"
+                                                   value="#{productJSF.product.unitprice}"/>
+                                    <h:message for="unitprice" class="text-danger"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="stock">Stock</label>
+                                    <p:inputNumber binding="#{stockInput}"
+                                                   inputStyleClass="form-control shadow-none"
+                                                   id="stock"
+                                                   minValue="0"
+                                                   decimalPlaces="0"
+                                                   required="true"
+                                                   emptyValue="0"
+                                                   requiredMessage="#{messageJSF.requiredMassage}"
+                                                   value="#{productJSF.product.stock}"/>
+                                    <p:message for="stock" class="text-danger"/>
+                                </div>
+                                <cc:if test="#{productJSF.productId == 0}">
+                                    <div class="form-group">
+                                        <label for="photo">Photo</label>
+                                        <h:inputFile binding="#{photoInput}"
+                                                     class="form-control-file"
+                                                     id="photo"
+                                                     required="true"
+                                                     requiredMessage="#{messageJSF.requiredMassage}"/>
+                                        <h:message for="photo" class="text-danger"/>
+                                    </div>
+                                </cc:if>
+                                <cc:if test="#{productJSF.productId != 0}">
+                                    <div class="form-group">
+                                        <label for="photo">Photo</label>
+                                        <h:inputFile binding="#{photoInput}"
+                                                     class="form-control-file"
+                                                     id="photo"/>
+                                        <h:message for="photo" class="text-danger"/>
+                                    </div>
+                                </cc:if>
+                                <h:commandButton value="Save" class="btn btn-primary"
+                                                 action="#{productJSF.save(
+                                                        titleInput.value,
+                                                        descriptionInput.value,
+                                                        unitpriceInput.value,
+                                                        stockInput.value,
+                                                        photoInput.value)}"/>
+                            </h:form>
                         </div>
-                        <img class="card-img-bottom" src="image?id=#{productJSF.productId}"
-                             alt="#{productJSF.product.title}"/>
                     </div>
-                </cc:if>
+                    <cc:if test="#{productJSF.productId != 0}">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <img class="card-img-top" src="image?id=#{productJSF.productId}" alt="#{productJSF.product}"/>
+                                <div class="card-img-overlay"></div>
+                            </div>
+                        </div>
+                    </cc:if>
+                </div>
             </div>
         </div>
     </ui:define>

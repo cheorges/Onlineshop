@@ -17,6 +17,7 @@
 
     <persistence-unit name="integration-test" transaction-type="RESOURCE_LOCAL">
         <class>ch.zotteljedi.onlineshop.data.entity.CustomerEntity</class>
+        <class>ch.zotteljedi.onlineshop.data.entity.ProductEntity</class>
         <properties>
             <property name="javax.persistence.jdbc.url"
                       value="jdbc:h2:mem:test:sample;DB_CLOSE_ON_EXIT=FALSE;" />

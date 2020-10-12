@@ -24,6 +24,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -33,10 +34,10 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl extends ApplicationService implements ProductServiceLocal {
 
     @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
-    private EntityManager em;
+    EntityManager em;
 
     @Inject
-    private CustomerServiceImpl customerService;
+    CustomerServiceImpl customerService;
 
     @Override
     public List<Product> getProductsBySeller(CustomerId customerId) {
@@ -59,7 +60,9 @@ public class ProductServiceImpl extends ApplicationService implements ProductSer
         ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
         customerService.getCustomerEntityById(product.getSellerId())
                 .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
-        em.persist(productEntity);
+        if (Objects.nonNull(productEntity.getSeller())) {
+            em.persist(productEntity);
+        }
         return getMessageContainer();
     }
 

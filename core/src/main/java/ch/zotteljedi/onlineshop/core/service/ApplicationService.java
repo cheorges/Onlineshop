@@ -2,8 +2,16 @@ package ch.zotteljedi.onlineshop.core.service;
 
 import ch.zotteljedi.onlineshop.common.message.Message;
 import ch.zotteljedi.onlineshop.common.message.MessageContainer;
+import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
 
-public abstract class ApplicationService {
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public abstract class ApplicationService<E> {
     private final MessageContainer messageContainer = new MessageContainer();
 
     protected void addMessage(Message message) {
@@ -12,5 +20,13 @@ public abstract class ApplicationService {
 
     protected MessageContainer getMessageContainer() {
         return messageContainer;
+    }
+
+    protected boolean validate(E entity) {
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        Set<ConstraintViolation<E>> constraintViolations = validator.validate(entity);
+        List<String> collect = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+        collect.forEach(message -> addMessage(() -> message));
+        return !getMessageContainer().hasMessages();
     }
 }

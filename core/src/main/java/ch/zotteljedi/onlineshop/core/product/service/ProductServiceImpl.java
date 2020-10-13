@@ -1,20 +1,20 @@
 package ch.zotteljedi.onlineshop.core.product.service;
 
-import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
+import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.common.product.dto.ChangeProduct;
-import ch.zotteljedi.onlineshop.common.product.service.ProductServiceLocal;
-import ch.zotteljedi.onlineshop.core.customer.message.CustomerByIdNotFound;
-import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
-import ch.zotteljedi.onlineshop.core.product.message.NotEnoughProductsAvailable;
-import ch.zotteljedi.onlineshop.core.product.message.ProductByIdNotFound;
-import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
-import ch.zotteljedi.onlineshop.data.entity.ProductEntity;
-import ch.zotteljedi.onlineshop.core.service.ApplicationService;
 import ch.zotteljedi.onlineshop.common.product.dto.NewProduct;
 import ch.zotteljedi.onlineshop.common.product.dto.Product;
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
+import ch.zotteljedi.onlineshop.common.product.service.ProductServiceLocal;
+import ch.zotteljedi.onlineshop.core.customer.message.CustomerByIdNotFound;
+import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
 import ch.zotteljedi.onlineshop.core.product.mapper.ProductMapper;
+import ch.zotteljedi.onlineshop.core.product.message.NotEnoughProductsAvailable;
+import ch.zotteljedi.onlineshop.core.product.message.ProductByIdNotFound;
+import ch.zotteljedi.onlineshop.core.service.ApplicationService;
+import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
+import ch.zotteljedi.onlineshop.data.entity.ProductEntity;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -24,14 +24,13 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Stateless
 @Local(ProductServiceLocal.class)
 @Transactional
-public class ProductServiceImpl extends ApplicationService implements ProductServiceLocal {
+public class ProductServiceImpl extends ApplicationService<ProductEntity> implements ProductServiceLocal {
 
     @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
     EntityManager em;
@@ -60,7 +59,7 @@ public class ProductServiceImpl extends ApplicationService implements ProductSer
         ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
         customerService.getCustomerEntityById(product.getSellerId())
                 .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
-        if (Objects.nonNull(productEntity.getSeller())) {
+        if (validate(productEntity)) {
             em.persist(productEntity);
         }
         return getMessageContainer();
@@ -71,7 +70,9 @@ public class ProductServiceImpl extends ApplicationService implements ProductSer
         ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
         customerService.getCustomerEntityById(product.getSellerId())
                 .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
-        em.merge(productEntity);
+        if (validate(productEntity)) {
+            em.merge(productEntity);
+        }
         return getMessageContainer();
     }
 

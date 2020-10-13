@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Stateless
 @Local(CustomerServiceLocal.class)
 @Transactional
-public class CustomerServiceImpl extends ApplicationService implements CustomerServiceLocal {
+public class CustomerServiceImpl extends ApplicationService<CustomerEntity> implements CustomerServiceLocal {
 
     @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
     EntityManager em;
@@ -105,14 +105,6 @@ public class CustomerServiceImpl extends ApplicationService implements CustomerS
         return em.createNamedQuery("CustomerEntity.getByUsername", CustomerEntity.class)
                 .setParameter("username", username)
                 .getResultList();
-    }
-
-    private boolean validate(CustomerEntity customer) {
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<CustomerEntity>> constraintViolations = validator.validate(customer);
-        List<String> collect = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
-        collect.forEach(message -> addMessage(() -> message));
-        return !getMessageContainer().hasMessages();
     }
 
 }

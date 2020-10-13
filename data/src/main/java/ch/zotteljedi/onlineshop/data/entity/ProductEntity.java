@@ -46,7 +46,7 @@ public class ProductEntity {
    @NotNull(message = "Photo may not be blank.")
    private byte[] photo;
 
-   @ManyToOne(cascade = CascadeType.REMOVE)
+   @ManyToOne(cascade = CascadeType.ALL)
    @NotNull(message = "Seller may not be blank.")
    private CustomerEntity seller;
 

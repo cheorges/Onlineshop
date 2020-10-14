@@ -18,7 +18,7 @@ public abstract class ApplicationService {
         messageContainer.add(message);
     }
 
-    protected MessageContainer getMessageContainer() {
+    public MessageContainer getMessageContainer() {
         return messageContainer;
     }
 

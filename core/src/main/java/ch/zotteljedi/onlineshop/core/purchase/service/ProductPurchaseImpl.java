@@ -1,6 +1,8 @@
 package ch.zotteljedi.onlineshop.core.purchase.service;
 
+import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.common.message.MessageContainer;
+import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
 import ch.zotteljedi.onlineshop.common.purchase.dto.CartProduct;
 import ch.zotteljedi.onlineshop.common.purchase.dto.Purchase;
 import ch.zotteljedi.onlineshop.common.purchase.service.ProductPurchaseLocal;
@@ -31,13 +33,13 @@ import javax.transaction.Transactional;
 public class ProductPurchaseImpl extends ApplicationService implements ProductPurchaseLocal {
 
    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
-   private EntityManager em;
+   EntityManager em;
 
    @Inject
-   private CustomerServiceImpl customerService;
+   CustomerServiceImpl customerService;
 
    @Inject
-   private ProductServiceImpl productService;
+   ProductServiceImpl productService;
 
    @Override
    public MessageContainer newPurchase(Purchase purchase) {
@@ -63,8 +65,8 @@ public class ProductPurchaseImpl extends ApplicationService implements ProductPu
    }
 
    private PurchaseItemEntity getPurchaseItemEntity(final PurchaseEntity purchaseEntity, final CartProduct cartProduct) {
-      productService.getProductById(cartProduct.getProductId())
-            .ifPresentOrElse(product -> productService.removeStockByProductId(product.getId(), cartProduct.getUnit()).hasMessagesThenProvide(this::addMessage),
+      productService.getProductEntityById(cartProduct.getProductId())
+            .ifPresentOrElse(product -> productService.removeStockByProductId(Id.of(product.getId(), ProductId.class), cartProduct.getUnit()).hasMessagesThenProvide(this::addMessage),
                   () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
       PurchaseItemEntity purchaseItemEntity = PurchaseMapper.INSTANCE.map(cartProduct);
       purchaseItemEntity.setPurchase(purchaseEntity);

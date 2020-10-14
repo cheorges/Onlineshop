@@ -13,9 +13,11 @@ import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
@@ -206,8 +208,8 @@ public class ProductServiceImplTest {
         // Then
         assertTrue(messageContainer.hasMessages());
         assertThat(messageContainer.getMessages().size(), is(2));
-        assertThat(messageContainer.getMessages().get(0).getMessage(), is("Title may not be empty."));
-        assertThat(messageContainer.getMessages().get(1).getMessage(), is("Title must be between 1 and 255 characters."));
+        assertThat(messageContainer.getMessages().get(0).getMessage(), anyOf(is("Title may not be empty."), is("Title must be between 1 and 255 characters.")));
+        assertThat(messageContainer.getMessages().get(1).getMessage(), anyOf(is("Title may not be empty."), is("Title must be between 1 and 255 characters.")));
     }
 
     @Test

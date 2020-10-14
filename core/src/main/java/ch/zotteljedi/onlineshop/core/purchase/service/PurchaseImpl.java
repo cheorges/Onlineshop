@@ -30,10 +30,10 @@ import java.util.stream.Collectors;
 public class PurchaseImpl extends ApplicationService implements PurchaseServiceLocal {
 
    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
-   private EntityManager em;
+   EntityManager em;
 
    @Inject
-   private CustomerServiceImpl customerService;
+   CustomerServiceImpl customerService;
 
    @Override
    public List<PurchaseOverview> getPurchaseByCustomer(CustomerId customerId) {

@@ -12,22 +12,22 @@ public class PurchaseItemEntityBuilder {
       return this;
    }
 
-   public PurchaseItemEntityBuilder boughtAt(Integer unit) {
+   public PurchaseItemEntityBuilder unit(Integer unit) {
       purchaseItemEntity.setUnit(unit);
       return this;
    }
 
-   public PurchaseItemEntityBuilder buyer(Double unitprice) {
+   public PurchaseItemEntityBuilder unitprice(Double unitprice) {
       purchaseItemEntity.setUnitprice(unitprice);
       return this;
    }
 
-   public PurchaseItemEntityBuilder buyer(ProductEntity product) {
+   public PurchaseItemEntityBuilder product(ProductEntity product) {
       purchaseItemEntity.setProduct(product);
       return this;
    }
 
-   public PurchaseItemEntityBuilder buyer(PurchaseEntity purchase) {
+   public PurchaseItemEntityBuilder purchase(PurchaseEntity purchase) {
       purchaseItemEntity.setPurchase(purchase);
       return this;
    }

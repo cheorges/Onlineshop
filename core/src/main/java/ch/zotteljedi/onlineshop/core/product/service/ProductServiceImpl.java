@@ -32,86 +32,86 @@ import javax.transaction.Transactional;
 @Transactional
 public class ProductServiceImpl extends ApplicationService implements ProductServiceLocal {
 
-   @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
-   EntityManager em;
+    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
+    EntityManager em;
 
-   @Inject
-   CustomerServiceImpl customerService;
+    @Inject
+    CustomerServiceImpl customerService;
 
-   @Override
-   public List<Product> getProductsBySeller(CustomerId customerId) {
-      return ProductMapper.INSTANCE.map(getProductEntitiyByCustomerId(customerId)).stream().map(it -> (Product) it)
-            .collect(Collectors.toList());
-   }
+    @Override
+    public List<Product> getProductsBySeller(CustomerId customerId) {
+        return ProductMapper.INSTANCE.map(getProductEntitiyByCustomerId(customerId)).stream().map(it -> (Product) it)
+                .collect(Collectors.toList());
+    }
 
-   @Override
-   public List<Product> getAllAvailableProducts() {
-      List<ProductEntity> products = em.createNamedQuery("ProductEntity.getByStockNotEmpty", ProductEntity.class).getResultList();
-      return ProductMapper.INSTANCE.map(products).stream().map(it -> (Product) it).collect(Collectors.toList());
-   }
+    @Override
+    public List<Product> getAllAvailableProducts() {
+        List<ProductEntity> products = em.createNamedQuery("ProductEntity.getByStockNotEmpty", ProductEntity.class).getResultList();
+        return ProductMapper.INSTANCE.map(products).stream().map(it -> (Product) it).collect(Collectors.toList());
+    }
 
-   @Override
-   public Optional<Product> getProductById(ProductId id) {
-      return getProductEntityById(id).map(ProductMapper.INSTANCE::map);
-   }
+    @Override
+    public Optional<Product> getProductById(ProductId id) {
+        return getProductEntityById(id).map(ProductMapper.INSTANCE::map);
+    }
 
-   @Override
-   public MessageContainer addNewProduct(NewProduct product) {
-      ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
-      customerService.getCustomerEntityById(product.getSellerId())
-            .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
-      if (validate(productEntity)) {
-         em.persist(productEntity);
-      }
-      return getMessageContainer();
-   }
+    @Override
+    public MessageContainer addNewProduct(NewProduct product) {
+        ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
+        customerService.getCustomerEntityById(product.getSellerId())
+                .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
+        if (validate(productEntity)) {
+            em.persist(productEntity);
+        }
+        return getMessageContainer();
+    }
 
-   @Override
-   public MessageContainer changeProduct(ChangeProduct product) {
-      ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
-      customerService.getCustomerEntityById(product.getSellerId())
-            .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
-      if (validate(productEntity)) {
-         em.merge(productEntity);
-      }
-      return getMessageContainer();
-   }
+    @Override
+    public MessageContainer changeProduct(ChangeProduct product) {
+        ProductEntity productEntity = ProductMapper.INSTANCE.map(product);
+        customerService.getCustomerEntityById(product.getSellerId())
+                .ifPresentOrElse(productEntity::setSeller, () -> addMessage(new CustomerByIdNotFound(product.getSellerId())));
+        if (validate(productEntity)) {
+            em.merge(productEntity);
+        }
+        return getMessageContainer();
+    }
 
-   @Override
-   public MessageContainer deleteProduct(ProductId id) {
-      getProductEntityById(id).ifPresentOrElse(product -> em.remove(product), () -> addMessage(new ProductByIdNotFound(id)));
-      return getMessageContainer();
-   }
+    @Override
+    public MessageContainer deleteProduct(ProductId id) {
+        getProductEntityById(id).ifPresentOrElse(product -> em.remove(product), () -> addMessage(new ProductByIdNotFound(id)));
+        return getMessageContainer();
+    }
 
-   public Optional<ProductEntity> getProductEntityById(ProductId id) {
-      return em.createNamedQuery("ProductEntity.getById", ProductEntity.class)
-            .setParameter("id", id.getValue())
-            .getResultList()
-            .stream()
-            .findFirst();
-   }
+    public Optional<ProductEntity> getProductEntityById(ProductId id) {
+        return em.createNamedQuery("ProductEntity.getById", ProductEntity.class)
+                .setParameter("id", id.getValue())
+                .getResultList()
+                .stream()
+                .findFirst();
+    }
 
-   public MessageContainer removeStockByProductId(ProductId id, Integer unit) {
-      getProductEntityById(id).ifPresentOrElse(product -> {
-         Integer currentStock = product.getStock();
-         if (currentStock >= unit) {
-            product.setStock(currentStock - unit);
-            em.persist(product);
-         } else {
-            addMessage(new NotEnoughProductsAvailable(currentStock));
-         }
-      }, () -> addMessage(new ProductByIdNotFound(id)));
-      return getMessageContainer();
-   }
+    public MessageContainer removeStockByProductId(ProductId id, Integer unit) {
+        getProductEntityById(id).ifPresentOrElse(product -> {
+            Integer currentStock = product.getStock();
+            if (currentStock >= unit) {
+                product.setStock(currentStock - unit);
+                em.persist(product);
+            } else {
+                addMessage(new NotEnoughProductsAvailable(currentStock));
+            }
+        }, () -> addMessage(new ProductByIdNotFound(id)));
+        return getMessageContainer();
+    }
 
-   public List<ProductEntity> getProductEntitiyByCustomerId(CustomerId customerId) {
-      Optional<CustomerEntity> customer = customerService.getCustomerEntityById(customerId);
-      if (customer.isPresent()) {
-         return em.createNamedQuery("ProductEntity.getBySeller", ProductEntity.class)
-               .setParameter("seller", customer.get())
-               .getResultList();
-      }
-      return new ArrayList<>();
-   }
+    public List<ProductEntity> getProductEntitiyByCustomerId(CustomerId customerId) {
+        Optional<CustomerEntity> customer = customerService.getCustomerEntityById(customerId);
+        if (customer.isPresent()) {
+            return em.createNamedQuery("ProductEntity.getBySeller", ProductEntity.class)
+                    .setParameter("seller", customer.get())
+                    .getResultList();
+        }
+        return new ArrayList<>();
+    }
 
 }

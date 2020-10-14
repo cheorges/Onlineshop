@@ -30,12 +30,12 @@ public class ProductServiceImplTest {
     private ProductServiceImpl productServiceImpl;
 
     private final CustomerEntity CUSTOMER_ENTITY_1 = new CustomerEntityBuilder()
-                .username("username-1")
-                .firstname("firstname-1")
-                .lastname("lastname-1")
-                .email("firstname-1@zotteltec.ch")
-                .password("password-1")
-                .build();
+            .username("username-1")
+            .firstname("firstname-1")
+            .lastname("lastname-1")
+            .email("firstname-1@zotteltec.ch")
+            .password("password-1")
+            .build();
 
     private final CustomerEntity CUSTOMER_ENTITY_2 = new CustomerEntityBuilder()
             .username("username-2")
@@ -283,6 +283,23 @@ public class ProductServiceImplTest {
 
     @Test
     public void test_delete_product() {
+        // When
+        em.getTransaction().begin();
+        MessageContainer messageContainer = productServiceImpl.deleteProduct(Id.of(5, ProductId.class));
+        em.getTransaction().commit();
+
+        // Then
+        assertFalse(messageContainer.hasMessages());
+        List<ProductEntity> allProducts = em.createNamedQuery("ProductEntity.get", ProductEntity.class)
+                .getResultList();
+        assertThat(allProducts.size(), is(2));
+    }
+
+    @Test
+    public void test_delete_product_with_purchase() {
+        // Given
+
+
         // When
         em.getTransaction().begin();
         MessageContainer messageContainer = productServiceImpl.deleteProduct(Id.of(5, ProductId.class));

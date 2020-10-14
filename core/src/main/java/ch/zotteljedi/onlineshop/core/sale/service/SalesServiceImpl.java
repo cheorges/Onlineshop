@@ -27,39 +27,39 @@ import javax.transaction.Transactional;
 @Transactional
 public class SalesServiceImpl extends ApplicationService implements SalesServiceLocal {
 
-   @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
-   EntityManager em;
+    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
+    EntityManager em;
 
-   @Inject
-   CustomerServiceImpl customerService;
+    @Inject
+    CustomerServiceImpl customerService;
 
-   @Inject
-   ProductServiceImpl productService;
+    @Inject
+    ProductServiceImpl productService;
 
-   @Override
-   public List<SalesOverview> getSalesByCustomer(CustomerId customerId) {
-      return productService.getProductEntitiyByCustomerId(customerId).stream()
-            .map(this::getSalesOverview).collect(Collectors.toList());
-   }
+    @Override
+    public List<SalesOverview> getSalesByCustomer(CustomerId customerId) {
+        return productService.getProductEntitiyByCustomerId(customerId).stream()
+                .map(this::getSalesOverview).collect(Collectors.toList());
+    }
 
-   @Override
-   public Optional<SalesOverview> getSalesByProductId(ProductId purchaseId) {
-      Optional<ProductEntity> productEntity = productService.getProductEntityById(purchaseId);
-      return productEntity.map(this::getSalesOverview);
-   }
+    @Override
+    public Optional<SalesOverview> getSalesByProductId(ProductId purchaseId) {
+        Optional<ProductEntity> productEntity = productService.getProductEntityById(purchaseId);
+        return productEntity.map(this::getSalesOverview);
+    }
 
-   private SalesOverview getSalesOverview(ProductEntity productEntity) {
-      List<SalesItemOverview> salesItemOverview = getPurchaseByProduct(productEntity).stream()
-            .map(purchaseItemEntity -> SalesMapper.INSTANCE
-                  .map(purchaseItemEntity, customerService.buildCustomerRepresentation(purchaseItemEntity.getPurchase().getBuyer())))
-            .collect(Collectors.toList());
-      return SalesMapper.INSTANCE.map(productEntity, salesItemOverview);
-   }
+    private SalesOverview getSalesOverview(ProductEntity productEntity) {
+        List<SalesItemOverview> salesItemOverview = getPurchaseByProduct(productEntity).stream()
+                .map(purchaseItemEntity -> SalesMapper.INSTANCE
+                        .map(purchaseItemEntity, customerService.buildCustomerRepresentation(purchaseItemEntity.getPurchase().getBuyer())))
+                .collect(Collectors.toList());
+        return SalesMapper.INSTANCE.map(productEntity, salesItemOverview);
+    }
 
-   private List<PurchaseItemEntity> getPurchaseByProduct(final ProductEntity productEntity) {
-      return em.createNamedQuery("PurchaseItemEntity.getByProduct", PurchaseItemEntity.class)
-            .setParameter("product", productEntity)
-            .getResultList();
-   }
+    private List<PurchaseItemEntity> getPurchaseByProduct(final ProductEntity productEntity) {
+        return em.createNamedQuery("PurchaseItemEntity.getByProduct", PurchaseItemEntity.class)
+                .setParameter("product", productEntity)
+                .getResultList();
+    }
 
 }

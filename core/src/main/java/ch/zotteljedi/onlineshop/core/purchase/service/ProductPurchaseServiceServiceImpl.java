@@ -31,55 +31,55 @@ import javax.transaction.Transactional;
 @Transactional
 public class ProductPurchaseServiceServiceImpl extends ApplicationService implements ProductPurchaseServiceLocal {
 
-   @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
-   EntityManager em;
+    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
+    EntityManager em;
 
-   @Inject
-   CustomerServiceImpl customerService;
+    @Inject
+    CustomerServiceImpl customerService;
 
-   @Inject
-   ProductServiceImpl productService;
+    @Inject
+    ProductServiceImpl productService;
 
-   @Override
-   public MessageContainer newPurchase(Purchase purchase) {
-      if (purchase.getCartProduct().isEmpty()) {
-         addMessage(new EmptyCart());
-         return getMessageContainer();
-      }
+    @Override
+    public MessageContainer newPurchase(Purchase purchase) {
+        if (purchase.getCartProduct().isEmpty()) {
+            addMessage(new EmptyCart());
+            return getMessageContainer();
+        }
 
-      final PurchaseEntity purchaseEntity = createPurchaseEntity(purchase);
-      if (validate(purchaseEntity)) {
-         List<PurchaseItemEntity> purchaseItemEntities = purchase.getCartProduct().stream()
-               .map(cartProduct -> getPurchaseItemEntity(purchaseEntity, cartProduct)).collect(Collectors.toList());
-         purchaseItemEntities.forEach(this::validate);
-         getMessageContainer().hasNoMessageThenProvide(() -> em.persist(purchaseEntity));
-         getMessageContainer().hasNoMessageThenProvide(() -> purchaseItemEntities.forEach(it -> em.persist(it)));
-      }
+        final PurchaseEntity purchaseEntity = createPurchaseEntity(purchase);
+        if (validate(purchaseEntity)) {
+            List<PurchaseItemEntity> purchaseItemEntities = purchase.getCartProduct().stream()
+                    .map(cartProduct -> getPurchaseItemEntity(purchaseEntity, cartProduct)).collect(Collectors.toList());
+            purchaseItemEntities.forEach(this::validate);
+            getMessageContainer().hasNoMessageThenProvide(() -> em.persist(purchaseEntity));
+            getMessageContainer().hasNoMessageThenProvide(() -> purchaseItemEntities.forEach(it -> em.persist(it)));
+        }
 
-      return getMessageContainer();
-   }
+        return getMessageContainer();
+    }
 
-   private PurchaseEntity createPurchaseEntity(Purchase purchase) {
-      final PurchaseEntity purchaseEntity = new PurchaseEntity();
-      purchaseEntity.setBoughtAt(LocalDate.now());
-      customerService.getCustomerEntityById(purchase.getBuyerId())
-            .ifPresentOrElse(purchaseEntity::setBuyer, () -> addMessage(new CustomerByIdNotFound(purchase.getBuyerId())));
-      return purchaseEntity;
-   }
+    private PurchaseEntity createPurchaseEntity(Purchase purchase) {
+        final PurchaseEntity purchaseEntity = new PurchaseEntity();
+        purchaseEntity.setBoughtAt(LocalDate.now());
+        customerService.getCustomerEntityById(purchase.getBuyerId())
+                .ifPresentOrElse(purchaseEntity::setBuyer, () -> addMessage(new CustomerByIdNotFound(purchase.getBuyerId())));
+        return purchaseEntity;
+    }
 
-   private PurchaseItemEntity getPurchaseItemEntity(final PurchaseEntity purchaseEntity, final CartProduct cartProduct) {
-      shrankProductStock(cartProduct);
-      PurchaseItemEntity purchaseItemEntity = PurchaseMapper.INSTANCE.map(cartProduct);
-      purchaseItemEntity.setPurchase(purchaseEntity);
-      productService.getProductEntityById(cartProduct.getProductId())
-            .ifPresentOrElse(purchaseItemEntity::setProduct, () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
-      return purchaseItemEntity;
-   }
+    private PurchaseItemEntity getPurchaseItemEntity(final PurchaseEntity purchaseEntity, final CartProduct cartProduct) {
+        shrankProductStock(cartProduct);
+        PurchaseItemEntity purchaseItemEntity = PurchaseMapper.INSTANCE.map(cartProduct);
+        purchaseItemEntity.setPurchase(purchaseEntity);
+        productService.getProductEntityById(cartProduct.getProductId())
+                .ifPresentOrElse(purchaseItemEntity::setProduct, () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
+        return purchaseItemEntity;
+    }
 
-   private void shrankProductStock(CartProduct cartProduct) {
-      productService.getProductEntityById(cartProduct.getProductId()).ifPresentOrElse(
-            product -> productService.removeStockByProductId(Id.of(product.getId(), ProductId.class), cartProduct.getUnit())
-                  .hasMessagesThenProvide(this::addMessage),
-            () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
-   }
+    private void shrankProductStock(CartProduct cartProduct) {
+        productService.getProductEntityById(cartProduct.getProductId()).ifPresentOrElse(
+                product -> productService.removeStockByProductId(Id.of(product.getId(), ProductId.class), cartProduct.getUnit())
+                        .hasMessagesThenProvide(this::addMessage),
+                () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
+    }
 }

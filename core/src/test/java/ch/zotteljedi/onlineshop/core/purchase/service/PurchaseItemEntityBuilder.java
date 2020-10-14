@@ -35,5 +35,4 @@ public class PurchaseItemEntityBuilder {
    public PurchaseItemEntity build() {
       return purchaseItemEntity;
    }
-
 }

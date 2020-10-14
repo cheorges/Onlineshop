@@ -3,16 +3,16 @@ package ch.zotteljedi.onlineshop.core.purchase.service;
 import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
+import ch.zotteljedi.onlineshop.common.product.service.ProductServiceLocal;
 import ch.zotteljedi.onlineshop.common.purchase.dto.CartProduct;
 import ch.zotteljedi.onlineshop.common.purchase.dto.Purchase;
 import ch.zotteljedi.onlineshop.common.purchase.service.ProductPurchaseLocal;
-import ch.zotteljedi.onlineshop.common.product.service.ProductServiceLocal;
 import ch.zotteljedi.onlineshop.core.customer.message.CustomerByIdNotFound;
 import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
-import ch.zotteljedi.onlineshop.core.purchase.mapper.PurchaseMapper;
-import ch.zotteljedi.onlineshop.core.purchase.message.EmptyCart;
 import ch.zotteljedi.onlineshop.core.product.message.ProductByIdNotFound;
 import ch.zotteljedi.onlineshop.core.product.service.ProductServiceImpl;
+import ch.zotteljedi.onlineshop.core.purchase.mapper.PurchaseMapper;
+import ch.zotteljedi.onlineshop.core.purchase.message.EmptyCart;
 import ch.zotteljedi.onlineshop.core.service.ApplicationService;
 import ch.zotteljedi.onlineshop.data.entity.PurchaseEntity;
 import ch.zotteljedi.onlineshop.data.entity.PurchaseItemEntity;
@@ -48,30 +48,39 @@ public class ProductPurchaseImpl extends ApplicationService implements ProductPu
          return getMessageContainer();
       }
 
-      final PurchaseEntity purchaseEntity = new PurchaseEntity();
-      purchaseEntity.setBoughtAt(LocalDate.now());
-      customerService.getCustomerEntityById(purchase.getBuyerId())
-            .ifPresentOrElse(purchaseEntity::setBuyer, () -> addMessage(new CustomerByIdNotFound(purchase.getBuyerId())));
-      em.persist(purchaseEntity);
-
-      List<PurchaseItemEntity> purchaseItemEntities = purchase.getCartProduct().stream()
-            .map(cartProduct -> {
-               return getPurchaseItemEntity(purchaseEntity, cartProduct);
-            }).collect(Collectors.toList());
-
-      getMessageContainer().hasNoMessageThenProvide(() -> purchaseItemEntities.forEach(it -> em.persist(it)));
+      final PurchaseEntity purchaseEntity = createPurchaseEntity(purchase);
+      if (validate(purchaseEntity)) {
+         List<PurchaseItemEntity> purchaseItemEntities = purchase.getCartProduct().stream()
+               .map(cartProduct -> getPurchaseItemEntity(purchaseEntity, cartProduct)).collect(Collectors.toList());
+         purchaseItemEntities.forEach(this::validate);
+         getMessageContainer().hasNoMessageThenProvide(() -> em.persist(purchaseEntity));
+         getMessageContainer().hasNoMessageThenProvide(() -> purchaseItemEntities.forEach(it -> em.persist(it)));
+      }
 
       return getMessageContainer();
    }
 
+   private PurchaseEntity createPurchaseEntity(Purchase purchase) {
+      final PurchaseEntity purchaseEntity = new PurchaseEntity();
+      purchaseEntity.setBoughtAt(LocalDate.now());
+      customerService.getCustomerEntityById(purchase.getBuyerId())
+            .ifPresentOrElse(purchaseEntity::setBuyer, () -> addMessage(new CustomerByIdNotFound(purchase.getBuyerId())));
+      return purchaseEntity;
+   }
+
    private PurchaseItemEntity getPurchaseItemEntity(final PurchaseEntity purchaseEntity, final CartProduct cartProduct) {
-      productService.getProductEntityById(cartProduct.getProductId())
-            .ifPresentOrElse(product -> productService.removeStockByProductId(Id.of(product.getId(), ProductId.class), cartProduct.getUnit()).hasMessagesThenProvide(this::addMessage),
-                  () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
+      shrankProductStock(cartProduct);
       PurchaseItemEntity purchaseItemEntity = PurchaseMapper.INSTANCE.map(cartProduct);
       purchaseItemEntity.setPurchase(purchaseEntity);
       productService.getProductEntityById(cartProduct.getProductId())
             .ifPresentOrElse(purchaseItemEntity::setProduct, () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
       return purchaseItemEntity;
+   }
+
+   private void shrankProductStock(CartProduct cartProduct) {
+      productService.getProductEntityById(cartProduct.getProductId()).ifPresentOrElse(
+            product -> productService.removeStockByProductId(Id.of(product.getId(), ProductId.class), cartProduct.getUnit())
+                  .hasMessagesThenProvide(this::addMessage),
+            () -> addMessage(new ProductByIdNotFound(cartProduct.getProductId())));
    }
 }

@@ -26,5 +26,4 @@ public class PurchaseEntityBuilder {
    public PurchaseEntity build() {
       return purchaseEntity;
    }
-
 }

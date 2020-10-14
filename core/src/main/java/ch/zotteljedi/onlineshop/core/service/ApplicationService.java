@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class ApplicationService<E> {
+public abstract class ApplicationService {
     private final MessageContainer messageContainer = new MessageContainer();
 
     protected void addMessage(Message message) {
@@ -22,7 +22,7 @@ public abstract class ApplicationService<E> {
         return messageContainer;
     }
 
-    protected boolean validate(E entity) {
+    protected <E> boolean validate(E entity) {
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<E>> constraintViolations = validator.validate(entity);
         List<String> collect = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());

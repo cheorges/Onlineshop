@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @Stateless
 @Local(ProductServiceLocal.class)
 @Transactional
-public class ProductServiceImpl extends ApplicationService<ProductEntity> implements ProductServiceLocal {
+public class ProductServiceImpl extends ApplicationService implements ProductServiceLocal {
 
     @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
     EntityManager em;

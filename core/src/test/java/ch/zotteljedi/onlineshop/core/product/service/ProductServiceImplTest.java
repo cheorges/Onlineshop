@@ -4,7 +4,8 @@ import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.common.product.dto.*;
-import ch.zotteljedi.onlineshop.core.customer.service.CustomerEntityBuilder;
+import ch.zotteljedi.onlineshop.core.builder.CustomerEntityBuilder;
+import ch.zotteljedi.onlineshop.core.builder.ProductEntityBuilder;
 import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
 import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
 import ch.zotteljedi.onlineshop.data.entity.ProductEntity;
@@ -13,7 +14,6 @@ import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 

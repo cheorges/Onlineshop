@@ -1,8 +1,6 @@
-package ch.zotteljedi.onlineshop.core.customer.service;
+package ch.zotteljedi.onlineshop.core.builder;
 
 import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
-
-import java.security.SecureRandom;
 
 public class CustomerEntityBuilder {
     private final CustomerEntity customerEntity = new CustomerEntity();

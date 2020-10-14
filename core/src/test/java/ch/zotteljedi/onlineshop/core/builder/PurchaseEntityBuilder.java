@@ -1,4 +1,4 @@
-package ch.zotteljedi.onlineshop.core.purchase.service;
+package ch.zotteljedi.onlineshop.core.builder;
 
 import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
 import ch.zotteljedi.onlineshop.data.entity.PurchaseEntity;

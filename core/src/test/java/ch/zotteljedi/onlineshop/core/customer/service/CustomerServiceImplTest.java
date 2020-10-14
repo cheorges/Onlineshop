@@ -13,6 +13,7 @@ import ch.zotteljedi.onlineshop.common.customer.dto.ImmutableNewCustomer;
 import ch.zotteljedi.onlineshop.common.customer.dto.NewCustomer;
 import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.common.message.MessageContainer;
+import ch.zotteljedi.onlineshop.core.builder.CustomerEntityBuilder;
 import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
 
 import org.junit.Before;

@@ -31,10 +31,10 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-public class PurchaseImplTest {
+public class PurchaseServiceImplTest {
    public static final LocalDate NOW = LocalDate.now();
    private EntityManager em;
-   private PurchaseImpl purchaseImpl;
+   private PurchaseServiceImpl purchaseServiceImpl;
 
    private final CustomerEntity BUYER = new CustomerEntityBuilder()
          .username("buyer")
@@ -64,9 +64,9 @@ public class PurchaseImplTest {
    @Before
    public void initializeDependencies() {
       em = Persistence.createEntityManagerFactory("integration-test").createEntityManager();
-      purchaseImpl = new PurchaseImpl();
-      purchaseImpl.em = em;
-      purchaseImpl.customerService = mock(CustomerServiceImpl.class);
+      purchaseServiceImpl = new PurchaseServiceImpl();
+      purchaseServiceImpl.em = em;
+      purchaseServiceImpl.customerService = mock(CustomerServiceImpl.class);
 
       em.getTransaction().begin();
       em.persist(BUYER);
@@ -89,10 +89,10 @@ public class PurchaseImplTest {
    @Test
    public void test_no_customer_found_by_id() {
       // Given
-      doReturn(Optional.empty()).when(purchaseImpl.customerService).getCustomerEntityById(any());
+      doReturn(Optional.empty()).when(purchaseServiceImpl.customerService).getCustomerEntityById(any());
 
       // When
-      List<PurchaseOverview> purchaseByCustomer = purchaseImpl.getPurchaseByCustomer(Id.of(99, CustomerId.class));
+      List<PurchaseOverview> purchaseByCustomer = purchaseServiceImpl.getPurchaseByCustomer(Id.of(99, CustomerId.class));
 
       // Then
       assertTrue(purchaseByCustomer.isEmpty());
@@ -101,11 +101,11 @@ public class PurchaseImplTest {
    @Test
    public void test_get_all_purchase_by_customer() {
       // Given
-      doReturn(Optional.of(BUYER)).when(purchaseImpl.customerService).getCustomerEntityById(any());
-      doReturn("sellerRepresentation").when(purchaseImpl.customerService).buildCustomerRepresentation(any());
+      doReturn(Optional.of(BUYER)).when(purchaseServiceImpl.customerService).getCustomerEntityById(any());
+      doReturn("sellerRepresentation").when(purchaseServiceImpl.customerService).buildCustomerRepresentation(any());
 
       // When
-      List<PurchaseOverview> purchaseByCustomer = purchaseImpl.getPurchaseByCustomer(Id.of(1, CustomerId.class));
+      List<PurchaseOverview> purchaseByCustomer = purchaseServiceImpl.getPurchaseByCustomer(Id.of(1, CustomerId.class));
 
       // Then
       assertFalse(purchaseByCustomer.isEmpty());
@@ -122,7 +122,7 @@ public class PurchaseImplTest {
    @Test
    public void test_purchase_by_id_not_found() {
       // When
-      Optional<PurchaseOverview> purchase = purchaseImpl.getPurchaseById(Id.of(99, PurchaseId.class));
+      Optional<PurchaseOverview> purchase = purchaseServiceImpl.getPurchaseById(Id.of(99, PurchaseId.class));
 
       // Then
       assertTrue(purchase.isEmpty());
@@ -131,10 +131,10 @@ public class PurchaseImplTest {
    @Test
    public void test_get_purchase_by_product_id() {
       // Given
-      doReturn("sellerRepresentation").when(purchaseImpl.customerService).buildCustomerRepresentation(any());
+      doReturn("sellerRepresentation").when(purchaseServiceImpl.customerService).buildCustomerRepresentation(any());
 
       // When
-      Optional<PurchaseOverview> purchase = purchaseImpl.getPurchaseById(Id.of(4, PurchaseId.class));
+      Optional<PurchaseOverview> purchase = purchaseServiceImpl.getPurchaseById(Id.of(4, PurchaseId.class));
 
       // Then
       assertTrue(purchase.isPresent());

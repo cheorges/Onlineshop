@@ -2,7 +2,7 @@ package ch.zotteljedi.onlineshop.web.purchase.jsf;
 
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
 import ch.zotteljedi.onlineshop.common.purchase.dto.Purchase;
-import ch.zotteljedi.onlineshop.common.purchase.service.ProductPurchaseLocal;
+import ch.zotteljedi.onlineshop.common.purchase.service.ProductPurchaseServiceLocal;
 import ch.zotteljedi.onlineshop.web.common.massage.MessageFactory;
 import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.web.customer.jsf.CustomerSessionJSF;
@@ -25,7 +25,7 @@ public class ProductPurchaseJSF implements Serializable {
     private CustomerSessionJSF customerSessionJSF;
 
     @Inject
-    private ProductPurchaseLocal productPurchaseLocal;
+    private ProductPurchaseServiceLocal productPurchaseServiceLocal;
 
     @Inject
     private MessageFactory messageFactory;
@@ -59,7 +59,7 @@ public class ProductPurchaseJSF implements Serializable {
 
     public void buyAllProductsInCart() throws UnauthorizedAccessException {
         Purchase purchase = ProductPurchaseMapper.INSTANCE.map(customerSessionJSF.getCustomer(), shoppingCart.getPageCartProducts());
-        if (!productPurchaseLocal.newPurchase(purchase).hasMessagesThenProvide(msg -> messageFactory.showError(msg))) {
+        if (!productPurchaseServiceLocal.newPurchase(purchase).hasMessagesThenProvide(msg -> messageFactory.showError(msg))) {
             shoppingCart.clear();
             messageFactory.showInfo("Purchase completed successfully.");
         }

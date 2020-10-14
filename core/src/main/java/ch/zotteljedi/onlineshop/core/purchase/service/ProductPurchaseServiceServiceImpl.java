@@ -3,10 +3,9 @@ package ch.zotteljedi.onlineshop.core.purchase.service;
 import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
-import ch.zotteljedi.onlineshop.common.product.service.ProductServiceLocal;
 import ch.zotteljedi.onlineshop.common.purchase.dto.CartProduct;
 import ch.zotteljedi.onlineshop.common.purchase.dto.Purchase;
-import ch.zotteljedi.onlineshop.common.purchase.service.ProductPurchaseLocal;
+import ch.zotteljedi.onlineshop.common.purchase.service.ProductPurchaseServiceLocal;
 import ch.zotteljedi.onlineshop.core.customer.message.CustomerByIdNotFound;
 import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
 import ch.zotteljedi.onlineshop.core.product.message.ProductByIdNotFound;
@@ -28,9 +27,9 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 @Stateless
-@Local(ProductServiceLocal.class)
+@Local(ProductPurchaseServiceLocal.class)
 @Transactional
-public class ProductPurchaseImpl extends ApplicationService implements ProductPurchaseLocal {
+public class ProductPurchaseServiceServiceImpl extends ApplicationService implements ProductPurchaseServiceLocal {
 
    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
    EntityManager em;

@@ -7,6 +7,6 @@ import javax.ejb.Local;
 import java.io.Serializable;
 
 @Local
-public interface ProductPurchaseLocal extends Serializable {
+public interface ProductPurchaseServiceLocal extends Serializable {
     MessageContainer newPurchase(Purchase purchase);
 }

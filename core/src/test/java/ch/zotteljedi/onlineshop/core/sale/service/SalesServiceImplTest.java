@@ -33,10 +33,10 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-public class SalesImplTest {
+public class SalesServiceImplTest {
    public static final LocalDate NOW = LocalDate.now();
    private EntityManager em;
-   private SalesImpl salesImpl;
+   private SalesServiceImpl salesServiceImpl;
 
    private final CustomerEntity BUYER = new CustomerEntityBuilder()
          .username("buyer")
@@ -66,10 +66,10 @@ public class SalesImplTest {
    @Before
    public void initializeDependencies() {
       em = Persistence.createEntityManagerFactory("integration-test").createEntityManager();
-      salesImpl = new SalesImpl();
-      salesImpl.em = em;
-      salesImpl.customerService = mock(CustomerServiceImpl.class);
-      salesImpl.productService = mock(ProductServiceImpl.class);
+      salesServiceImpl = new SalesServiceImpl();
+      salesServiceImpl.em = em;
+      salesServiceImpl.customerService = mock(CustomerServiceImpl.class);
+      salesServiceImpl.productService = mock(ProductServiceImpl.class);
 
       em.getTransaction().begin();
       em.persist(BUYER);
@@ -92,10 +92,10 @@ public class SalesImplTest {
    @Test
    public void test_customer_not_found() {
       // Given
-      doReturn(Optional.empty()).when(salesImpl.customerService).getCustomerEntityById(any());
+      doReturn(Optional.empty()).when(salesServiceImpl.customerService).getCustomerEntityById(any());
 
       // When
-      List<SalesOverview> salesByCustomer = salesImpl.getSalesByCustomer(Id.of(99, CustomerId.class));
+      List<SalesOverview> salesByCustomer = salesServiceImpl.getSalesByCustomer(Id.of(99, CustomerId.class));
 
       // Then
       assertTrue(salesByCustomer.isEmpty());
@@ -104,11 +104,11 @@ public class SalesImplTest {
    @Test
    public void test_get_sales_by_customer() {
       // Given
-      doReturn(Collections.singletonList(PRODUCT_ENTITY_1)).when(salesImpl.productService).getProductEntitiyByCustomerId(any());
-      doReturn("buyerRepresentation").when(salesImpl.customerService).buildCustomerRepresentation(any());
+      doReturn(Collections.singletonList(PRODUCT_ENTITY_1)).when(salesServiceImpl.productService).getProductEntitiyByCustomerId(any());
+      doReturn("buyerRepresentation").when(salesServiceImpl.customerService).buildCustomerRepresentation(any());
 
       // When
-      List<SalesOverview> salesByCustomer = salesImpl.getSalesByCustomer(Id.of(2, CustomerId.class));
+      List<SalesOverview> salesByCustomer = salesServiceImpl.getSalesByCustomer(Id.of(2, CustomerId.class));
 
       // Then
       assertFalse(salesByCustomer.isEmpty());
@@ -125,10 +125,10 @@ public class SalesImplTest {
    @Test
    public void test_prduct_not_found() {
       // Given
-      doReturn(Optional.empty()).when(salesImpl.productService).getProductEntityById(any());
+      doReturn(Optional.empty()).when(salesServiceImpl.productService).getProductEntityById(any());
 
       // When
-      Optional<SalesOverview> salesByCustomer = salesImpl.getSalesByProductId(Id.of(99, ProductId.class));
+      Optional<SalesOverview> salesByCustomer = salesServiceImpl.getSalesByProductId(Id.of(99, ProductId.class));
 
       // Then
       assertTrue(salesByCustomer.isEmpty());
@@ -137,11 +137,11 @@ public class SalesImplTest {
    @Test
    public void test_sales_overview_by_product_id() {
       // Given
-      doReturn(Optional.of(PRODUCT_ENTITY_1)).when(salesImpl.productService).getProductEntityById(any());
-      doReturn("buyerRepresentation").when(salesImpl.customerService).buildCustomerRepresentation(any());
+      doReturn(Optional.of(PRODUCT_ENTITY_1)).when(salesServiceImpl.productService).getProductEntityById(any());
+      doReturn("buyerRepresentation").when(salesServiceImpl.customerService).buildCustomerRepresentation(any());
 
       // When
-      Optional<SalesOverview> salesByCustomer = salesImpl.getSalesByProductId(Id.of(3, ProductId.class));
+      Optional<SalesOverview> salesByCustomer = salesServiceImpl.getSalesByProductId(Id.of(3, ProductId.class));
 
       // Then
       assertTrue(salesByCustomer.isPresent());

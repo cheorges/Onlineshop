@@ -34,9 +34,9 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-public class ProductPurchaseImplTest {
+public class ProductPurchaseServiceImplTest {
    private EntityManager em;
-   private ProductPurchaseImpl productPurchaseImpl;
+   private ProductPurchaseServiceServiceImpl productPurchaseServiceImpl;
 
    private final CustomerEntity CUSTOMER_ENTITY = new CustomerEntityBuilder()
          .username("username-1")
@@ -67,10 +67,10 @@ public class ProductPurchaseImplTest {
    @Before
    public void initializeDependencies() {
       em = Persistence.createEntityManagerFactory("integration-test").createEntityManager();
-      productPurchaseImpl = new ProductPurchaseImpl();
-      productPurchaseImpl.em = em;
-      productPurchaseImpl.customerService = mock(CustomerServiceImpl.class);
-      productPurchaseImpl.productService = mock(ProductServiceImpl.class);
+      productPurchaseServiceImpl = new ProductPurchaseServiceServiceImpl();
+      productPurchaseServiceImpl.em = em;
+      productPurchaseServiceImpl.customerService = mock(CustomerServiceImpl.class);
+      productPurchaseServiceImpl.productService = mock(ProductServiceImpl.class);
 
       em.getTransaction().begin();
       em.persist(CUSTOMER_ENTITY);
@@ -86,7 +86,7 @@ public class ProductPurchaseImplTest {
             .buyerId(Id.of(1, CustomerId.class)).build();
 
       // When
-      MessageContainer messageContainer = productPurchaseImpl.newPurchase(purchase);
+      MessageContainer messageContainer = productPurchaseServiceImpl.newPurchase(purchase);
 
       // Then
       assertTrue(messageContainer.hasMessages());
@@ -107,11 +107,11 @@ public class ProductPurchaseImplTest {
             .build();
 
       doReturn(Optional.empty())
-            .when(productPurchaseImpl.customerService)
+            .when(productPurchaseServiceImpl.customerService)
             .getCustomerEntityById(any());
 
       // When
-      MessageContainer messageContainer = productPurchaseImpl.newPurchase(purchase);
+      MessageContainer messageContainer = productPurchaseServiceImpl.newPurchase(purchase);
 
       // Then
       assertTrue(messageContainer.hasMessages());
@@ -133,16 +133,16 @@ public class ProductPurchaseImplTest {
             .build();
 
       doReturn(Optional.of(CUSTOMER_ENTITY))
-            .when(productPurchaseImpl.customerService)
+            .when(productPurchaseServiceImpl.customerService)
             .getCustomerEntityById(any());
 
       doReturn(Optional.empty())
-            .when(productPurchaseImpl.productService)
+            .when(productPurchaseServiceImpl.productService)
             .getProductEntityById(any());
 
       // When
       em.getTransaction().begin();
-      MessageContainer messageContainer = productPurchaseImpl.newPurchase(purchase);
+      MessageContainer messageContainer = productPurchaseServiceImpl.newPurchase(purchase);
       em.getTransaction().commit();
 
       // Then
@@ -169,17 +169,17 @@ public class ProductPurchaseImplTest {
             .build();
 
       doReturn(Optional.of(CUSTOMER_ENTITY))
-            .when(productPurchaseImpl.customerService)
+            .when(productPurchaseServiceImpl.customerService)
             .getCustomerEntityById(any());
 
       doReturn(Optional.of(PRODUCT_ENTITY_1))
-            .when(productPurchaseImpl.productService)
+            .when(productPurchaseServiceImpl.productService)
             .getProductEntityById(any());
-      doReturn(productPurchaseImpl.getMessageContainer()).when(productPurchaseImpl.productService).removeStockByProductId(any(), any());
+      doReturn(productPurchaseServiceImpl.getMessageContainer()).when(productPurchaseServiceImpl.productService).removeStockByProductId(any(), any());
 
       // When
       em.getTransaction().begin();
-      MessageContainer messageContainer = productPurchaseImpl.newPurchase(purchase);
+      MessageContainer messageContainer = productPurchaseServiceImpl.newPurchase(purchase);
       em.getTransaction().commit();
 
       // Then
@@ -218,20 +218,20 @@ public class ProductPurchaseImplTest {
             .build();
 
       doReturn(Optional.of(CUSTOMER_ENTITY))
-            .when(productPurchaseImpl.customerService)
+            .when(productPurchaseServiceImpl.customerService)
             .getCustomerEntityById(any());
 
       doReturn(Optional.of(PRODUCT_ENTITY_1))
-            .when(productPurchaseImpl.productService)
+            .when(productPurchaseServiceImpl.productService)
             .getProductEntityById(Id.of(2, ProductId.class));
       doReturn(Optional.of(PRODUCT_ENTITY_2))
-            .when(productPurchaseImpl.productService)
+            .when(productPurchaseServiceImpl.productService)
             .getProductEntityById(Id.of(3, ProductId.class));
-      doReturn(productPurchaseImpl.getMessageContainer()).when(productPurchaseImpl.productService).removeStockByProductId(any(), any());
+      doReturn(productPurchaseServiceImpl.getMessageContainer()).when(productPurchaseServiceImpl.productService).removeStockByProductId(any(), any());
 
       // When
       em.getTransaction().begin();
-      MessageContainer messageContainer = productPurchaseImpl.newPurchase(purchase);
+      MessageContainer messageContainer = productPurchaseServiceImpl.newPurchase(purchase);
       em.getTransaction().commit();
 
       // Then

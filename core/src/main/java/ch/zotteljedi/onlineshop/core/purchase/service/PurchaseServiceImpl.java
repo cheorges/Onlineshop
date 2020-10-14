@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Stateless
 @Local(PurchaseServiceLocal.class)
 @Transactional
-public class PurchaseImpl extends ApplicationService implements PurchaseServiceLocal {
+public class PurchaseServiceImpl extends ApplicationService implements PurchaseServiceLocal {
 
    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
    EntityManager em;

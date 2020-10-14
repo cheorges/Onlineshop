@@ -25,7 +25,7 @@ import javax.transaction.Transactional;
 @Stateless
 @Local(SalesServiceLocal.class)
 @Transactional
-public class SalesImpl extends ApplicationService implements SalesServiceLocal {
+public class SalesServiceImpl extends ApplicationService implements SalesServiceLocal {
 
    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
    EntityManager em;

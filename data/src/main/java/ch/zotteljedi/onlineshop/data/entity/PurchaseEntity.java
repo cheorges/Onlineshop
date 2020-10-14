@@ -3,6 +3,8 @@ package ch.zotteljedi.onlineshop.data.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,9 +25,12 @@ public class PurchaseEntity {
     @NotNull(message = "Purchasedate may not be blank.")
     private LocalDate boughtAt;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @NotNull(message = "Buyer may not be blank.")
     private CustomerEntity buyer;
+
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.REMOVE)
+    private List<PurchaseItemEntity> purchaseItemEntities = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -51,27 +56,37 @@ public class PurchaseEntity {
         this.buyer = buyer;
     }
 
+    public List<PurchaseItemEntity> getPurchaseItemEntities() {
+        return purchaseItemEntities;
+    }
+
+    public void setPurchaseItemEntities(List<PurchaseItemEntity> purchaseItemEntities) {
+        this.purchaseItemEntities = purchaseItemEntities;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PurchaseEntity)) return false;
         PurchaseEntity that = (PurchaseEntity) o;
         return id == that.id &&
-                boughtAt.equals(that.boughtAt) &&
-                buyer.equals(that.buyer);
+                Objects.equals(boughtAt, that.boughtAt) &&
+                Objects.equals(buyer, that.buyer) &&
+                Objects.equals(purchaseItemEntities, that.purchaseItemEntities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, boughtAt, buyer);
+        return Objects.hash(id, boughtAt, buyer, purchaseItemEntities);
     }
 
     @Override
     public String toString() {
-        return "PurchaseEntitiy{" +
+        return "PurchaseEntity{" +
                 "id=" + id +
                 ", boughtAt=" + boughtAt +
                 ", buyer=" + buyer +
+                ", purchaseItemEntities=" + purchaseItemEntities +
                 '}';
     }
 }

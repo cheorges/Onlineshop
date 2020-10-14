@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -49,6 +51,12 @@ public class CustomerEntity {
     @NotEmpty(message = "Password may not be empty.")
     @Size(min = 6, max = 255, message = "Password must be between 6 and 255 characters.")
     private String password;
+
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.REMOVE)
+    private List<ProductEntity> products = new ArrayList<>();
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.REMOVE)
+    private List<PurchaseEntity> purchases = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -98,35 +106,53 @@ public class CustomerEntity {
         this.password = password;
     }
 
+    public List<ProductEntity> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductEntity> products) {
+        this.products = products;
+    }
+
+    public List<PurchaseEntity> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<PurchaseEntity> purchase) {
+        this.purchases = purchase;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof CustomerEntity))
-            return false;
+        if (this == o) return true;
+        if (!(o instanceof CustomerEntity)) return false;
         CustomerEntity that = (CustomerEntity) o;
-        return getId() == that.getId() &&
-              getUsername().equals(that.getUsername()) &&
-              getFirstname().equals(that.getFirstname()) &&
-              getLastname().equals(that.getLastname()) &&
-              getEmail().equals(that.getEmail()) &&
-              getPassword().equals(that.getPassword());
+        return id == that.id &&
+                Objects.equals(username, that.username) &&
+                Objects.equals(firstname, that.firstname) &&
+                Objects.equals(lastname, that.lastname) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(products, that.products) &&
+                Objects.equals(purchases, that.purchases);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUsername(), getFirstname(), getLastname(), getEmail(), getPassword());
+        return Objects.hash(id, username, firstname, lastname, email, password, products, purchases);
     }
 
     @Override
     public String toString() {
         return "CustomerEntity{" +
-              "id=" + id +
-              ", username='" + username + '\'' +
-              ", firstname='" + firstname + '\'' +
-              ", lastname='" + lastname + '\'' +
-              ", email='" + email + '\'' +
-              ", password='" + password + '\'' +
-              '}';
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", products=" + products +
+                ", purchase=" + purchases +
+                '}';
     }
 }

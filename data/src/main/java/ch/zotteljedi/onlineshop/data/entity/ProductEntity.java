@@ -2,7 +2,9 @@ package ch.zotteljedi.onlineshop.data.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -46,9 +48,12 @@ public class ProductEntity {
    @NotNull(message = "Photo may not be blank.")
    private byte[] photo;
 
-   @ManyToOne(cascade = CascadeType.ALL)
+   @ManyToOne
    @NotNull(message = "Seller may not be blank.")
    private CustomerEntity seller;
+
+   @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+   private List<PurchaseItemEntity> purchaseItemEntities = new ArrayList<>();
 
    public int getId() {
       return id;
@@ -106,25 +111,32 @@ public class ProductEntity {
       this.seller = seller;
    }
 
+   public List<PurchaseItemEntity> getPurchaseItemEntities() {
+      return purchaseItemEntities;
+   }
+
+   public void setPurchaseItemEntities(List<PurchaseItemEntity> purchaseItemEntities) {
+      this.purchaseItemEntities = purchaseItemEntities;
+   }
+
    @Override
    public boolean equals(Object o) {
-      if (this == o)
-         return true;
-      if (!(o instanceof ProductEntity))
-         return false;
+      if (this == o) return true;
+      if (!(o instanceof ProductEntity)) return false;
       ProductEntity that = (ProductEntity) o;
       return id == that.id &&
-            title.equals(that.title) &&
-            Objects.equals(description, that.description) &&
-            unitprice.equals(that.unitprice) &&
-            stock.equals(that.stock) &&
-            Arrays.equals(photo, that.photo) &&
-            seller.equals(that.seller);
+              Objects.equals(title, that.title) &&
+              Objects.equals(description, that.description) &&
+              Objects.equals(unitprice, that.unitprice) &&
+              Objects.equals(stock, that.stock) &&
+              Arrays.equals(photo, that.photo) &&
+              Objects.equals(seller, that.seller) &&
+              Objects.equals(purchaseItemEntities, that.purchaseItemEntities);
    }
 
    @Override
    public int hashCode() {
-      int result = Objects.hash(id, title, description, unitprice, stock, seller);
+      int result = Objects.hash(id, title, description, unitprice, stock, seller, purchaseItemEntities);
       result = 31 * result + Arrays.hashCode(photo);
       return result;
    }
@@ -132,14 +144,15 @@ public class ProductEntity {
    @Override
    public String toString() {
       return "ProductEntity{" +
-            "id=" + id +
-            ", title='" + title + '\'' +
-            ", description='" + description + '\'' +
-            ", price=" + unitprice +
-            ", stock=" + stock +
-            ", photo=" + Arrays.toString(photo) +
-            ", seller=" + seller +
-            '}';
+              "id=" + id +
+              ", title='" + title + '\'' +
+              ", description='" + description + '\'' +
+              ", unitprice=" + unitprice +
+              ", stock=" + stock +
+              ", photo=" + Arrays.toString(photo) +
+              ", seller=" + seller +
+              ", purchaseItemEntities=" + purchaseItemEntities +
+              '}';
    }
 
 }

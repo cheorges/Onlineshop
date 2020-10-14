@@ -17,9 +17,13 @@ public interface CustomerMapper {
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "products", ignore = true)
+    @Mapping(target = "purchases", ignore = true)
     CustomerEntity map(NewCustomer customer);
 
     @Mapping(target = "id", source = "id", qualifiedByName = "mapIdTo")
+    @Mapping(target = "products", ignore = true)
+    @Mapping(target = "purchases", ignore = true)
     CustomerEntity map(Customer customer);
 
     @Mapping(target = "from", ignore = true)

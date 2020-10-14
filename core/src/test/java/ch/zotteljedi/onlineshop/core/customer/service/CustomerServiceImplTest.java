@@ -4,18 +4,12 @@ import ch.zotteljedi.onlineshop.common.customer.dto.*;
 import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.common.message.MessageContainer;
 import ch.zotteljedi.onlineshop.core.builder.CustomerEntityBuilder;
-import ch.zotteljedi.onlineshop.core.builder.ProductEntityBuilder;
-import ch.zotteljedi.onlineshop.core.builder.PurchaseEntityBuilder;
-import ch.zotteljedi.onlineshop.core.builder.PurchaseItemEntityBuilder;
 import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
-import ch.zotteljedi.onlineshop.data.entity.ProductEntity;
-import ch.zotteljedi.onlineshop.data.entity.PurchaseEntity;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -291,40 +285,6 @@ public class CustomerServiceImplTest {
         // When
         em.getTransaction().begin();
         MessageContainer messageContainer = customerServiceImpl.deleteCustomer(Id.of(1, CustomerId.class));
-        em.getTransaction().commit();
-
-        // Then
-        assertFalse(messageContainer.hasMessages());
-    }
-
-    @Test
-    public void test_delete_customer_with_purchase() {
-        // Given
-        em.getTransaction().begin();
-        PurchaseEntity purchase = new PurchaseEntityBuilder()
-                .boughtAt(LocalDate.now())
-                .buyer(CUSTOMER)
-                .build();
-        em.persist(purchase);
-        ProductEntity product = new ProductEntityBuilder()
-                .title("title")
-                .description("description")
-                .photo(ProductEntityBuilder.generateRandomByte(1))
-                .stock(1)
-                .unitprice(1.0)
-                .seller(CUSTOMER)
-                .build();
-        em.persist(product);
-        em.persist(new PurchaseItemEntityBuilder()
-                .purchase(purchase)
-                .product(product)
-                .unit(2)
-                .unitprice(2.0)
-                .build());
-        em.getTransaction().commit();
-        // When
-        em.getTransaction().begin();
-        MessageContainer messageContainer = customerServiceImpl.deleteCustomer(Id.of(2, CustomerId.class));
         em.getTransaction().commit();
 
         // Then

@@ -28,11 +28,11 @@ public class PurchaseItemEntity {
     @NotNull(message = "Unit may not be blank.")
     private Integer unit;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @NotNull(message = "Purchase may not be blank.")
     private PurchaseEntity purchase;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @NotNull(message = "Product may not be blank.")
     private ProductEntity product;
 

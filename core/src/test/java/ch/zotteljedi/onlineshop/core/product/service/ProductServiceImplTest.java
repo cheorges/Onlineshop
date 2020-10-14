@@ -45,6 +45,15 @@ public class ProductServiceImplTest {
             .password("password-2")
             .build();
 
+    private final ProductEntity PRODUCT_ENTITY_3 = new ProductEntityBuilder()
+            .title("title-2")
+            .description("description-2")
+            .stock(2)
+            .unitprice(2.2)
+            .photo(ProductEntityBuilder.generateRandomByte(2))
+            .seller(CUSTOMER_ENTITY_1)
+            .build();
+
     @Before
     public void initializeDependencies() {
         em = Persistence.createEntityManagerFactory("integration-test").createEntityManager();
@@ -74,14 +83,7 @@ public class ProductServiceImplTest {
                 .photo(ProductEntityBuilder.generateRandomByte(1))
                 .seller(CUSTOMER_ENTITY_1)
                 .build());
-        em.persist(new ProductEntityBuilder()
-                .title("title-2")
-                .description("description-2")
-                .stock(2)
-                .unitprice(2.2)
-                .photo(ProductEntityBuilder.generateRandomByte(2))
-                .seller(CUSTOMER_ENTITY_1)
-                .build());
+        em.persist(PRODUCT_ENTITY_3);
         em.getTransaction().commit();
     }
 
@@ -283,23 +285,6 @@ public class ProductServiceImplTest {
 
     @Test
     public void test_delete_product() {
-        // When
-        em.getTransaction().begin();
-        MessageContainer messageContainer = productServiceImpl.deleteProduct(Id.of(5, ProductId.class));
-        em.getTransaction().commit();
-
-        // Then
-        assertFalse(messageContainer.hasMessages());
-        List<ProductEntity> allProducts = em.createNamedQuery("ProductEntity.get", ProductEntity.class)
-                .getResultList();
-        assertThat(allProducts.size(), is(2));
-    }
-
-    @Test
-    public void test_delete_product_with_purchase() {
-        // Given
-
-
         // When
         em.getTransaction().begin();
         MessageContainer messageContainer = productServiceImpl.deleteProduct(Id.of(5, ProductId.class));

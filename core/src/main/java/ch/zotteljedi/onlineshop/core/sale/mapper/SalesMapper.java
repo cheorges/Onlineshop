@@ -18,23 +18,23 @@ import java.util.List;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface SalesMapper {
 
-   SalesMapper INSTANCE = Mappers.getMapper(SalesMapper.class);
+    SalesMapper INSTANCE = Mappers.getMapper(SalesMapper.class);
 
-   @Mapping(target = "id", source = "productEntity.id", qualifiedByName = "id")
-   @Mapping(target = "salesItems", source = "salesItemOverviews")
-   @Mapping(target = "title", source = "productEntity.title")
-   @Mapping(target = "from", ignore = true)
-   ImmutableSalesOverview map(ProductEntity productEntity, List<SalesItemOverview> salesItemOverviews);
+    @Mapping(target = "id", source = "productEntity.id", qualifiedByName = "id")
+    @Mapping(target = "salesItems", source = "salesItemOverviews")
+    @Mapping(target = "title", source = "productEntity.title")
+    @Mapping(target = "from", ignore = true)
+    ImmutableSalesOverview map(ProductEntity productEntity, List<SalesItemOverview> salesItemOverviews);
 
-   @Mapping(target = "buyerRepresentation", source = "representation")
-   @Mapping(target = "unit", source = "purchaseItemEntity.unit")
-   @Mapping(target = "unitprice", source = "purchaseItemEntity.unitprice")
-   @Mapping(target = "boughtAt", source = "purchaseItemEntity.purchase.boughtAt")
-   @Mapping(target = "from", ignore = true)
-   ImmutableSalesItemOverview map(PurchaseItemEntity purchaseItemEntity, String representation);
+    @Mapping(target = "buyerRepresentation", source = "representation")
+    @Mapping(target = "unit", source = "purchaseItemEntity.unit")
+    @Mapping(target = "unitprice", source = "purchaseItemEntity.unitprice")
+    @Mapping(target = "boughtAt", source = "purchaseItemEntity.purchase.boughtAt")
+    @Mapping(target = "from", ignore = true)
+    ImmutableSalesItemOverview map(PurchaseItemEntity purchaseItemEntity, String representation);
 
-   @Named("id")
-   default ProductId map(final Integer id) {
-      return Id.of(id, ProductId.class);
-   }
+    @Named("id")
+    default ProductId map(final Integer id) {
+        return Id.of(id, ProductId.class);
+    }
 }

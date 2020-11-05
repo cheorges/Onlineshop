@@ -19,9 +19,9 @@ import static org.mockito.Mockito.mock;
 
 public class PurchaseEntityValidatorTest {
 
+    private final LocalDate now = LocalDate.now();
     private Validator validator;
     private PurchaseEntity purchaseEntity;
-    private final LocalDate now = LocalDate.now();
 
     @Before
     public void setUp() {

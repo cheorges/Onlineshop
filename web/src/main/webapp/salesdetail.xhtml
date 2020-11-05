@@ -40,7 +40,8 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <cc:forEach items="#{salesJSF.pageSales.items}" var="item" varStatus="metadata">
+                                                <cc:forEach items="#{salesJSF.pageSales.items}" var="item"
+                                                            varStatus="metadata">
                                                     <tr class="align-middle">
                                                         <td class="align-middle">#{item.buyerRepresentation}</td>
                                                         <td class="align-middle">#{item.boughtAt}</td>
@@ -63,7 +64,8 @@
                                     </div>
                                     <div class="card shadow">
                                         <div>
-                                            <img class="card-img-top" src="image?id=#{salesJSF.productId}" alt="#{productJSF.product}"/>
+                                            <img class="card-img-top" src="image?id=#{salesJSF.productId}"
+                                                 alt="#{productJSF.product}"/>
                                             <div class="card-img-overlay"></div>
                                         </div>
                                     </div>

@@ -2,7 +2,6 @@ package ch.zotteljedi.onlineshop.common.purchase.dto;
 
 import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.dto.ValueObject;
-import ch.zotteljedi.onlineshop.common.purchase.dto.CartProduct;
 import org.immutables.value.Value;
 
 import java.util.List;

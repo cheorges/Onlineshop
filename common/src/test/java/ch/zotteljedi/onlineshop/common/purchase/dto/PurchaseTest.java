@@ -2,10 +2,7 @@ package ch.zotteljedi.onlineshop.common.purchase.dto;
 
 import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.dto.Id;
-import ch.zotteljedi.onlineshop.common.purchase.dto.ImmutableCartProduct;
-import ch.zotteljedi.onlineshop.common.purchase.dto.ImmutablePurchase;
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
-import ch.zotteljedi.onlineshop.common.purchase.dto.CartProduct;
 import org.junit.Before;
 import org.junit.Test;
 

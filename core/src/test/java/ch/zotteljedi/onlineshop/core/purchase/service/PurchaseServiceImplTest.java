@@ -1,41 +1,34 @@
 package ch.zotteljedi.onlineshop.core.purchase.service;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-
 import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.common.purchase.dto.PurchaseId;
 import ch.zotteljedi.onlineshop.common.purchase.dto.PurchaseOverview;
 import ch.zotteljedi.onlineshop.core.builder.CustomerEntityBuilder;
+import ch.zotteljedi.onlineshop.core.builder.ProductEntityBuilder;
 import ch.zotteljedi.onlineshop.core.builder.PurchaseEntityBuilder;
 import ch.zotteljedi.onlineshop.core.builder.PurchaseItemEntityBuilder;
 import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
-import ch.zotteljedi.onlineshop.core.builder.ProductEntityBuilder;
 import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
 import ch.zotteljedi.onlineshop.data.entity.ProductEntity;
 import ch.zotteljedi.onlineshop.data.entity.PurchaseEntity;
-
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 public class PurchaseServiceImplTest {
     public static final LocalDate NOW = LocalDate.now();
-    private EntityManager em;
-    private PurchaseServiceImpl purchaseServiceImpl;
-
     private final CustomerEntity BUYER = new CustomerEntityBuilder()
             .username("buyer")
             .firstname("buyer-firstname")
@@ -43,7 +36,6 @@ public class PurchaseServiceImplTest {
             .email("buyer@zotteltec.ch")
             .password("buyer-password")
             .build();
-
     private final CustomerEntity SELLER = new CustomerEntityBuilder()
             .username("seller")
             .firstname("seller-firstname")
@@ -51,7 +43,6 @@ public class PurchaseServiceImplTest {
             .email("seller-firstname@zotteltec.ch")
             .password("seller-password")
             .build();
-
     private final ProductEntity PRODUCT_ENTITY_1 = new ProductEntityBuilder()
             .title("title-1")
             .description("description-1")
@@ -60,6 +51,8 @@ public class PurchaseServiceImplTest {
             .photo(ProductEntityBuilder.generateRandomByte(5))
             .seller(SELLER)
             .build();
+    private EntityManager em;
+    private PurchaseServiceImpl purchaseServiceImpl;
 
     @Before
     public void initializeDependencies() {

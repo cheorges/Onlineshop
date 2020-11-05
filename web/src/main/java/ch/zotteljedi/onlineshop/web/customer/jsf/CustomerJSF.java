@@ -3,10 +3,10 @@ package ch.zotteljedi.onlineshop.web.customer.jsf;
 import ch.zotteljedi.onlineshop.common.customer.dto.Customer;
 import ch.zotteljedi.onlineshop.common.customer.dto.ImmutableCustomer;
 import ch.zotteljedi.onlineshop.common.customer.service.CustomerServiceLocal;
-import ch.zotteljedi.onlineshop.web.customer.dto.PageCustomer;
-import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.web.common.Hash256;
 import ch.zotteljedi.onlineshop.web.common.massage.MessageFactory;
+import ch.zotteljedi.onlineshop.web.customer.dto.PageCustomer;
+import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;

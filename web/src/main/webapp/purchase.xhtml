@@ -27,7 +27,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <cc:forEach items="#{purchaseJSF.purchaseByCustomer}" var="purchase" varStatus="metadata">
+                                <cc:forEach items="#{purchaseJSF.purchaseByCustomer}" var="purchase"
+                                            varStatus="metadata">
                                     <tr class="align-middle">
                                         <td class="align-middle">#{purchase.boughtAt}</td>
                                         <td class="align-middle">
@@ -36,7 +37,8 @@
                                             </h:outputText>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <a href="purchasedetail.xhtml?id=#{purchase.purchaseId.value}" class="btn btn-primary">Info</a>
+                                            <a href="purchasedetail.xhtml?id=#{purchase.purchaseId.value}"
+                                               class="btn btn-primary">Info</a>
                                         </td>
                                     </tr>
                                 </cc:forEach>

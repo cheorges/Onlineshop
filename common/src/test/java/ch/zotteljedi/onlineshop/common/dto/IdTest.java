@@ -1,6 +1,5 @@
 package ch.zotteljedi.onlineshop.common.dto;
 
-import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
 import org.junit.Test;
 

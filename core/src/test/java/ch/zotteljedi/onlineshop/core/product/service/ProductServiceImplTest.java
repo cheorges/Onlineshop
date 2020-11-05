@@ -26,9 +26,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 public class ProductServiceImplTest {
-    private EntityManager em;
-    private ProductServiceImpl productServiceImpl;
-
     private final CustomerEntity CUSTOMER_ENTITY_1 = new CustomerEntityBuilder()
             .username("username-1")
             .firstname("firstname-1")
@@ -36,7 +33,6 @@ public class ProductServiceImplTest {
             .email("firstname-1@zotteltec.ch")
             .password("password-1")
             .build();
-
     private final CustomerEntity CUSTOMER_ENTITY_2 = new CustomerEntityBuilder()
             .username("username-2")
             .firstname("firstname-2")
@@ -44,7 +40,6 @@ public class ProductServiceImplTest {
             .email("firstname-2@zotteltec.ch")
             .password("password-2")
             .build();
-
     private final ProductEntity PRODUCT_ENTITY_3 = new ProductEntityBuilder()
             .title("title-2")
             .description("description-2")
@@ -53,6 +48,8 @@ public class ProductServiceImplTest {
             .photo(ProductEntityBuilder.generateRandomByte(2))
             .seller(CUSTOMER_ENTITY_1)
             .build();
+    private EntityManager em;
+    private ProductServiceImpl productServiceImpl;
 
     @Before
     public void initializeDependencies() {

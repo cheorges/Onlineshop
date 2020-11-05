@@ -12,15 +12,15 @@ import ch.zotteljedi.onlineshop.core.service.ApplicationService;
 import ch.zotteljedi.onlineshop.data.entity.ProductEntity;
 import ch.zotteljedi.onlineshop.data.entity.PurchaseItemEntity;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Stateless
 @Local(SalesServiceLocal.class)

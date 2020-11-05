@@ -1,14 +1,5 @@
 package ch.zotteljedi.onlineshop.core.purchase.service;
 
-import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-
 import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.common.message.MessageContainer;
@@ -16,28 +7,31 @@ import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
 import ch.zotteljedi.onlineshop.common.purchase.dto.ImmutableCartProduct;
 import ch.zotteljedi.onlineshop.common.purchase.dto.ImmutablePurchase;
 import ch.zotteljedi.onlineshop.core.builder.CustomerEntityBuilder;
-import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
 import ch.zotteljedi.onlineshop.core.builder.ProductEntityBuilder;
+import ch.zotteljedi.onlineshop.core.customer.service.CustomerServiceImpl;
 import ch.zotteljedi.onlineshop.core.product.service.ProductServiceImpl;
 import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
 import ch.zotteljedi.onlineshop.data.entity.ProductEntity;
 import ch.zotteljedi.onlineshop.data.entity.PurchaseEntity;
 import ch.zotteljedi.onlineshop.data.entity.PurchaseItemEntity;
-
 import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 public class ProductPurchaseServiceImplTest {
-    private EntityManager em;
-    private ProductPurchaseServiceServiceImpl productPurchaseServiceImpl;
-
     private final CustomerEntity CUSTOMER_ENTITY = new CustomerEntityBuilder()
             .username("username-1")
             .firstname("firstname-1")
@@ -45,7 +39,6 @@ public class ProductPurchaseServiceImplTest {
             .email("firstname-1@zotteltec.ch")
             .password("password-1")
             .build();
-
     private final ProductEntity PRODUCT_ENTITY_1 = new ProductEntityBuilder()
             .title("title-1")
             .description("description-1")
@@ -54,7 +47,6 @@ public class ProductPurchaseServiceImplTest {
             .photo(ProductEntityBuilder.generateRandomByte(5))
             .seller(CUSTOMER_ENTITY)
             .build();
-
     private final ProductEntity PRODUCT_ENTITY_2 = new ProductEntityBuilder()
             .title("title-2")
             .description("description-2")
@@ -63,6 +55,8 @@ public class ProductPurchaseServiceImplTest {
             .photo(ProductEntityBuilder.generateRandomByte(5))
             .seller(CUSTOMER_ENTITY)
             .build();
+    private EntityManager em;
+    private ProductPurchaseServiceServiceImpl productPurchaseServiceImpl;
 
     @Before
     public void initializeDependencies() {

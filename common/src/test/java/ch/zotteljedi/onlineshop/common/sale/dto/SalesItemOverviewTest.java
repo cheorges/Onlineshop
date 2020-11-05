@@ -15,7 +15,7 @@ public class SalesItemOverviewTest {
     @Test
     public void test_create_sales_item_overview_dto() {
         // Given
-        SalesItemOverview purchaseItemOverview  = ImmutableSalesItemOverview.builder()
+        SalesItemOverview purchaseItemOverview = ImmutableSalesItemOverview.builder()
                 .buyerRepresentation("BuyerRepresentation")
                 .boughtAt(now)
                 .unit(1)

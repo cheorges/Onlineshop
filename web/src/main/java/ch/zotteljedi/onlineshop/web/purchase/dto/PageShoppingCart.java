@@ -15,9 +15,9 @@ public class PageShoppingCart implements Serializable {
         isProductInShoppingCart(persistPageProduct.getId())
                 .ifPresentOrElse(PageCartProduct::incrementUnit, () -> pageCartProducts.add(
                         new PageCartProduct(persistPageProduct.getId(),
-                              persistPageProduct.getTitle(),
-                              persistPageProduct.getUnitprice(),
-                              persistPageProduct.getStock())));
+                                persistPageProduct.getTitle(),
+                                persistPageProduct.getUnitprice(),
+                                persistPageProduct.getStock())));
     }
 
     public boolean removePageCartProduct(ProductId id) {

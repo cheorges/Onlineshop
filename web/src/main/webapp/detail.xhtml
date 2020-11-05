@@ -16,41 +16,43 @@
         <br/>
         <h1>Zotteltec - Onlineshop</h1>
         <hr/>
-            <h:form>
-                <div class="card">
-                    <h5 class="card-header">
-                        #{productJSF.product.title} <span class="badge badge-pill badge-primary">#{productJSF.product.stock}</span>
-                    </h5>
-                    <div class="card-body">
-                        <div class="card-deck">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h5 class="card-title">#{productJSF.product.title}</h5>
-                                    <hr/>
-                                    <p class="card-text text-muted">
-                                        <h:outputText value="#{productJSF.product.unitprice}">
-                                            <c:convertNumber minFractionDigits="2"/>
-                                        </h:outputText> CHF
-                                    </p>
-                                    <p class="card-text">#{productJSF.product.description}</p>
+        <h:form>
+            <div class="card">
+                <h5 class="card-header">
+                    #{productJSF.product.title} <span
+                        class="badge badge-pill badge-primary">#{productJSF.product.stock}</span>
+                </h5>
+                <div class="card-body">
+                    <div class="card-deck">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h5 class="card-title">#{productJSF.product.title}</h5>
+                                <hr/>
+                                <p class="card-text text-muted">
+                                    <h:outputText value="#{productJSF.product.unitprice}">
+                                        <c:convertNumber minFractionDigits="2"/>
+                                    </h:outputText> CHF
+                                </p>
+                                <p class="card-text">#{productJSF.product.description}</p>
+                                <br/>
+                                <footer class="blockquote-footer">#{productJSF.product.seller.representation}</footer>
+                                <cc:if test="#{customerSessionJSF.authenticated}">
                                     <br/>
-                                    <footer class="blockquote-footer">#{productJSF.product.seller.representation}</footer>
-                                        <cc:if test="#{customerSessionJSF.authenticated}">
-                                            <br/>
-                                            <h:commandButton value="Add To Cart" class="btn btn-primary"
-                                                             actionListener="#{productPurchaseJSF.addToShoppingCart(productJSF.product)}"/>
-                                        </cc:if>
-                                </div>
+                                    <h:commandButton value="Add To Cart" class="btn btn-primary"
+                                                     actionListener="#{productPurchaseJSF.addToShoppingCart(productJSF.product)}"/>
+                                </cc:if>
                             </div>
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <img class="card-img-top" src="image?id=#{productJSF.productId}" alt="#{productJSF.product}"/>
-                                    <div class="card-img-overlay"></div>
-                                </div>
+                        </div>
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <img class="card-img-top" src="image?id=#{productJSF.productId}"
+                                     alt="#{productJSF.product}"/>
+                                <div class="card-img-overlay"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </h:form>
+            </div>
+        </h:form>
     </ui:define>
 </ui:composition>

@@ -6,9 +6,9 @@ import ch.zotteljedi.onlineshop.common.purchase.service.ProductPurchaseServiceLo
 import ch.zotteljedi.onlineshop.web.common.massage.MessageFactory;
 import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.web.customer.jsf.CustomerSessionJSF;
+import ch.zotteljedi.onlineshop.web.product.dto.PersistPageProduct;
 import ch.zotteljedi.onlineshop.web.purchase.dto.PageCartProduct;
 import ch.zotteljedi.onlineshop.web.purchase.dto.PageShoppingCart;
-import ch.zotteljedi.onlineshop.web.product.dto.PersistPageProduct;
 import ch.zotteljedi.onlineshop.web.purchase.mapper.ProductPurchaseMapper;
 
 import javax.enterprise.context.SessionScoped;

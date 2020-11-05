@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.0"
-             xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             version="2.0" xmlns="http://java.sun.com/xml/ns/persistence"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="ZotteltecPersistenceProvider">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
@@ -10,7 +10,7 @@
         <class>ch.zotteljedi.onlineshop.data.entity.PurchaseEntity</class>
         <class>ch.zotteljedi.onlineshop.data.entity.PurchaseItemEntity</class>
         <properties>
-            <property name="tomee.jpa.factory.lazy" value="true" />
+            <property name="tomee.jpa.factory.lazy" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
     </persistence-unit>
@@ -22,9 +22,9 @@
         <class>ch.zotteljedi.onlineshop.data.entity.PurchaseItemEntity</class>
         <properties>
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:h2:mem:test:sample;DB_CLOSE_ON_EXIT=FALSE;" />
-            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+                      value="jdbc:h2:mem:test:sample;DB_CLOSE_ON_EXIT=FALSE;"/>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
         </properties>
     </persistence-unit>
 

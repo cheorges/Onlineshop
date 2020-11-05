@@ -18,12 +18,12 @@ public abstract class Id implements Serializable {
         return instance;
     }
 
-    void setValue(Integer value) {
-        this.value = value;
-    }
-
     public Integer getValue() {
         return value;
+    }
+
+    void setValue(Integer value) {
+        this.value = value;
     }
 
     @Override

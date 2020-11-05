@@ -34,7 +34,9 @@ public class PageSales implements Serializable {
         this.items = items;
     }
 
-    public Integer getTotalUnits() { return getItems().stream().mapToInt(PageSalesItem::getUnit).sum(); }
+    public Integer getTotalUnits() {
+        return getItems().stream().mapToInt(PageSalesItem::getUnit).sum();
+    }
 
     public Double getTotalAmount() {
         return getItems().stream().mapToDouble(PageSalesItem::getTotalPrice).sum();

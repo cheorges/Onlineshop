@@ -1,14 +1,5 @@
 package ch.zotteljedi.onlineshop.core.sale.service;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-
 import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.common.product.dto.ProductId;
@@ -22,22 +13,24 @@ import ch.zotteljedi.onlineshop.core.product.service.ProductServiceImpl;
 import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
 import ch.zotteljedi.onlineshop.data.entity.ProductEntity;
 import ch.zotteljedi.onlineshop.data.entity.PurchaseEntity;
-
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 public class SalesServiceImplTest {
     public static final LocalDate NOW = LocalDate.now();
-    private EntityManager em;
-    private SalesServiceImpl salesServiceImpl;
-
     private final CustomerEntity BUYER = new CustomerEntityBuilder()
             .username("buyer")
             .firstname("buyer-firstname")
@@ -45,7 +38,6 @@ public class SalesServiceImplTest {
             .email("buyer@zotteltec.ch")
             .password("buyer-password")
             .build();
-
     private final CustomerEntity SELLER = new CustomerEntityBuilder()
             .username("seller")
             .firstname("seller-firstname")
@@ -53,7 +45,6 @@ public class SalesServiceImplTest {
             .email("seller-firstname@zotteltec.ch")
             .password("seller-password")
             .build();
-
     private final ProductEntity PRODUCT_ENTITY_1 = new ProductEntityBuilder()
             .title("title-1")
             .description("description-1")
@@ -62,6 +53,8 @@ public class SalesServiceImplTest {
             .photo(ProductEntityBuilder.generateRandomByte(5))
             .seller(SELLER)
             .build();
+    private EntityManager em;
+    private SalesServiceImpl salesServiceImpl;
 
     @Before
     public void initializeDependencies() {

@@ -4,7 +4,6 @@ import ch.zotteljedi.onlineshop.common.dto.Id;
 import ch.zotteljedi.onlineshop.common.purchase.dto.PurchaseId;
 import ch.zotteljedi.onlineshop.common.purchase.dto.PurchaseOverview;
 import ch.zotteljedi.onlineshop.common.purchase.service.PurchaseServiceLocal;
-import ch.zotteljedi.onlineshop.web.common.massage.MessageFactory;
 import ch.zotteljedi.onlineshop.web.customer.exception.UnauthorizedAccessException;
 import ch.zotteljedi.onlineshop.web.customer.jsf.CustomerSessionJSF;
 import ch.zotteljedi.onlineshop.web.purchase.dto.PagePurchase;

@@ -18,9 +18,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
 public class CustomerServiceImplTest {
-    private EntityManager em;
-    private CustomerServiceImpl customerServiceImpl;
-
     private final CustomerEntity CUSTOMER = new CustomerEntityBuilder()
             .username("username-2")
             .firstname("firstname-2")
@@ -28,6 +25,8 @@ public class CustomerServiceImplTest {
             .email("firstname-2@zotteltec.ch")
             .password("password-2")
             .build();
+    private EntityManager em;
+    private CustomerServiceImpl customerServiceImpl;
 
     @Before
     public void initializeDependencies() {

@@ -184,7 +184,7 @@ public class CustomerEntityValidatorTest {
         // Then
         List<String> messages = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
         assertThat(messages.size(), is(1));
-        assertTrue(messages.contains( "Is not a valid email."));
+        assertTrue(messages.contains("Is not a valid email."));
     }
 
     @Test
@@ -198,7 +198,7 @@ public class CustomerEntityValidatorTest {
         // Then
         List<String> messages = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
         assertThat(messages.size(), is(2));
-        assertTrue(messages.contains( "Is not a valid email."));
+        assertTrue(messages.contains("Is not a valid email."));
         assertTrue(messages.contains("Email must be between 1 and 255 characters."));
     }
 
@@ -292,7 +292,7 @@ public class CustomerEntityValidatorTest {
         StringBuilder builder = new StringBuilder();
         Random random = new Random();
         for (int it = 0; it < size; it++) {
-            builder.append((char)(random.nextInt(26) + 'a'));
+            builder.append((char) (random.nextInt(26) + 'a'));
         }
         return builder.toString();
     }

@@ -8,6 +8,13 @@ import java.security.SecureRandom;
 public class ProductEntityBuilder {
     private final ProductEntity productEntity = new ProductEntity();
 
+    public static byte[] generateRandomByte(int size) {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[size];
+        random.nextBytes(bytes);
+        return bytes;
+    }
+
     public ProductEntityBuilder id(Integer id) {
         productEntity.setId(id);
         return this;
@@ -45,12 +52,5 @@ public class ProductEntityBuilder {
 
     public ProductEntity build() {
         return productEntity;
-    }
-
-    public static byte[] generateRandomByte(int size) {
-        SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[size];
-        random.nextBytes(bytes);
-        return bytes;
     }
 }

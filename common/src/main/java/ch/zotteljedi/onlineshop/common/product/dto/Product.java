@@ -1,7 +1,7 @@
 package ch.zotteljedi.onlineshop.common.product.dto;
 
-import ch.zotteljedi.onlineshop.common.dto.Entity;
 import ch.zotteljedi.onlineshop.common.customer.dto.Customer;
+import ch.zotteljedi.onlineshop.common.dto.Entity;
 import org.immutables.value.Value;
 import org.jetbrains.annotations.Nullable;
 

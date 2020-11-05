@@ -5,7 +5,6 @@ import ch.zotteljedi.onlineshop.common.customer.dto.CustomerId;
 import ch.zotteljedi.onlineshop.common.customer.dto.ImmutableCustomer;
 import ch.zotteljedi.onlineshop.common.customer.dto.NewCustomer;
 import ch.zotteljedi.onlineshop.data.entity.CustomerEntity;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

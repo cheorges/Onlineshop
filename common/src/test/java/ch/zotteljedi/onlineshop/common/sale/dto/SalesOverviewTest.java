@@ -14,12 +14,12 @@ import static org.junit.Assert.assertNotNull;
 
 public class SalesOverviewTest {
 
-    private SalesItemOverview salesItemOverview;
     private final LocalDate now = LocalDate.now();
+    private SalesItemOverview salesItemOverview;
 
     @Before
     public void setUp() {
-        salesItemOverview  = ImmutableSalesItemOverview.builder()
+        salesItemOverview = ImmutableSalesItemOverview.builder()
                 .buyerRepresentation("BuyerRepresentation")
                 .boughtAt(now)
                 .unit(1)

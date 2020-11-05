@@ -14,6 +14,10 @@ import ch.zotteljedi.onlineshop.web.product.dto.PageProduct;
 import ch.zotteljedi.onlineshop.web.product.dto.PersistPageProduct;
 import ch.zotteljedi.onlineshop.web.product.mapper.PageProductMapper;
 
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.http.Part;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,10 +25,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.servlet.http.Part;
 
 @Named
 @ViewScoped

@@ -209,7 +209,7 @@ public class ProductEntityValidatorTest {
         StringBuilder builder = new StringBuilder();
         Random random = new Random();
         for (int it = 0; it < size; it++) {
-            builder.append((char)(random.nextInt(26) + 'a'));
+            builder.append((char) (random.nextInt(26) + 'a'));
         }
         return builder.toString();
     }

@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Named
 @ViewScoped
-public class MessageJSF  implements Serializable {
+public class MessageJSF implements Serializable {
 
     public String getRequiredMassage() {
         return "Field is required.";

@@ -1,7 +1,6 @@
 package ch.zotteljedi.onlineshop.common.purchase.dto;
 
 import ch.zotteljedi.onlineshop.common.dto.Id;
-import ch.zotteljedi.onlineshop.common.purchase.dto.PurchaseItemId;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;

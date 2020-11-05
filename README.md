@@ -9,9 +9,12 @@
 
 ## Quickstart
 
+Run the following commands:
 ```
 ./gradlew build
 ```
 ```
 docker-compose up --build
 ```
+
+Open the 'Zotelltec' onlineshop on: http://localhost:8080/web-1.0-SNAPSHOT/index.xhtml

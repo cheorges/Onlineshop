@@ -43,7 +43,6 @@ public class CustomerEntityValidatorTest {
         assertThat(constraintViolations.size(), is(0));
     }
 
-
     @Test
     public void test_no_username() {
         // Given

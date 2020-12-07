@@ -11,10 +11,9 @@
 
 Run the following commands:
 ```
-./gradlew build
-```
-```
-docker-compose up --build
+docker build . -t onlineshop-zotteltec:latest
+docker-compose up
 ```
 
-Open the 'Zotelltec' onlineshop on: http://localhost:8080/web-1.0-SNAPSHOT/index.xhtml
+Open the [Zotelltec](http://localhost:8080/web-1.0-SNAPSHOT/index.xhtml) onlineshop.  
+* *http://localhost:8080/web-1.0-SNAPSHOT/index.xhtml*

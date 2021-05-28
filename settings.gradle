@@ -1,4 +1,4 @@
-rootProject.name = 'Zotteltec'
+rootProject.name = 'cheorgestec'
 
 include 'common'
 include 'data'

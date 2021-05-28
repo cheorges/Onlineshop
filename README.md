@@ -1,9 +1,9 @@
-![Java CI with Gradle](https://github.com/zotteljedi/Onlineshop/workflows/Java%20CI%20with%20Gradle/badge.svg)
-![Docker Image CI](https://github.com/zotteljedi/Onlineshop/workflows/Docker%20Image%20CI/badge.svg)
+![Java CI with Gradle](https://github.com/cheorges/Onlineshop/workflows/Java%20CI%20with%20Gradle/badge.svg)
+![Docker Image CI](https://github.com/cheorges/Onlineshop/workflows/Docker%20Image%20CI/badge.svg)
 
 ---
 
-# Zotteltec - Onlineshop 
+# cheorges - Onlineshop 
 
 > Java EE 8 Onlineshop Besipiel | FFHS
 
@@ -11,7 +11,7 @@
 
 Run the following commands:
 ```
-docker build . -t onlineshop-zotteltec:latest
+docker build . -t onlineshop-cheorgestec:latest
 docker-compose up
 ```
 

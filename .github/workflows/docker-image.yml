@@ -23,4 +23,4 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -x test
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag zotteltec:$(date +%s)
+        run: docker build . --file Dockerfile --tag cheorgestec:$(date +%s)

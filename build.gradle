@@ -1,7 +1,7 @@
 plugins {
 }
 
-group 'ch.zotteljedi'
+group 'ch.cheorges'
 version '1.0-SNAPSHOT'
 
 repositories {

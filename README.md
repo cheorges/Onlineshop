@@ -3,7 +3,7 @@
 
 ---
 
-# Zotteltec - Onlineshop 
+# CheorgesTec - Onlineshop 
 
 > Java EE 8 Onlineshop Besipiel | FFHS
 

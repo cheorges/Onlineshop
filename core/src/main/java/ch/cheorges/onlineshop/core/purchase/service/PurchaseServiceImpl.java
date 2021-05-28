@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class PurchaseServiceImpl extends ApplicationService implements PurchaseServiceLocal {
 
-    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
+    @PersistenceContext(unitName = "CheorgesTecPersistenceProvider")
     EntityManager em;
 
     @Inject

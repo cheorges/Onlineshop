@@ -29,7 +29,7 @@ public class CustomerServiceImplTest {
             .username("username-2")
             .firstname("firstname-2")
             .lastname("lastname-2")
-            .email("firstname-2@zotteltec.ch")
+            .email("firstname-2@cheorgestec.ch")
             .password("password-2")
             .build();
 
@@ -48,7 +48,7 @@ public class CustomerServiceImplTest {
                 .username("username-1")
                 .firstname("firstname-1")
                 .lastname("lastname-1")
-                .email("firstname-1@zotteltec.ch")
+                .email("firstname-1@cheorgestec.ch")
                 .password("password-1")
                 .build());
         em.persist(CUSTOMER);
@@ -62,7 +62,7 @@ public class CustomerServiceImplTest {
                 .username("username-3")
                 .firstname("firstname-3")
                 .lastname("lastname-3")
-                .email("firstname-3@zotteltec.ch")
+                .email("firstname-3@cheorgestec.ch")
                 .password("password-3")
                 .build();
 
@@ -86,7 +86,7 @@ public class CustomerServiceImplTest {
                 .username("username-4")
                 .firstname("firstname-4")
                 .lastname("lastname-4")
-                .email("firstname-4@zotteltec.ch")
+                .email("firstname-4@cheorgestec.ch")
                 .password("short")
                 .build();
 
@@ -108,7 +108,7 @@ public class CustomerServiceImplTest {
                 .username("username-1")
                 .firstname("firstname-3")
                 .lastname("lastname-3")
-                .email("firstname-3@zotteltec.ch")
+                .email("firstname-3@cheorgestec.ch")
                 .password("password-3")
                 .build();
 
@@ -185,7 +185,7 @@ public class CustomerServiceImplTest {
                 .username("new-username-1")
                 .firstname("new-firstname-1")
                 .lastname("new-lastname-1")
-                .email("new-firstname-1@zotteltec.ch")
+                .email("new-firstname-1@cheorgestec.ch")
                 .password("new-password-1")
                 .build();
 
@@ -204,7 +204,7 @@ public class CustomerServiceImplTest {
         assertThat(changedCustomer.get().getUsername(), is("new-username-1"));
         assertThat(changedCustomer.get().getFirstname(), is("new-firstname-1"));
         assertThat(changedCustomer.get().getLastname(), is("new-lastname-1"));
-        assertThat(changedCustomer.get().getEmail(), is("new-firstname-1@zotteltec.ch"));
+        assertThat(changedCustomer.get().getEmail(), is("new-firstname-1@cheorgestec.ch"));
         assertThat(changedCustomer.get().getPassword(), is("new-password-1"));
     }
 
@@ -215,7 +215,7 @@ public class CustomerServiceImplTest {
                 .username("username-2")
                 .firstname("firstname-2")
                 .lastname("lastname-2")
-                .email("firstname-2@zotteltec.ch")
+                .email("firstname-2@cheorgestec.ch")
                 .password("short")
                 .build();
 
@@ -238,7 +238,7 @@ public class CustomerServiceImplTest {
                 .username("username-2")
                 .firstname("new-firstname-1")
                 .lastname("new-lastname-1")
-                .email("new-firstname-1@zotteltec.ch")
+                .email("new-firstname-1@cheorgestec.ch")
                 .password("new-password-1")
                 .build();
 

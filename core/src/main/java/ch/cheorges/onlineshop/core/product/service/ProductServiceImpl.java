@@ -32,7 +32,7 @@ import javax.transaction.Transactional;
 @Transactional
 public class ProductServiceImpl extends ApplicationService implements ProductServiceLocal {
 
-    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
+    @PersistenceContext(unitName = "CheorgesTecPersistenceProvider")
     EntityManager em;
 
     @Inject

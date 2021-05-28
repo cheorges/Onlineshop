@@ -38,7 +38,7 @@ public class ProductServiceImplTest {
             .username("username-1")
             .firstname("firstname-1")
             .lastname("lastname-1")
-            .email("firstname-1@zotteltec.ch")
+            .email("firstname-1@cheorgestec.ch")
             .password("password-1")
             .build();
 
@@ -46,7 +46,7 @@ public class ProductServiceImplTest {
             .username("username-2")
             .firstname("firstname-2")
             .lastname("lastname-2")
-            .email("firstname-2@zotteltec.ch")
+            .email("firstname-2@cheorgestec.ch")
             .password("password-2")
             .build();
 

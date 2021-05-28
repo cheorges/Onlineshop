@@ -27,7 +27,7 @@ import java.util.Optional;
 @Transactional
 public class CustomerServiceImpl extends ApplicationService implements CustomerServiceLocal {
 
-    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
+    @PersistenceContext(unitName = "CheorgesTecPersistenceProvider")
     EntityManager em;
 
     @Override

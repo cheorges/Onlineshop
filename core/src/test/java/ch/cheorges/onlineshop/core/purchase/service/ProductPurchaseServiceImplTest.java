@@ -44,7 +44,7 @@ public class ProductPurchaseServiceImplTest {
             .username("username-1")
             .firstname("firstname-1")
             .lastname("lastname-1")
-            .email("firstname-1@zotteltec.ch")
+            .email("firstname-1@cheorgestec.ch")
             .password("password-1")
             .build();
 

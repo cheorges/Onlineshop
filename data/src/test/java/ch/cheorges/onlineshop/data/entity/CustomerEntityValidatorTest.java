@@ -29,8 +29,8 @@ public class CustomerEntityValidatorTest {
         customerEntity = new CustomerEntity();
         customerEntity.setUsername("admin");
         customerEntity.setFirstname("Administrator");
-        customerEntity.setLastname("Zotteltec");
-        customerEntity.setEmail("admin@zotteltec.ch");
+        customerEntity.setLastname("CheorgesTec");
+        customerEntity.setEmail("admin@cheorgestec.ch");
         customerEntity.setPassword("password");
     }
 

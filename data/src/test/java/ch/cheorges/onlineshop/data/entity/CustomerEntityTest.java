@@ -15,16 +15,16 @@ public class CustomerEntityTest {
         customerEntity.setId(1);
         customerEntity.setUsername("admin");
         customerEntity.setFirstname("Administrator");
-        customerEntity.setLastname("Zotteltec");
-        customerEntity.setEmail("admin@zotteltec.ch");
+        customerEntity.setLastname("CheorgesTec");
+        customerEntity.setEmail("admin@cheorgestec.ch");
         customerEntity.setPassword("password");
 
         // Then
         assertThat(customerEntity.getId(), is(1));
         assertThat(customerEntity.getUsername(), is("admin"));
         assertThat(customerEntity.getFirstname(), is("Administrator"));
-        assertThat(customerEntity.getLastname(), is("Zotteltec"));
-        assertThat(customerEntity.getEmail(), is("admin@zotteltec.ch"));
+        assertThat(customerEntity.getLastname(), is("CheorgesTec"));
+        assertThat(customerEntity.getEmail(), is("admin@cheorgestec.ch"));
         assertThat(customerEntity.getPassword(), is("password"));
     }
 

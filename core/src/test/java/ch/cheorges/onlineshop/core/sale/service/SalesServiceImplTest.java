@@ -42,7 +42,7 @@ public class SalesServiceImplTest {
             .username("buyer")
             .firstname("buyer-firstname")
             .lastname("buyer-lastname")
-            .email("buyer@zotteltec.ch")
+            .email("buyer@cheorgestec.ch")
             .password("buyer-password")
             .build();
 
@@ -50,7 +50,7 @@ public class SalesServiceImplTest {
             .username("seller")
             .firstname("seller-firstname")
             .lastname("seller-lastname")
-            .email("seller-firstname@zotteltec.ch")
+            .email("seller-firstname@cheorgestec.ch")
             .password("seller-password")
             .build();
 

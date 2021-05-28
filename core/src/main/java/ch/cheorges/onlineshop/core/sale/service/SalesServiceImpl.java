@@ -27,7 +27,7 @@ import javax.transaction.Transactional;
 @Transactional
 public class SalesServiceImpl extends ApplicationService implements SalesServiceLocal {
 
-    @PersistenceContext(unitName = "ZotteltecPersistenceProvider")
+    @PersistenceContext(unitName = "CheorgesTecPersistenceProvider")
     EntityManager em;
 
     @Inject

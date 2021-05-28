@@ -1,9 +1,11 @@
 package ch.cheorges.onlineshop.web.purchase.mapper;
 
+import ch.cheorges.onlineshop.common.purchase.dto.ImmutableCartProduct;
+import ch.cheorges.onlineshop.common.purchase.dto.ImmutablePurchase;
 import ch.cheorges.onlineshop.web.customer.dto.PageCustomer;
 import ch.cheorges.onlineshop.web.purchase.dto.PageCartProduct;
-import ch.zotteljedi.onlineshop.common.purchase.dto.ImmutableCartProduct;
-import ch.zotteljedi.onlineshop.common.purchase.dto.ImmutablePurchase;
+import ch.cheorges.onlineshop.common.purchase.dto.ImmutableCartProduct;
+import ch.cheorges.onlineshop.common.purchase.dto.ImmutablePurchase;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,6 +1,8 @@
 package ch.cheorges.onlineshop.core.purchase.mapper;
 
 import ch.cheorges.onlineshop.common.purchase.dto.CartProduct;
+import ch.cheorges.onlineshop.common.purchase.dto.ImmutablePurchaseItemOverview;
+import ch.cheorges.onlineshop.common.purchase.dto.ImmutablePurchaseOverview;
 import ch.cheorges.onlineshop.common.purchase.dto.PurchaseId;
 import ch.cheorges.onlineshop.common.purchase.dto.PurchaseItemOverview;
 import ch.cheorges.onlineshop.core.customer.mapper.CustomerMapper;

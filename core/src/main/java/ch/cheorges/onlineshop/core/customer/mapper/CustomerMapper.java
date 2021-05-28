@@ -2,7 +2,7 @@ package ch.cheorges.onlineshop.core.customer.mapper;
 
 import ch.cheorges.onlineshop.common.customer.dto.Customer;
 import ch.cheorges.onlineshop.common.customer.dto.CustomerId;
-import ch.zotteljedi.onlineshop.common.customer.dto.ImmutableCustomer;
+import ch.cheorges.onlineshop.common.customer.dto.ImmutableCustomer;
 import ch.cheorges.onlineshop.common.customer.dto.NewCustomer;
 import ch.cheorges.onlineshop.data.entity.CustomerEntity;
 

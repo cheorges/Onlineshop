@@ -4,7 +4,7 @@ import ch.cheorges.onlineshop.web.common.Hash256;
 import ch.cheorges.onlineshop.web.common.massage.MessageFactory;
 import ch.cheorges.onlineshop.web.customer.dto.PageCustomer;
 import ch.cheorges.onlineshop.common.customer.dto.Customer;
-import ch.zotteljedi.onlineshop.common.customer.dto.ImmutableCustomer;
+import ch.cheorges.onlineshop.common.customer.dto.ImmutableCustomer;
 import ch.cheorges.onlineshop.common.customer.service.CustomerServiceLocal;
 import ch.cheorges.onlineshop.web.customer.exception.UnauthorizedAccessException;
 

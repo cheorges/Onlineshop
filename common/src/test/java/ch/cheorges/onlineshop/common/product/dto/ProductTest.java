@@ -2,7 +2,7 @@ package ch.cheorges.onlineshop.common.product.dto;
 
 import ch.cheorges.onlineshop.common.customer.dto.Customer;
 import ch.cheorges.onlineshop.common.customer.dto.CustomerId;
-import ch.zotteljedi.onlineshop.common.customer.dto.ImmutableCustomer;
+import ch.cheorges.onlineshop.common.customer.dto.ImmutableCustomer;
 import ch.cheorges.onlineshop.common.dto.Id;
 import org.junit.Before;
 import org.junit.Test;

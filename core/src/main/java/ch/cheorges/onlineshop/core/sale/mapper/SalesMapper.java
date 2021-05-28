@@ -2,8 +2,8 @@ package ch.cheorges.onlineshop.core.sale.mapper;
 
 import ch.cheorges.onlineshop.common.dto.Id;
 import ch.cheorges.onlineshop.common.product.dto.ProductId;
-import ch.zotteljedi.onlineshop.common.sale.dto.ImmutableSalesItemOverview;
-import ch.zotteljedi.onlineshop.common.sale.dto.ImmutableSalesOverview;
+import ch.cheorges.onlineshop.common.sale.dto.ImmutableSalesItemOverview;
+import ch.cheorges.onlineshop.common.sale.dto.ImmutableSalesOverview;
 import ch.cheorges.onlineshop.common.sale.dto.SalesItemOverview;
 import ch.cheorges.onlineshop.data.entity.ProductEntity;
 import ch.cheorges.onlineshop.data.entity.PurchaseItemEntity;

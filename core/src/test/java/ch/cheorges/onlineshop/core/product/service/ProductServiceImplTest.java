@@ -4,6 +4,8 @@ import ch.cheorges.onlineshop.common.customer.dto.CustomerId;
 import ch.cheorges.onlineshop.common.dto.Id;
 import ch.cheorges.onlineshop.common.message.MessageContainer;
 import ch.cheorges.onlineshop.common.product.dto.ChangeProduct;
+import ch.cheorges.onlineshop.common.product.dto.ImmutableChangeProduct;
+import ch.cheorges.onlineshop.common.product.dto.ImmutableNewProduct;
 import ch.cheorges.onlineshop.common.product.dto.NewProduct;
 import ch.cheorges.onlineshop.common.product.dto.Product;
 import ch.cheorges.onlineshop.common.product.dto.ProductId;

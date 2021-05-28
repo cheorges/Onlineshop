@@ -2,7 +2,7 @@ package ch.cheorges.onlineshop.core.product.mapper;
 
 import ch.cheorges.onlineshop.common.dto.Id;
 import ch.cheorges.onlineshop.common.product.dto.ChangeProduct;
-import ch.zotteljedi.onlineshop.common.product.dto.ImmutableProduct;
+import ch.cheorges.onlineshop.common.product.dto.ImmutableProduct;
 import ch.cheorges.onlineshop.common.product.dto.NewProduct;
 import ch.cheorges.onlineshop.common.product.dto.ProductId;
 import ch.cheorges.onlineshop.core.customer.mapper.CustomerMapper;

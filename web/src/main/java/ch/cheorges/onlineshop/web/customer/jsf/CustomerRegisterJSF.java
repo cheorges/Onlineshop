@@ -3,7 +3,7 @@ package ch.cheorges.onlineshop.web.customer.jsf;
 
 import ch.cheorges.onlineshop.web.common.Hash256;
 import ch.cheorges.onlineshop.web.common.massage.MessageFactory;
-import ch.zotteljedi.onlineshop.common.customer.dto.ImmutableNewCustomer;
+import ch.cheorges.onlineshop.common.customer.dto.ImmutableNewCustomer;
 import ch.cheorges.onlineshop.common.customer.dto.NewCustomer;
 import ch.cheorges.onlineshop.common.customer.service.CustomerServiceLocal;
 

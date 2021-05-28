@@ -2,8 +2,8 @@ package ch.cheorges.onlineshop.common.purchase.dto;
 
 import ch.cheorges.onlineshop.common.customer.dto.CustomerId;
 import ch.cheorges.onlineshop.common.dto.Id;
-import ch.zotteljedi.onlineshop.common.purchase.dto.ImmutableCartProduct;
-import ch.zotteljedi.onlineshop.common.purchase.dto.ImmutablePurchase;
+import ch.cheorges.onlineshop.common.purchase.dto.ImmutableCartProduct;
+import ch.cheorges.onlineshop.common.purchase.dto.ImmutablePurchase;
 import ch.cheorges.onlineshop.common.product.dto.ProductId;
 
 import org.junit.Before;

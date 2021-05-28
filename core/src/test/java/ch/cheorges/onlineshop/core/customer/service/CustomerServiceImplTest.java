@@ -2,6 +2,8 @@ package ch.cheorges.onlineshop.core.customer.service;
 
 import ch.cheorges.onlineshop.common.customer.dto.Customer;
 import ch.cheorges.onlineshop.common.customer.dto.CustomerId;
+import ch.cheorges.onlineshop.common.customer.dto.ImmutableCustomer;
+import ch.cheorges.onlineshop.common.customer.dto.ImmutableNewCustomer;
 import ch.cheorges.onlineshop.common.customer.dto.NewCustomer;
 import ch.cheorges.onlineshop.common.dto.Id;
 import ch.cheorges.onlineshop.common.message.MessageContainer;

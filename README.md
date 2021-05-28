@@ -3,7 +3,7 @@
 
 ---
 
-# cheorges - Onlineshop 
+# CheorgesTec - Onlineshop 
 
 > Java EE 8 Onlineshop Besipiel | FFHS
 
@@ -15,5 +15,5 @@ docker build . -t onlineshop-cheorgestec:latest
 docker-compose up
 ```
 
-Open the [Zotelltec](http://localhost:8080/web-1.0-SNAPSHOT/index.xhtml) onlineshop.  
+Open the [CheorgesTec](http://localhost:8080/web-1.0-SNAPSHOT/index.xhtml) onlineshop.  
 * *http://localhost:8080/web-1.0-SNAPSHOT/index.xhtml*
